@@ -8,21 +8,46 @@
         xmlns:views="clr-namespace:PropertyAgencyDesktopApp.Views"
         mc:Ignorable="d"
         Title="{Binding CurrentViewModel.Title}"
-        Height="450" 
-        Width="800"
-        MinHeight="450"
-        MinWidth="800"
-        WindowStartupLocation="CenterScreen">
+        Height="650" 
+        Width="1000"
+        MinHeight="650"
+        MinWidth="1000"
+        WindowStartupLocation="CenterScreen"
+        Icon="/Resources/logo.png">
     <Window.DataContext>
         <viewmodels:NavigationViewModel></viewmodels:NavigationViewModel>
     </Window.DataContext>
     <Grid>
-        <ContentControl Content="{Binding CurrentViewModel}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="100" />
+        </Grid.RowDefinitions>
+        <Border Background="White"
+                CornerRadius="3">
+            <Border.BitmapEffect>
+                <DropShadowBitmapEffect Opacity=".2"
+                                        ShadowDepth="1"></DropShadowBitmapEffect>
+            </Border.BitmapEffect>
+            <Image Source="/Resources/logo.png"
+                   HorizontalAlignment="Left"
+                   Margin="15"></Image>
+        </Border>
+        <ContentControl Content="{Binding CurrentViewModel}"
+                        Grid.Row="1">
             <ContentControl.Resources>
                 <DataTemplate DataType="{x:Type viewmodels:ClientViewModel}">
                     <views:ClientView></views:ClientView>
                 </DataTemplate>
             </ContentControl.Resources>
         </ContentControl>
+        <Border Background="White"
+                CornerRadius="3"
+                Grid.Row="2">
+            <Border.BitmapEffect>
+                <DropShadowBitmapEffect Opacity=".2"
+                                        ShadowDepth="1"></DropShadowBitmapEffect>
+            </Border.BitmapEffect>
+        </Border>
     </Grid>
 </Window>

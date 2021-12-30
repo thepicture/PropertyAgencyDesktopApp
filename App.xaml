@@ -1,8 +1,55 @@
 ﻿<Application x:Class="PropertyAgencyDesktopApp.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:PropertyAgencyDesktopApp">
+             xmlns:local="clr-namespace:PropertyAgencyDesktopApp"
+             StartupUri="Views/NavigationView.xaml">
     <Application.Resources>
-         
+        <Style x:Key="CommonMarkup"
+               TargetType="Control">
+            <Setter Property="Padding" 
+                    Value="10" />
+            <Setter Property="Margin" 
+                    Value="15" />
+            <Setter Property="Height"
+                    Value="36" />
+        </Style>
+        <Style TargetType="TextBlock"
+               x:Key="CommonBlock">
+            <Setter Property="Margin" 
+                    Value="15" />
+        </Style>
+        <Style x:Key="CommonBorder"
+               TargetType="Border">
+            <Setter Property="CornerRadius" Value="3" />
+        </Style>
+        <Style x:Key="CommonBox"
+               TargetType="TextBox"
+               BasedOn="{StaticResource CommonMarkup}">
+            <Style.Resources>
+                <Style BasedOn="{StaticResource CommonBorder}"
+                       TargetType="Border"></Style>
+            </Style.Resources>
+        </Style>
+        <Style x:Key="CommonButton"
+               TargetType="Button"
+               BasedOn="{StaticResource CommonMarkup}">
+            <Setter Property="Background"
+                    Value="#04A0FF" />
+            <Setter Property="BorderBrush"
+                    Value="Transparent" />
+            <Setter Property="Foreground"
+                    Value="White" />
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver"
+                         Value="True">
+                    <Setter Property="Background"
+                            Value="#0081D1" />
+                </Trigger>
+            </Style.Triggers>
+            <Style.Resources>
+                <Style BasedOn="{StaticResource CommonBorder}"
+                       TargetType="Border"></Style>
+            </Style.Resources>
+        </Style>
     </Application.Resources>
 </Application>

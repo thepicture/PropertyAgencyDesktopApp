@@ -3,7 +3,7 @@
 namespace PropertyAgencyDesktopApp
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for NavigationWindow.xaml
     /// </summary>
     public partial class NavigationView : Window
     {

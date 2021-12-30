@@ -26,6 +26,7 @@ namespace PropertyAgencyDesktopApp.Services
             if (instance == null)
             {
                 throw new NullReferenceException("Implementation " +
+                    $"for {typeof(T).FullName}" +
                     "was not found");
             }
             return (T)instance;

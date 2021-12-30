@@ -1,4 +1,5 @@
 ﻿using PropertyAgencyDesktopApp.Services;
+using PropertyAgencyDesktopApp.ViewModels;
 using System.Windows;
 
 namespace PropertyAgencyDesktopApp
@@ -12,8 +13,8 @@ namespace PropertyAgencyDesktopApp
         {
             base.OnStartup(e);
             DependencyService.Register<ViewModelNavigationService>();
-            NavigationView view = new NavigationView();
-            view.Show();
+            DependencyService.Get<INavigationService<ViewModelBase>>()
+                 .Navigate<ClientViewModel>();
         }
     }
 }

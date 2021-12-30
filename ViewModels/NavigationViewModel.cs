@@ -10,10 +10,14 @@ namespace PropertyAgencyDesktopApp.ViewModels
             .CurrentNavigationTarget;
         public NavigationViewModel()
         {
+            if (System.ComponentModel.DesignerProperties
+                .GetIsInDesignMode(new System.Windows.DependencyObject()))
+            {
+                return;
+            }
             DependencyService.Get<INavigationService<ViewModelBase>>()
                              .Navigated += OnNavigated;
-            DependencyService.Get<INavigationService<ViewModelBase>>()
-                             .Navigate<ClientViewModel>();
+
         }
 
         private void OnNavigated()
