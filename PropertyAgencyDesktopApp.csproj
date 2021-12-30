@@ -35,9 +35,18 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -83,6 +92,36 @@
     <Compile Include="Controls\PopupControl.xaml.cs">
       <DependentUpon>PopupControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Models\Entities\AgencyModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AgencyModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entities\AgencyModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AgencyModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entities\AgencyModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AgencyModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entities\Agent.cs">
+      <DependentUpon>AgencyModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entities\Client.cs">
+      <DependentUpon>AgencyModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entities\Demand.cs">
+      <DependentUpon>AgencyModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entities\Offer.cs">
+      <DependentUpon>AgencyModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entities\Property.cs">
+      <DependentUpon>AgencyModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Services\DependencyService.cs" />
     <Compile Include="Services\INavigationService.cs" />
     <Compile Include="Services\ViewModelNavigationService.cs" />
@@ -116,6 +155,14 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <Resource Include="Fonts\Roboto-Black.ttf" />
+    <EntityDeploy Include="Models\Entities\AgencyModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>AgencyModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Models\Entities\AgencyModel.edmx.diagram">
+      <DependentUpon>AgencyModel.edmx</DependentUpon>
+    </None>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -124,9 +171,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Models\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Resource Include="Resources\alert.png" />
   </ItemGroup>
@@ -141,6 +186,21 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\warning.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Models\Entities\AgencyModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>AgencyModel.Context.cs</LastGenOutput>
+      <DependentUpon>AgencyModel.edmx</DependentUpon>
+    </Content>
+    <Content Include="Models\Entities\AgencyModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>AgencyModel.edmx</DependentUpon>
+      <LastGenOutput>AgencyModel.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
