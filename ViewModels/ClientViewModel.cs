@@ -1,6 +1,9 @@
-﻿using PropertyAgencyDesktopApp.Models.Entities;
+﻿using PropertyAgencyDesktopApp.Commands;
+using PropertyAgencyDesktopApp.Models.Entities;
+using PropertyAgencyDesktopApp.Services;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Windows.Input;
 
 namespace PropertyAgencyDesktopApp.ViewModels
 {
@@ -24,6 +27,28 @@ namespace PropertyAgencyDesktopApp.ViewModels
         {
             get => _clients;
             set => SetProperty(ref _clients, value);
+        }
+
+        private RelayCommand addNewClientCommand;
+
+        public ICommand AddNewClientCommand
+        {
+            get
+            {
+                if (addNewClientCommand == null)
+                {
+                    addNewClientCommand = new RelayCommand(AddNewClient);
+                }
+
+                return addNewClientCommand;
+            }
+        }
+
+        private void AddNewClient(object commandParameter)
+        {
+            DependencyService.Get<INavigationService<ViewModelBase>>()
+                             .Navigate
+                             <AddEditClientViewModel>();
         }
     }
 }

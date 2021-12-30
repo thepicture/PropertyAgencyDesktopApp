@@ -40,5 +40,14 @@ namespace PropertyAgencyDesktopApp.Services
             Journal.Push(instance);
             Navigated?.Invoke();
         }
+        public void NavigateWithParameter<T>(object parameter)
+        {
+            ViewModelBase instance = (ViewModelBase)Activator
+                                                    .CreateInstance(typeof(T),
+                new object[] { parameter });
+            Journal.Push(instance);
+            Navigated?.Invoke();
+        }
+
     }
 }

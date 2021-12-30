@@ -9,6 +9,7 @@ namespace PropertyAgencyDesktopApp.Services
         Stack<TNavigationTarget> Journal { get; }
         event Action Navigated;
         void Navigate<T>();
+        void NavigateWithParameter<T>(object parameter);
         void GoBack();
         bool IsCanGoBack();
     }

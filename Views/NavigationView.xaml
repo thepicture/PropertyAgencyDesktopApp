@@ -39,6 +39,9 @@
                 <DataTemplate DataType="{x:Type viewmodels:ClientViewModel}">
                     <views:ClientView></views:ClientView>
                 </DataTemplate>
+                <DataTemplate DataType="{x:Type viewmodels:AddEditClientViewModel}">
+                    <views:AddEditClientView></views:AddEditClientView>
+                </DataTemplate>
             </ContentControl.Resources>
         </ContentControl>
         <Border Background="White"

@@ -26,7 +26,7 @@ namespace PropertyAgencyDesktopApp.Controls
             DependencyProperty.Register("Text",
                 typeof(string),
                 typeof(InputControl),
-                new FrameworkPropertyMetadata("Notext",
+                new FrameworkPropertyMetadata(string.Empty,
                     FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
 
 
