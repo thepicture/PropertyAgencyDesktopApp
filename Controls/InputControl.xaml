@@ -7,7 +7,8 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" 
              d:DesignWidth="800"
-             d:DataContext="{d:DesignInstance Type={x:Type local:InputControl}}">
+             d:DataContext="{d:DesignInstance 
+                               Type={x:Type local:InputControl}}">
     <StackPanel Width="200">
         <TextBlock Foreground="{Binding Color}"
                    Text="{Binding Header}"
@@ -25,13 +26,15 @@
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding Text.Length}"
                                          Value="0">
-                                <Setter Property="Text" Value="{Binding Placeholder}" />
+                                <Setter Property="Text" 
+                                        Value="{Binding Placeholder}" />
                             </DataTrigger>
                         </Style.Triggers>
                     </Style>
                 </TextBlock.Style>
             </TextBlock>
-            <TextBox Text="{Binding Text, UpdateSourceTrigger=PropertyChanged}">
+            <TextBox Text="{Binding Text, 
+                                    UpdateSourceTrigger=PropertyChanged}">
                 <TextBox.Style>
                     <Style BasedOn="{StaticResource CommonBox}"
                            TargetType="TextBox">
@@ -50,11 +53,13 @@
                    FontSize="11">
             <TextBlock.Style>
                 <Style TargetType="TextBlock">
-                    <Setter Property="Visibility" Value="Visible" />
+                    <Setter Property="Visibility"
+                            Value="Visible" />
                     <Style.Triggers>
                         <DataTrigger Binding="{Binding ValidationText.Length}"
                                      Value="0">
-                            <Setter Property="Visibility" Value="Collapsed" />
+                            <Setter Property="Visibility"
+                                    Value="Collapsed" />
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>

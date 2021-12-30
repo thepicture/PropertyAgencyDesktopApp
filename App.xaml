@@ -4,6 +4,13 @@
              xmlns:local="clr-namespace:PropertyAgencyDesktopApp"
              StartupUri="Views/NavigationView.xaml">
     <Application.Resources>
+        <Style TargetType="ContentControl">
+            <Setter Property="FontFamily">
+                <Setter.Value>
+                    <FontFamily>pack://application,,,/Fonts/#Roboto</FontFamily>
+                </Setter.Value>
+            </Setter>
+        </Style>
         <Style x:Key="CommonMarkup"
                TargetType="Control">
             <Setter Property="Padding" 
