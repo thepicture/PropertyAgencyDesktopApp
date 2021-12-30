@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using PropertyAgencyDesktopApp.Services;
 using System.Windows;
 
 namespace PropertyAgencyDesktopApp
@@ -13,5 +8,12 @@ namespace PropertyAgencyDesktopApp
     /// </summary>
     public partial class App : Application
     {
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            base.OnStartup(e);
+            DependencyService.Register<ViewModelNavigationService>();
+            NavigationView view = new NavigationView();
+            view.Show();
+        }
     }
 }

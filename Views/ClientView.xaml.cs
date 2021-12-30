@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace PropertyAgencyDesktopApp
+namespace PropertyAgencyDesktopApp.Views
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for ClientView.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class ClientView : UserControl
     {
-        public MainWindow()
+        public ClientView()
         {
             InitializeComponent();
         }
