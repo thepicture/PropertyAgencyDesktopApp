@@ -17,7 +17,6 @@ namespace PropertyAgencyDesktopApp.ViewModels
             }
             DependencyService.Get<INavigationService<ViewModelBase>>()
                              .Navigated += OnNavigated;
-
         }
 
         private void OnNavigated()

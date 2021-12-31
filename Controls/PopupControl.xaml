@@ -7,7 +7,8 @@
              mc:Ignorable="d" 
              d:DesignHeight="150"
              d:DesignWidth="800"
-             d:DataContext="{d:DesignInstance Type={x:Type local:PopupControl}}">
+             d:DataContext="{d:DesignInstance Type={x:Type local:PopupControl}}"
+             Visibility="Collapsed">
     <Border Background="White"
             CornerRadius="3"
             Width="200">
@@ -24,6 +25,8 @@
             <Image Margin="10">
                 <Image.Style>
                     <Style TargetType="Image">
+                        <Setter Property="Source"
+                                        Value="/Resources/alert.png"></Setter>
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding Type}"
                                          Value="Alert">
@@ -58,25 +61,25 @@
                   Grid.Column="2"
                   Background="White"
                   Mouse.MouseDown="OnClosing">
-            <Button HorizontalAlignment="Center"
+                <Button HorizontalAlignment="Center"
                     VerticalAlignment="Center">
-                <Button.Template>
-                    <ControlTemplate>
-                        <Grid>
-                            <Line X1="0" 
+                    <Button.Template>
+                        <ControlTemplate>
+                            <Grid>
+                                <Line X1="0" 
                                   X2="10"
                                   Y1="0"
                                   Y2="10"
                                   Stroke="Gray"></Line>
-                            <Line X1="0" 
+                                <Line X1="0" 
                                   X2="10"
                                   Y1="10"
                                   Y2="0"
                                   Stroke="Gray"></Line>
-                        </Grid>
-                    </ControlTemplate>
-                </Button.Template>
-            </Button>
+                            </Grid>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
             </Grid>
         </Grid>
     </Border>

@@ -29,6 +29,11 @@
                                 <Setter Property="Text" 
                                         Value="{Binding Placeholder}" />
                             </DataTrigger>
+                            <DataTrigger Binding="{Binding Text}"
+                                         Value="{x:Null}">
+                                <Setter Property="Text" 
+                                        Value="{Binding Placeholder}" />
+                            </DataTrigger>
                         </Style.Triggers>
                     </Style>
                 </TextBlock.Style>

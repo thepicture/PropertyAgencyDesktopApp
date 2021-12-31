@@ -16,7 +16,7 @@ namespace PropertyAgencyDesktopApp.Services
         public ViewModelBase CurrentNavigationTarget
         {
             get => Journal.Peek();
-            private set => CurrentNavigationTarget = value;
+            private set => Journal.Push(value);
         }
 
         public event Action Navigated;

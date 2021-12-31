@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PropertyAgencyDesktopApp"
         xmlns:viewmodels="clr-namespace:PropertyAgencyDesktopApp.ViewModels" 
-        xmlns:views="clr-namespace:PropertyAgencyDesktopApp.Views"
+        xmlns:views="clr-namespace:PropertyAgencyDesktopApp.Views" 
+        xmlns:controls="clr-namespace:PropertyAgencyDesktopApp.Controls"
         mc:Ignorable="d"
         Title="{Binding CurrentViewModel.Title}"
         Height="650" 
@@ -33,6 +34,18 @@
                    HorizontalAlignment="Left"
                    Margin="15"></Image>
         </Border>
+
+        <controls:PopupControl Text="{Binding RelativeSource={RelativeSource AncestorType=Window}, 
+                                              Path=DataContext.CurrentViewModel.ValidationMessage}"
+                               Type="{Binding RelativeSource={RelativeSource AncestorType=Window}, 
+                                              Path=DataContext.CurrentViewModel.MessageType}"
+                               Grid.Row="1"
+                               VerticalAlignment="Top"
+                               IsClosed="{Binding RelativeSource={RelativeSource AncestorType=Window}, 
+                                              Path=DataContext.CurrentViewModel.IsMessageClosed,
+                                              Mode=TwoWay,
+                                              UpdateSourceTrigger=PropertyChanged}"
+                               Panel.ZIndex="1"></controls:PopupControl>
         <ContentControl Content="{Binding CurrentViewModel}"
                         Grid.Row="1">
             <ContentControl.Resources>

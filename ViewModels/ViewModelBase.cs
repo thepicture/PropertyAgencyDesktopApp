@@ -1,5 +1,8 @@
-﻿using System.ComponentModel;
+﻿using PropertyAgencyDesktopApp.Commands;
+using PropertyAgencyDesktopApp.Services;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Windows.Input;
 
 namespace PropertyAgencyDesktopApp.ViewModels
 {
@@ -37,6 +40,51 @@ namespace PropertyAgencyDesktopApp.ViewModels
             }
 
             return false;
+        }
+
+        private RelayCommand _goBackCommand;
+
+        public ICommand GoBackCommand
+        {
+            get
+            {
+                if (_goBackCommand == null)
+                {
+                    _goBackCommand = new RelayCommand(GoBack);
+                }
+
+                return _goBackCommand;
+            }
+        }
+
+        private void GoBack(object commandParameter)
+        {
+            DependencyService.Get<INavigationService<ViewModelBase>>()
+                             .GoBack();
+        }
+
+        private string _validationMessage;
+
+        public string ValidationMessage
+        {
+            get => _validationMessage;
+            set => SetProperty(ref _validationMessage, value);
+        }
+
+        private string _messageType;
+
+        public string MessageType
+        {
+            get => _messageType;
+            set => SetProperty(ref _messageType, value);
+        }
+
+        private bool _isMessageClosed = true;
+
+        public bool IsMessageClosed
+        {
+            get => _isMessageClosed;
+            set => SetProperty(ref _isMessageClosed, value);
         }
     }
 }

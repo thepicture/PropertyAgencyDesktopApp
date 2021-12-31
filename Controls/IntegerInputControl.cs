@@ -6,11 +6,11 @@ namespace PropertyAgencyDesktopApp.Controls
 {
     public class IntegerInputControl : InputControl
     {
-        protected override void OnPreviewTextInput(TextCompositionEventArgs e)
+        protected override void OnKeyUp(KeyEventArgs e)
         {
-            if (Regex.IsMatch(e.Text, @"^[0-9]+$")
-               && Text.Length + 1 >= MinLength
-               && Text.Length + 1 <= MaxLength)
+            if (Regex.IsMatch(Text, @"^[0-9]+$")
+              && Text?.Length + 1 >= MinLength
+              && Text?.Length + 1 <= MaxLength)
             {
                 IsValidated = true;
                 Color = Brushes.Green;
@@ -20,7 +20,7 @@ namespace PropertyAgencyDesktopApp.Controls
                 IsValidated = false;
                 Color = Brushes.Red;
             }
-            base.OnPreviewTextInput(e);
+            base.OnKeyUp(e);
         }
     }
 }

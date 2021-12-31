@@ -4,40 +4,74 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:PropertyAgencyDesktopApp.Views"
-      xmlns:controls="clr-namespace:PropertyAgencyDesktopApp.Controls"
+      xmlns:controls="clr-namespace:PropertyAgencyDesktopApp.Controls" 
+      xmlns:viewmodels="clr-namespace:PropertyAgencyDesktopApp.ViewModels" 
+      d:DataContext="{d:DesignInstance Type=viewmodels:AddEditClientViewModel}"
       mc:Ignorable="d" 
       d:DesignHeight="450"
       d:DesignWidth="800">
     <ScrollViewer VerticalScrollBarVisibility="Auto"
                   HorizontalScrollBarVisibility="Disabled">
         <StackPanel>
+            <TextBlock Text="{Binding Path=CurrentClient.LastName}"></TextBlock>
             <controls:TextInputControl Header="Last name"
+                                       x:Name="LastNameText"
+                                       CanBeNull="True"
+                                       Text="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.CurrentViewModel.CurrentClient.LastName, UpdateSourceTrigger=PropertyChanged}"
                                        MinLength="2"
                                        MaxLength="50"
                                        Placeholder="Enter a last name"
                                        ValidationText="Enter a last name from 2 symbols up to 50 symbols"></controls:TextInputControl>
             <controls:TextInputControl Header="First name"
+                                       x:Name="FirstNameText"
+                                       CanBeNull="True"
+                                       Text="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.CurrentViewModel.CurrentClient.FirstName, UpdateSourceTrigger=PropertyChanged}"
                                        MinLength="2"
                                        MaxLength="50"
                                        Placeholder="Enter a first name"
                                        ValidationText="Enter a first name from 2 symbols up to 50 symbols"></controls:TextInputControl>
             <controls:TextInputControl Header="Middle name"
+                                       x:Name="MiddleNameText"
+                                       CanBeNull="True"
+                                       Text="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.CurrentViewModel.CurrentClient.MiddleName, UpdateSourceTrigger=PropertyChanged}"
                                        MinLength="2"
                                        MaxLength="50"
                                        Placeholder="Enter a middle name"
                                        ValidationText="Enter a middle name from 2 symbols up to 50 symbols"></controls:TextInputControl>
             <controls:IntegerInputControl Header="Phone"
+                                          x:Name="PhoneNumberText"
+                                          Text="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.CurrentViewModel.CurrentClient.Phone, UpdateSourceTrigger=PropertyChanged}"
                                           Placeholder="Enter a phone number"
                                           ValidationText="Enter a phone number from 3 symbols up to 20 symbols"
                                           MinLength="3"
                                           MaxLength="20"></controls:IntegerInputControl>
             <controls:EmailInputControl Header="Email"
+                                        x:Name="EmailText"
+                                        Text="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.CurrentViewModel.CurrentClient.Email, UpdateSourceTrigger=PropertyChanged}"
                                         Placeholder="Enter an email"
-                                        ValidationText="Email must be in format aaa@aaa.aaa"></controls:EmailInputControl>
+                                        ValidationText="Email must be in format xxx@xxx.xx, where x is any word character"></controls:EmailInputControl>
+            <Button Content="Save"
+                    Command="{Binding SaveClientCommand}">
+                <Button.Style>
+                    <Style TargetType="Button"
+                           BasedOn="{StaticResource CommonButton}">
+                        <Setter Property="IsEnabled" Value="False" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ElementName=PhoneNumberText, Path=IsValidated}"
+                                         Value="True">
+                                <Setter Property="IsEnabled" Value="True" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ElementName=EmailText, Path=IsValidated}"
+                                         Value="True">
+                                <Setter Property="IsEnabled" Value="True" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
             <Button Style="{StaticResource CommonButton}"
-                    Content="Save"></Button>
-            <Button Style="{StaticResource CommonButton}"
-                    Content="Go back"></Button>
+                    Content="Go back"
+                    Command="{Binding GoBackCommand}"></Button>
         </StackPanel>
     </ScrollViewer>
 </UserControl>

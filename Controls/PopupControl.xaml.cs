@@ -42,9 +42,34 @@ namespace PropertyAgencyDesktopApp.Controls
                 new PropertyMetadata("Alert"));
 
         private void OnClosing(object sender,
-                                    System.Windows.Input.MouseButtonEventArgs e)
+                               System.Windows.Input.MouseButtonEventArgs e)
         {
             Visibility = Visibility.Collapsed;
+        }
+
+
+
+        public bool IsClosed
+        {
+            get { return (bool)GetValue(IsClosedProperty); }
+            set { SetValue(IsClosedProperty, value); }
+        }
+
+        public static readonly DependencyProperty IsClosedProperty =
+            DependencyProperty.Register(
+                "IsClosed",
+                typeof(bool),
+                typeof(PopupControl),
+                new PropertyMetadata(true, OnIsClosedChanged));
+
+        private static void OnIsClosedChanged
+            (DependencyObject d,
+             DependencyPropertyChangedEventArgs e)
+        {
+            bool isClosed = (bool)e.NewValue;
+            (d as PopupControl).Visibility = isClosed
+                ? Visibility.Collapsed
+                : Visibility.Visible;
         }
     }
 }
