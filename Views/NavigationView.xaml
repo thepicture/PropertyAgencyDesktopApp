@@ -46,17 +46,35 @@
                                               Mode=TwoWay,
                                               UpdateSourceTrigger=PropertyChanged}"
                                Panel.ZIndex="1"></controls:PopupControl>
-        <ContentControl Content="{Binding CurrentViewModel}"
-                        Grid.Row="1">
-            <ContentControl.Resources>
-                <DataTemplate DataType="{x:Type viewmodels:ClientViewModel}">
-                    <views:ClientView></views:ClientView>
-                </DataTemplate>
-                <DataTemplate DataType="{x:Type viewmodels:AddEditClientViewModel}">
-                    <views:AddEditClientView></views:AddEditClientView>
-                </DataTemplate>
-            </ContentControl.Resources>
-        </ContentControl>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="5*" />
+            </Grid.ColumnDefinitions>
+            <StackPanel>
+                <Button Style="{StaticResource CommonButton}"
+                        Content="Clients"
+                        Command="{Binding NavigateToClientsCommand}"></Button>
+                <Button Style="{StaticResource CommonButton}"
+                        Content="Agents"
+                        Command="{Binding NavigateToAgentsCommand}"></Button>
+            </StackPanel>
+            <ContentControl Content="{Binding CurrentViewModel}"
+                            Grid.Row="1"
+                            Grid.Column="1">
+                <ContentControl.Resources>
+                    <DataTemplate DataType="{x:Type viewmodels:ClientViewModel}">
+                        <views:ClientView></views:ClientView>
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type viewmodels:AddEditClientViewModel}">
+                        <views:AddEditClientView></views:AddEditClientView>
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type viewmodels:AgentViewModel}">
+                        <views:AgentView></views:AgentView>
+                    </DataTemplate>
+                </ContentControl.Resources>
+            </ContentControl>
+        </Grid>
         <Border Background="White"
                 CornerRadius="3"
                 Grid.Row="2">

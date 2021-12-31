@@ -94,7 +94,16 @@ namespace PropertyAgencyDesktopApp.ViewModels
         private async void DeleteClient(object commandParameter)
         {
             Client client = commandParameter as Client;
-            var questionService = DependencyService.Get<IQuestionService>();
+            if (client.Offer.Count > 0 || client.Demand.Count > 0)
+            {
+                IsMessageClosed = false;
+                MessageType = "Alert";
+                ValidationMessage = "Can't delete the client with " +
+                    "offers or demands related to the client";
+                return;
+            }
+            IQuestionService questionService = 
+                DependencyService.Get<IQuestionService>();
             if (questionService.Ask("Do you really want " +
                 "to delete client " +
                 $"with credentials {client.Phone ?? client.Email}?"))

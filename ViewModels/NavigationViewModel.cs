@@ -1,4 +1,6 @@
-﻿using PropertyAgencyDesktopApp.Services;
+﻿using PropertyAgencyDesktopApp.Commands;
+using PropertyAgencyDesktopApp.Services;
+using System.Windows.Input;
 
 namespace PropertyAgencyDesktopApp.ViewModels
 {
@@ -22,6 +24,48 @@ namespace PropertyAgencyDesktopApp.ViewModels
         private void OnNavigated()
         {
             OnPropertyChanged(nameof(CurrentViewModel));
+        }
+
+        private RelayCommand navigateToClientsCommand;
+
+        public ICommand NavigateToClientsCommand
+        {
+            get
+            {
+                if (navigateToClientsCommand == null)
+                {
+                    navigateToClientsCommand = new RelayCommand(NavigateToClients);
+                }
+
+                return navigateToClientsCommand;
+            }
+        }
+
+        private void NavigateToClients(object commandParameter)
+        {
+            DependencyService.Get<INavigationService<ViewModelBase>>()
+                             .Navigate<ClientViewModel>();
+        }
+
+        private RelayCommand navigateToAgentsCommand;
+
+        public ICommand NavigateToAgentsCommand
+        {
+            get
+            {
+                if (navigateToAgentsCommand == null)
+                {
+                    navigateToAgentsCommand = new RelayCommand(NavigateToAgents);
+                }
+
+                return navigateToAgentsCommand;
+            }
+        }
+
+        private void NavigateToAgents(object commandParameter)
+        {
+            DependencyService.Get<INavigationService<ViewModelBase>>()
+                            .Navigate<AgentViewModel>();
         }
     }
 }

@@ -17,6 +17,7 @@
         </Grid.RowDefinitions>
         <StackPanel Orientation="Horizontal">
             <TextBlock Text="Clients"
+                       FontWeight="Bold"
                        Style="{StaticResource CommonBlock}"
                        FontSize="30"></TextBlock>
             <Button Content="Add a new client"
