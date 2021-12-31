@@ -4,10 +4,73 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:PropertyAgencyDesktopApp.Views"
+             xmlns:viewmodels="clr-namespace:PropertyAgencyDesktopApp.ViewModels"
+             d:DataContext="{d:DesignInstance Type=viewmodels:AgentViewModel}"
              mc:Ignorable="d" 
              d:DesignHeight="450"
              d:DesignWidth="800">
     <Grid>
-            
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Text="Agents"
+                       FontWeight="Bold"
+                       Style="{StaticResource CommonBlock}"
+                       FontSize="30"></TextBlock>
+            <Button Content="Add a new agent"
+                    Style="{StaticResource CommonButton}"
+                    Command="{Binding AddNewAgentCommand}"></Button>
+        </StackPanel>
+        <DataGrid ItemsSource="{Binding Agents}"
+                  IsReadOnly="True"
+                  AutoGenerateColumns="False"
+                  ColumnWidth="*"
+                  Grid.Row="1">
+            <DataGrid.Columns>
+                <DataGridTemplateColumn Header="Identity">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Style="{StaticResource CommonBlock}">
+                                    <Run Text="{Binding LastName}"></Run>
+                                    <Run Text="{Binding FirstName}"></Run>
+                                    <Run Text="{Binding MiddleName}"></Run>
+                            </TextBlock>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Deal share">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Style="{StaticResource CommonBlock}"
+                                           Text="{Binding DealShare, StringFormat={}{0}%}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="Edit"
+                                    Style="{StaticResource CommonButton}"
+                                    CommandParameter="{Binding .}"
+                                    Command="{Binding RelativeSource={RelativeSource AncestorType=UserControl},
+                                                      Path=DataContext.EditAgentCommand}"></Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="Delete"
+                                        Style="{StaticResource CommonButton}"
+                                        CommandParameter="{Binding .}"
+                                        Command="{Binding RelativeSource={RelativeSource AncestorType=UserControl},
+                                                          Path=DataContext.DeleteAgentCommand}"></Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </UserControl>
