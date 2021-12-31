@@ -50,5 +50,28 @@ namespace PropertyAgencyDesktopApp.ViewModels
                              .Navigate
                              <AddEditClientViewModel>();
         }
+
+        private RelayCommand editClientCommand;
+
+        public ICommand EditClientCommand
+        {
+            get
+            {
+                if (editClientCommand == null)
+                {
+                    editClientCommand = new RelayCommand(EditClient);
+                }
+
+                return editClientCommand;
+            }
+        }
+
+        private void EditClient(object commandParameter)
+        {
+            Client client = commandParameter as Client;
+            DependencyService.Get<INavigationService<ViewModelBase>>()
+                          .NavigateWithParameter
+                          <AddEditClientViewModel>(client);
+        }
     }
 }

@@ -58,6 +58,7 @@ namespace PropertyAgencyDesktopApp.ViewModels
             if (string.IsNullOrEmpty(CurrentClient.Email)
                 && string.IsNullOrEmpty(CurrentClient.Phone))
             {
+                MessageType = "Warning";
                 ValidationMessage = "Client must have email or phone or both";
             }
             if (CurrentClient.Id == 0)
@@ -67,11 +68,13 @@ namespace PropertyAgencyDesktopApp.ViewModels
             try
             {
                 _ = await _context.SaveChangesAsync();
+                MessageType = "Alert";
                 ValidationMessage = "Client was successfully saved!";
             }
             catch (DbException ex)
             {
                 System.Diagnostics.Debug.Write(ex.StackTrace);
+                MessageType = "Danger";
                 ValidationMessage = "Can't save the client " +
                     "into the database. " +
                     "Try to go back and to the client again," +
@@ -80,6 +83,7 @@ namespace PropertyAgencyDesktopApp.ViewModels
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.Write(ex.StackTrace);
+                MessageType = "Danger";
                 ValidationMessage = "Can't save the client " +
                     "into the database. " +
                     "Fatal error encountered. " +

@@ -24,7 +24,8 @@ namespace PropertyAgencyDesktopApp.Services
         public void GoBack()
         {
             _ = Journal.Pop();
-            CurrentNavigationTarget = Journal.Peek();
+            CurrentNavigationTarget = (ViewModelBase)
+                Activator.CreateInstance(Journal.Peek().GetType());
             Navigated?.Invoke();
         }
 

@@ -8,7 +8,7 @@ namespace PropertyAgencyDesktopApp.Controls
     {
         protected override void OnKeyUp(KeyEventArgs e)
         {
-            if (Regex.IsMatch(Text, @"^[0-9]+$")
+            if (Regex.IsMatch(Text, @"^[0-9\-]+$")
               && Text?.Length + 1 >= MinLength
               && Text?.Length + 1 <= MaxLength)
             {
