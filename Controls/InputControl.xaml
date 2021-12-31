@@ -56,8 +56,8 @@
                     <Setter Property="Visibility"
                             Value="Visible" />
                     <Style.Triggers>
-                        <DataTrigger Binding="{Binding ValidationText.Length}"
-                                     Value="0">
+                        <DataTrigger Binding="{Binding IsValidated}"
+                                     Value="True">
                             <Setter Property="Visibility"
                                     Value="Collapsed" />
                         </DataTrigger>

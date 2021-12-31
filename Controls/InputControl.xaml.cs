@@ -16,11 +16,49 @@ namespace PropertyAgencyDesktopApp.Controls
             DataContext = this;
         }
 
+        public bool IsValidated
+        {
+            get { return (bool)GetValue(IsValidatedProperty); }
+            set { SetValue(IsValidatedProperty, value); }
+        }
+
+        public static readonly DependencyProperty IsValidatedProperty =
+            DependencyProperty.Register("IsValidated",
+                                        typeof(bool),
+                                        typeof(InputControl),
+                                        new PropertyMetadata(false));
+
         public string Text
         {
             get { return (string)GetValue(TextProperty); }
             set { SetValue(TextProperty, value); }
         }
+
+
+
+        public int MaxLength
+        {
+            get { return (int)GetValue(MaxLengthProperty); }
+            set { SetValue(MaxLengthProperty, value); }
+        }
+
+        public static readonly DependencyProperty MaxLengthProperty =
+            DependencyProperty.Register("MaxLength",
+                                        typeof(int),
+                                        typeof(InputControl),
+                                        new PropertyMetadata(int.MaxValue));
+
+        public int MinLength
+        {
+            get { return (int)GetValue(MinLengthProperty); }
+            set { SetValue(MinLengthProperty, value); }
+        }
+
+        public static readonly DependencyProperty MinLengthProperty =
+            DependencyProperty.Register("MinLength",
+                                        typeof(int),
+                                        typeof(InputControl),
+                                        new PropertyMetadata(0));
 
         public static readonly DependencyProperty TextProperty =
             DependencyProperty.Register("Text",
@@ -28,8 +66,6 @@ namespace PropertyAgencyDesktopApp.Controls
                 typeof(InputControl),
                 new FrameworkPropertyMetadata(string.Empty,
                     FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
-
-
 
         public Brush Color
         {

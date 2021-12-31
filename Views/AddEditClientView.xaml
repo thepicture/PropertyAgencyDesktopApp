@@ -11,27 +11,33 @@
     <ScrollViewer VerticalScrollBarVisibility="Auto"
                   HorizontalScrollBarVisibility="Disabled">
         <StackPanel>
-            <controls:InputControl Header="Last name"
-                                   Width="200"
-                                   Placeholder="Enter a last name"></controls:InputControl>
-            <controls:InputControl Header="First name"
-                                   Width="200"
-                                   Placeholder="Enter a first name"></controls:InputControl>
-            <controls:InputControl Header="Middle name"
-                                   Width="200"
-                                   Placeholder="Enter a middle name"></controls:InputControl>
-            <controls:InputControl Header="Phone"
-                                   Width="200"
-                                   Placeholder="Enter a phone number"></controls:InputControl>
-            <controls:InputControl Header="Email"
-                                   Width="200"
-                                   Placeholder="Enter an email"></controls:InputControl>
+            <controls:TextInputControl Header="Last name"
+                                       MinLength="2"
+                                       MaxLength="50"
+                                       Placeholder="Enter a last name"
+                                       ValidationText="Enter a last name from 2 symbols up to 50 symbols"></controls:TextInputControl>
+            <controls:TextInputControl Header="First name"
+                                       MinLength="2"
+                                       MaxLength="50"
+                                       Placeholder="Enter a first name"
+                                       ValidationText="Enter a first name from 2 symbols up to 50 symbols"></controls:TextInputControl>
+            <controls:TextInputControl Header="Middle name"
+                                       MinLength="2"
+                                       MaxLength="50"
+                                       Placeholder="Enter a middle name"
+                                       ValidationText="Enter a middle name from 2 symbols up to 50 symbols"></controls:TextInputControl>
+            <controls:IntegerInputControl Header="Phone"
+                                          Placeholder="Enter a phone number"
+                                          ValidationText="Enter a phone number from 3 symbols up to 20 symbols"
+                                          MinLength="3"
+                                          MaxLength="20"></controls:IntegerInputControl>
+            <controls:EmailInputControl Header="Email"
+                                        Placeholder="Enter an email"
+                                        ValidationText="Email must be in format aaa@aaa.aaa"></controls:EmailInputControl>
             <Button Style="{StaticResource CommonButton}"
-                    Content="Save"
-                    Width="170"></Button>
+                    Content="Save"></Button>
             <Button Style="{StaticResource CommonButton}"
-                    Content="Go back"
-                    Width="170"></Button>
+                    Content="Go back"></Button>
         </StackPanel>
     </ScrollViewer>
 </UserControl>

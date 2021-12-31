@@ -93,9 +93,12 @@
     <Compile Include="Controls\InputControl.xaml.cs">
       <DependentUpon>InputControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\IntegerInputControl.cs" />
     <Compile Include="Controls\PopupControl.xaml.cs">
       <DependentUpon>PopupControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\EmailInputControl.cs" />
+    <Compile Include="Controls\TextInputControl.cs" />
     <Compile Include="Models\Entities\AgencyModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
