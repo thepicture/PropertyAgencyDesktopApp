@@ -131,6 +131,8 @@
     </Compile>
     <Compile Include="Services\DependencyService.cs" />
     <Compile Include="Services\INavigationService.cs" />
+    <Compile Include="Services\IQuestionService.cs" />
+    <Compile Include="Services\MessageBoxQuestionService.cs" />
     <Compile Include="Services\ViewModelNavigationService.cs" />
     <Compile Include="ViewModels\AddEditClientViewModel.cs" />
     <Compile Include="ViewModels\ClientViewModel.cs" />

@@ -71,7 +71,10 @@
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Button Content="Delete"
-                                        Style="{StaticResource CommonButton}"></Button>
+                                        Style="{StaticResource CommonButton}"
+                                        CommandParameter="{Binding .}"
+                                        Command="{Binding RelativeSource={RelativeSource AncestorType=UserControl},
+                                                          Path=DataContext.DeleteClientCommand}"></Button>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>

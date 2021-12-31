@@ -13,6 +13,7 @@ namespace PropertyAgencyDesktopApp
         {
             base.OnStartup(e);
             DependencyService.Register<ViewModelNavigationService>();
+            DependencyService.Register<MessageBoxQuestionService>();
             DependencyService.Get<INavigationService<ViewModelBase>>()
                  .Navigate<ClientViewModel>();
         }
