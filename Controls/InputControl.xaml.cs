@@ -16,6 +16,19 @@ namespace PropertyAgencyDesktopApp.Controls
             DataContext = this;
         }
 
+        public bool CanBeNull
+        {
+            get => (bool)GetValue(CanBeNullProperty);
+            set => SetValue(CanBeNullProperty, value);
+        }
+
+        public static readonly DependencyProperty CanBeNullProperty =
+            DependencyProperty.Register("CanBeNull",
+                                        typeof(bool),
+                                        typeof(TextInputControl),
+                                        new PropertyMetadata(
+                                            false));
+
         public bool IsValidated
         {
             get { return (bool)GetValue(IsValidatedProperty); }

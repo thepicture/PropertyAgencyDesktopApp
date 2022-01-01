@@ -13,16 +13,17 @@
     <ScrollViewer VerticalScrollBarVisibility="Auto"
                   HorizontalScrollBarVisibility="Disabled">
         <StackPanel>
-            <TextBlock Text="{Binding Path=CurrentClient.LastName}"></TextBlock>
             <controls:TextInputControl Header="Last name"
                                        x:Name="LastNameText"
                                        CanBeNull="True"
+                                       IsValidated="True"
                                        Text="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.CurrentViewModel.CurrentClient.LastName, UpdateSourceTrigger=PropertyChanged}"
                                        MinLength="2"
                                        MaxLength="50"
                                        Placeholder="Enter a last name"
                                        ValidationText="Enter a last name from 2 symbols up to 50 symbols"></controls:TextInputControl>
             <controls:TextInputControl Header="First name"
+                                       IsValidated="True"
                                        x:Name="FirstNameText"
                                        CanBeNull="True"
                                        Text="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.CurrentViewModel.CurrentClient.FirstName, UpdateSourceTrigger=PropertyChanged}"
@@ -33,6 +34,7 @@
             <controls:TextInputControl Header="Middle name"
                                        x:Name="MiddleNameText"
                                        CanBeNull="True"
+                                       IsValidated="True"
                                        Text="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.CurrentViewModel.CurrentClient.MiddleName, UpdateSourceTrigger=PropertyChanged}"
                                        MinLength="2"
                                        MaxLength="50"
@@ -40,6 +42,7 @@
                                        ValidationText="Enter a middle name from 2 symbols up to 50 symbols"></controls:TextInputControl>
             <controls:IntegerInputControl Header="Phone"
                                           x:Name="PhoneNumberText"
+                                          CanBeNull="True"
                                           Text="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.CurrentViewModel.CurrentClient.Phone, UpdateSourceTrigger=PropertyChanged}"
                                           Placeholder="Enter a phone number"
                                           ValidationText="Enter a phone number from 3 symbols up to 20 symbols"
@@ -47,6 +50,7 @@
                                           MaxLength="20"></controls:IntegerInputControl>
             <controls:EmailInputControl Header="Email"
                                         x:Name="EmailText"
+                                        CanBeNull="True"
                                         Text="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.CurrentViewModel.CurrentClient.Email, UpdateSourceTrigger=PropertyChanged}"
                                         Placeholder="Enter an email"
                                         ValidationText="Email must be in format xxx@xxx.xx, where x is any word character"></controls:EmailInputControl>
@@ -58,6 +62,18 @@
                         <Setter Property="IsEnabled" Value="False" />
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding ElementName=PhoneNumberText, Path=IsValidated}"
+                                         Value="True">
+                                <Setter Property="IsEnabled" Value="True" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ElementName=LastName, Path=IsValidated}"
+                                         Value="True">
+                                <Setter Property="IsEnabled" Value="True" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ElementName=FirstName, Path=IsValidated}"
+                                         Value="True">
+                                <Setter Property="IsEnabled" Value="True" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ElementName=MiddleName, Path=IsValidated}"
                                          Value="True">
                                 <Setter Property="IsEnabled" Value="True" />
                             </DataTrigger>

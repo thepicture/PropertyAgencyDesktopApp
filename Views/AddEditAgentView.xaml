@@ -13,7 +13,6 @@
     <ScrollViewer VerticalScrollBarVisibility="Auto"
                   HorizontalScrollBarVisibility="Disabled">
         <StackPanel>
-            <TextBlock Text="{Binding Path=CurrentAgent.LastName}"></TextBlock>
             <controls:TextInputControl Header="Last name"
                                        x:Name="LastNameText"
                                        Text="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.CurrentViewModel.CurrentAgent.LastName, UpdateSourceTrigger=PropertyChanged}"
@@ -37,9 +36,11 @@
                                        ValidationText="Enter a middle name from 2 symbols up to 50 symbols"></controls:TextInputControl>
             <controls:DistinctIntegerInputControl Header="Dead share"
                                           x:Name="DealShare"
+                                          IsValidated="True"
+                                          CanBeNull="True"
                                           Text="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.CurrentViewModel.CurrentAgent.DealShare, UpdateSourceTrigger=PropertyChanged}"
                                           Placeholder="Enter a deal share"
-                                          ValidationText="A deal share must be a decimal value from 0 to 100 inclusive"
+                                          ValidationText="A deal share must be a decimal value from 0 to 100 inclusive or be an empty value"
                                           MinInteger="0"
                                           MaxInteger="100"></controls:DistinctIntegerInputControl>
             <Button Content="Save"
@@ -47,23 +48,23 @@
                 <Button.Style>
                     <Style TargetType="Button"
                            BasedOn="{StaticResource CommonButton}">
-                        <Setter Property="IsEnabled" Value="False" />
+                        <Setter Property="IsEnabled" Value="True" />
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding ElementName=LastName, Path=IsValidated}"
-                                         Value="True">
-                                <Setter Property="IsEnabled" Value="True" />
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding ElementName=MiddleName, Path=IsValidated}"
-                                         Value="True">
-                                <Setter Property="IsEnabled" Value="True" />
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding ElementName=FirstName, Path=IsValidated}"
-                                         Value="True">
-                                <Setter Property="IsEnabled" Value="True" />
-                            </DataTrigger>
                             <DataTrigger Binding="{Binding ElementName=DealShare, Path=IsValidated}"
-                                         Value="True">
-                                <Setter Property="IsEnabled" Value="True" />
+                                         Value="False">
+                                <Setter Property="IsEnabled" Value="False" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ElementName=LastNameText, Path=IsValidated}"
+                                         Value="False">
+                                <Setter Property="IsEnabled" Value="False" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ElementName=MiddleNameText, Path=IsValidated}"
+                                         Value="False">
+                                <Setter Property="IsEnabled" Value="False" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ElementName=FirstNameText, Path=IsValidated}"
+                                         Value="False">
+                                <Setter Property="IsEnabled" Value="False" />
                             </DataTrigger>
                         </Style.Triggers>
                     </Style>

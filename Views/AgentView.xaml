@@ -44,7 +44,7 @@
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <TextBlock Style="{StaticResource CommonBlock}"
-                                           Text="{Binding DealShare, StringFormat={}{0}%}"/>
+                                           Text="{Binding DealShare, TargetNullValue=0%, StringFormat={}{0}%}"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>

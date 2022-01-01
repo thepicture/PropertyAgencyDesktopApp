@@ -8,7 +8,8 @@ namespace PropertyAgencyDesktopApp.Controls
     {
         protected override void OnKeyUp(KeyEventArgs e)
         {
-            if (Regex.IsMatch(Text, @"^\w+@\w+\.\w+$"))
+            if (Regex.IsMatch(Text, @"^\w+@\w+\.\w+$")
+                || (CanBeNull && string.IsNullOrEmpty(Text)))
             {
                 IsValidated = true;
                 Color = Brushes.Green;

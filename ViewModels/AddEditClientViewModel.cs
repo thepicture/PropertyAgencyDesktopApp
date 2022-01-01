@@ -60,6 +60,7 @@ namespace PropertyAgencyDesktopApp.ViewModels
             {
                 MessageType = "Warning";
                 ValidationMessage = "Client must have email or phone or both";
+                return;
             }
             if (CurrentClient.Id == 0)
             {

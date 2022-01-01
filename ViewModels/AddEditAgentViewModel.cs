@@ -1,5 +1,7 @@
 ﻿using PropertyAgencyDesktopApp.Commands;
 using PropertyAgencyDesktopApp.Models.Entities;
+using System;
+using System.Data.Common;
 using System.Windows.Input;
 
 namespace PropertyAgencyDesktopApp.ViewModels
@@ -37,8 +39,37 @@ namespace PropertyAgencyDesktopApp.ViewModels
             }
         }
 
-        private void SaveAgent(object commandParameter)
+        private async void SaveAgent(object commandParameter)
         {
+            IsMessageClosed = false;
+            if (CurrentAgent.Id == 0)
+            {
+                _ = _context.Agent.Add(CurrentAgent);
+            }
+            try
+            {
+                _ = await _context.SaveChangesAsync();
+                MessageType = "Alert";
+                ValidationMessage = "Agent was successfully saved!";
+            }
+            catch (DbException ex)
+            {
+                System.Diagnostics.Debug.Write(ex.StackTrace);
+                MessageType = "Danger";
+                ValidationMessage = "Can't save the agent " +
+                    "into the database. " +
+                    "Try to go back and to the agent again," +
+                    "or reload the app if it doesn't help";
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.Write(ex.StackTrace);
+                MessageType = "Danger";
+                ValidationMessage = "Can't save the agent " +
+                    "into the database. " +
+                    "Fatal error encountered. " +
+                    "Reload the app and try again";
+            }
         }
     }
 }

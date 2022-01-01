@@ -6,8 +6,7 @@ namespace PropertyAgencyDesktopApp.Controls
 {
     public class DistinctIntegerInputControl : InputControl
     {
-
-
+       
         public decimal MinInteger
         {
             get { return (decimal)GetValue(MinIntegerProperty); }
@@ -40,7 +39,7 @@ namespace PropertyAgencyDesktopApp.Controls
         {
             if (decimal.TryParse(Text, out decimal result)
                 && result >= MinInteger
-                && result <= MaxInteger)
+                && result <= MaxInteger || (string.IsNullOrEmpty(Text) && CanBeNull))
             {
                 IsValidated = true;
                 Color = Brushes.Green;
