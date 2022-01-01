@@ -5,6 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Data.Common;
 using System.Data.Entity;
+using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace PropertyAgencyDesktopApp.ViewModels
@@ -13,6 +15,7 @@ namespace PropertyAgencyDesktopApp.ViewModels
     {
         private readonly PropertyAgencyBaseEntities _context;
         private IEnumerable<Client> _clients;
+        private string _searchText = string.Empty;
         public ClientViewModel()
         {
             Title = "Clients";
@@ -23,6 +26,28 @@ namespace PropertyAgencyDesktopApp.ViewModels
         private async void LoadClients()
         {
             Clients = await _context.Client.ToListAsync();
+            if (!string.IsNullOrEmpty(SearchText))
+            {
+                var distanceCalculator = DependencyService
+                                         .Get<IWordIndefiniteSearcher>();
+                await Task.Run(() =>
+                {
+                    return Clients = from Client c in Clients
+                                     where c.FirstName != null
+                                     && distanceCalculator
+                                        .Calculate(SearchText,
+                                                   c.FirstName) < 4
+                                     || c.LastName != null
+                                     && distanceCalculator
+                                        .Calculate(SearchText,
+                                                   c.LastName) < 4
+                                     || c.MiddleName != null
+                                     && distanceCalculator
+                                        .Calculate(SearchText,
+                                                   c.MiddleName) < 4
+                                     select c;
+                });
+            }
         }
 
         public IEnumerable<Client> Clients
@@ -91,6 +116,16 @@ namespace PropertyAgencyDesktopApp.ViewModels
             }
         }
 
+        public string SearchText
+        {
+            get => _searchText;
+            set
+            {
+                SetProperty(ref _searchText, value);
+                LoadClients();
+            }
+        }
+
         private async void DeleteClient(object commandParameter)
         {
             Client client = commandParameter as Client;
@@ -102,7 +137,7 @@ namespace PropertyAgencyDesktopApp.ViewModels
                     "offers or demands related to the client";
                 return;
             }
-            IQuestionService questionService = 
+            IQuestionService questionService =
                 DependencyService.Get<IQuestionService>();
             if (questionService.Ask("Do you really want " +
                 "to delete client " +

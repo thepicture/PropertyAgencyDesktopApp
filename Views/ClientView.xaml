@@ -23,6 +23,13 @@
             <Button Content="Add a new client"
                     Style="{StaticResource CommonButton}"
                     Command="{Binding AddNewClientCommand}"></Button>
+            <controls:TextInputControl Header="Search by credentials"
+                                       Width="500"
+                                       MinLength="0"
+                                       MaxLength="10"
+                                       ValidationText="Enter only word characters up to 10 symbols"
+                                       Text="{Binding RelativeSource={RelativeSource AncestorType=Window},
+                                                      Path=DataContext.CurrentViewModel.SearchText}"></controls:TextInputControl>
         </StackPanel>
         <DataGrid ItemsSource="{Binding Clients}"
                   IsReadOnly="True"
