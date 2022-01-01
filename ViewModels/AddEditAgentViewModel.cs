@@ -2,6 +2,7 @@
 using PropertyAgencyDesktopApp.Models.Entities;
 using System;
 using System.Data.Common;
+using System.Data.Entity;
 using System.Windows.Input;
 
 namespace PropertyAgencyDesktopApp.ViewModels
@@ -11,6 +12,7 @@ namespace PropertyAgencyDesktopApp.ViewModels
         private Agent _currentAgent;
         private readonly PropertyAgencyBaseEntities _context =
             new PropertyAgencyBaseEntities();
+        private bool _isInEditMode;
 
 
         public Agent CurrentAgent
@@ -22,6 +24,18 @@ namespace PropertyAgencyDesktopApp.ViewModels
         {
             Title = "Add a new agent";
             CurrentAgent = new Agent();
+        }
+
+        public AddEditAgentViewModel(Agent agent)
+        {
+            Title = "Edit an agent";
+            IsInEditMode = true;
+            LoadAgent(agent);
+        }
+
+        private async void LoadAgent(Agent agent)
+        {
+            CurrentAgent = await _context.Agent.FirstAsync(a => a.Id == agent.Id);
         }
 
         private RelayCommand saveAgentCommand;
@@ -37,6 +51,12 @@ namespace PropertyAgencyDesktopApp.ViewModels
 
                 return saveAgentCommand;
             }
+        }
+
+        public bool IsInEditMode
+        {
+            get => _isInEditMode;
+            set => SetProperty(ref _isInEditMode, value);
         }
 
         private async void SaveAgent(object commandParameter)

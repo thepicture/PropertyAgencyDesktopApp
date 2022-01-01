@@ -1,7 +1,9 @@
 ﻿using PropertyAgencyDesktopApp.Commands;
 using PropertyAgencyDesktopApp.Models.Entities;
 using PropertyAgencyDesktopApp.Services;
+using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Data.Entity;
 using System.Windows.Input;
 
@@ -48,6 +50,92 @@ namespace PropertyAgencyDesktopApp.ViewModels
         {
             get => _agents;
             set => SetProperty(ref _agents, value);
+        }
+
+        private RelayCommand editAgentCommand;
+
+        public ICommand EditAgentCommand
+        {
+            get
+            {
+                if (editAgentCommand == null)
+                {
+                    editAgentCommand = new RelayCommand(EditAgent);
+                }
+
+                return editAgentCommand;
+            }
+        }
+
+        private void EditAgent(object commandParameter)
+        {
+            Agent agent = commandParameter as Agent;
+            DependencyService.Get<INavigationService<ViewModelBase>>()
+                          .NavigateWithParameter
+                          <AddEditAgentViewModel>(agent);
+        }
+
+        private RelayCommand deleteAgentCommand;
+
+        public ICommand DeleteAgentCommand
+        {
+            get
+            {
+                if (deleteAgentCommand == null)
+                {
+                    deleteAgentCommand = new RelayCommand(DeleteAgent);
+                }
+
+                return deleteAgentCommand;
+            }
+        }
+
+        private async void DeleteAgent(object commandParameter)
+        {
+            Agent agent = commandParameter as Agent;
+            if (agent.Offer.Count > 0 || agent.Demand.Count > 0)
+            {
+                IsMessageClosed = false;
+                MessageType = "Alert";
+                ValidationMessage = "Can't delete the agent with " +
+                    "offers or demands related to the agent";
+                return;
+            }
+            IQuestionService questionService =
+                DependencyService.Get<IQuestionService>();
+            if (questionService.Ask("Do you really want " +
+                "to delete client " +
+                $"{agent.LastName} {agent.FirstName} {agent.MiddleName}?"))
+            {
+                IsMessageClosed = false;
+                Agent agentFromDatabase = _context.Agent.Find(agent.Id);
+                _ = _context.Agent.Remove(agentFromDatabase);
+                try
+                {
+                    _ = await _context.SaveChangesAsync();
+                    MessageType = "Alert";
+                    ValidationMessage = "Agent was successfully deleted!";
+                    LoadAgents();
+                }
+                catch (DbException ex)
+                {
+                    System.Diagnostics.Debug.Write(ex.StackTrace);
+                    MessageType = "Danger";
+                    ValidationMessage = "Can't delete the agent " +
+                        "from the database. " +
+                        "Try to go back and to the agent again," +
+                        "or reload the app if it doesn't help";
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.Write(ex.StackTrace);
+                    MessageType = "Danger";
+                    ValidationMessage = "Can't delete the agent " +
+                        "from the database. " +
+                        "Fatal error encountered. " +
+                        "Reload the app and try again";
+                }
+            }
         }
     }
 }

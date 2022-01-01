@@ -65,15 +65,15 @@
                                          Value="True">
                                 <Setter Property="IsEnabled" Value="True" />
                             </DataTrigger>
-                            <DataTrigger Binding="{Binding ElementName=LastName, Path=IsValidated}"
+                            <DataTrigger Binding="{Binding ElementName=LastNameText, Path=IsValidated}"
                                          Value="True">
                                 <Setter Property="IsEnabled" Value="True" />
                             </DataTrigger>
-                            <DataTrigger Binding="{Binding ElementName=FirstName, Path=IsValidated}"
+                            <DataTrigger Binding="{Binding ElementName=FirstNameText, Path=IsValidated}"
                                          Value="True">
                                 <Setter Property="IsEnabled" Value="True" />
                             </DataTrigger>
-                            <DataTrigger Binding="{Binding ElementName=MiddleName, Path=IsValidated}"
+                            <DataTrigger Binding="{Binding ElementName=MiddleNameText, Path=IsValidated}"
                                          Value="True">
                                 <Setter Property="IsEnabled" Value="True" />
                             </DataTrigger>

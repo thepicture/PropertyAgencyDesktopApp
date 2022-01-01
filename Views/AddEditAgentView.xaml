@@ -66,6 +66,10 @@
                                          Value="False">
                                 <Setter Property="IsEnabled" Value="False" />
                             </DataTrigger>
+                            <DataTrigger Binding="{Binding IsInEditMode}"
+                                         Value="True">
+                                <Setter Property="IsEnabled" Value="True" />
+                            </DataTrigger>
                         </Style.Triggers>
                     </Style>
                 </Button.Style>
