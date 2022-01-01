@@ -72,6 +72,9 @@
                     <DataTemplate DataType="{x:Type viewmodels:AgentViewModel}">
                         <views:AgentView></views:AgentView>
                     </DataTemplate>
+                    <DataTemplate DataType="{x:Type viewmodels:AddEditAgentViewModel}">
+                        <views:AddEditAgentView></views:AddEditAgentView>
+                    </DataTemplate>
                 </ContentControl.Resources>
             </ContentControl>
         </Grid>

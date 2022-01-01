@@ -30,7 +30,8 @@ namespace PropertyAgencyDesktopApp.Controls
 
         protected override void OnKeyUp(KeyEventArgs e)
         {
-            if (CanBeNull || (Regex.IsMatch(Text, @"^[a-zA-Zа-яА-Я]+$")
+            if (CanBeNull || (Text != null
+                && Regex.IsMatch(Text, @"^[a-zA-Zа-яА-Я]+$")
                 && Text.Length >= MinLength
                 && Text.Length <= MaxLength))
             {

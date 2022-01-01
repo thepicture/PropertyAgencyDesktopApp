@@ -73,6 +73,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\AddEditAgentView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\AddEditClientView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -94,6 +98,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Commands\RelayCommand.cs" />
+    <Compile Include="Controls\DistinctIntegerInputControl.cs" />
     <Compile Include="Controls\InputControl.xaml.cs">
       <DependentUpon>InputControl.xaml</DependentUpon>
     </Compile>
@@ -138,11 +143,15 @@
     <Compile Include="Services\IQuestionService.cs" />
     <Compile Include="Services\MessageBoxQuestionService.cs" />
     <Compile Include="Services\ViewModelNavigationService.cs" />
+    <Compile Include="ViewModels\AddEditAgentViewModel.cs" />
     <Compile Include="ViewModels\AddEditClientViewModel.cs" />
     <Compile Include="ViewModels\AgentViewModel.cs" />
     <Compile Include="ViewModels\ClientViewModel.cs" />
     <Compile Include="ViewModels\NavigationViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
+    <Compile Include="Views\AddEditAgentView.xaml.cs">
+      <DependentUpon>AddEditAgentView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\AddEditClientView.xaml.cs">
       <DependentUpon>AddEditClientView.xaml</DependentUpon>
     </Compile>
