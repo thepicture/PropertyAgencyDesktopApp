@@ -17,16 +17,28 @@ namespace PropertyAgencyDesktopApp.Models.Entities
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Property()
         {
+            this.Apartment = new HashSet<Apartment>();
             this.Demand = new HashSet<Demand>();
+            this.House = new HashSet<House>();
+            this.Land = new HashSet<Land>();
             this.Offer = new HashSet<Offer>();
         }
     
         public int Id { get; set; }
-        public string PropertyName { get; set; }
+        public Nullable<int> AddressId { get; set; }
+        public decimal Latitude { get; set; }
+        public decimal Longitude { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Apartment> Apartment { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Demand> Demand { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<House> House { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Land> Land { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Offer> Offer { get; set; }
+        public virtual PropertyAddress PropertyAddress { get; set; }
     }
 }

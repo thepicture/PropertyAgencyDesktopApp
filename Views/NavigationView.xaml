@@ -58,6 +58,9 @@
                 <Button Style="{StaticResource CommonButton}"
                         Content="Agents"
                         Command="{Binding NavigateToAgentsCommand}"></Button>
+                <Button Style="{StaticResource CommonButton}"
+                        Content="Properties"
+                        Command="{Binding NavigateToPropertiesCommand}"></Button>
             </StackPanel>
             <ContentControl Content="{Binding CurrentViewModel}"
                             Grid.Row="1"
@@ -74,6 +77,9 @@
                     </DataTemplate>
                     <DataTemplate DataType="{x:Type viewmodels:AddEditAgentViewModel}">
                         <views:AddEditAgentView></views:AddEditAgentView>
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type viewmodels:PropertyViewModel}">
+                        <views:PropertyView></views:PropertyView>
                     </DataTemplate>
                 </ContentControl.Resources>
             </ContentControl>

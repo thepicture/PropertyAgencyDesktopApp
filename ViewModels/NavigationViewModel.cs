@@ -67,5 +67,26 @@ namespace PropertyAgencyDesktopApp.ViewModels
             DependencyService.Get<INavigationService<ViewModelBase>>()
                             .Navigate<AgentViewModel>();
         }
+
+        private RelayCommand navigateToPropertiesCommand;
+
+        public ICommand NavigateToPropertiesCommand
+        {
+            get
+            {
+                if (navigateToPropertiesCommand == null)
+                {
+                    navigateToPropertiesCommand = new RelayCommand(NavigateToProperties);
+                }
+
+                return navigateToPropertiesCommand;
+            }
+        }
+
+        private void NavigateToProperties(object commandParameter)
+        {
+            DependencyService.Get<INavigationService<ViewModelBase>>()
+                          .Navigate<PropertyViewModel>();
+        }
     }
 }

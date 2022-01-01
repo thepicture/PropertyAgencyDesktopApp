@@ -65,6 +65,61 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Models\Entities\Agent.cs">
+      <DependentUpon>PropertyModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entities\Apartment.cs">
+      <DependentUpon>PropertyModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entities\City.cs">
+      <DependentUpon>PropertyModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entities\Client.cs">
+      <DependentUpon>PropertyModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entities\Demand.cs">
+      <DependentUpon>PropertyModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entities\District.cs">
+      <DependentUpon>PropertyModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entities\DistrictPolygon.cs">
+      <DependentUpon>PropertyModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entities\House.cs">
+      <DependentUpon>PropertyModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entities\Land.cs">
+      <DependentUpon>PropertyModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entities\Offer.cs">
+      <DependentUpon>PropertyModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entities\Property.cs">
+      <DependentUpon>PropertyModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entities\PropertyAddress.cs">
+      <DependentUpon>PropertyModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entities\PropertyModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PropertyModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entities\PropertyModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PropertyModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entities\PropertyModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PropertyModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModels\PropertyViewModel.cs" />
+    <Compile Include="Views\PropertyView.xaml.cs">
+      <DependentUpon>PropertyView.xaml</DependentUpon>
+    </Compile>
     <Page Include="Controls\InputControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -108,36 +163,6 @@
     </Compile>
     <Compile Include="Controls\EmailInputControl.cs" />
     <Compile Include="Controls\TextInputControl.cs" />
-    <Compile Include="Models\Entities\AgencyModel.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>AgencyModel.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Entities\AgencyModel.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>AgencyModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Entities\AgencyModel.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>AgencyModel.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Entities\Agent.cs">
-      <DependentUpon>AgencyModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Entities\Client.cs">
-      <DependentUpon>AgencyModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Entities\Demand.cs">
-      <DependentUpon>AgencyModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Entities\Offer.cs">
-      <DependentUpon>AgencyModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Entities\Property.cs">
-      <DependentUpon>AgencyModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Services\DependencyService.cs" />
     <Compile Include="Services\INavigationService.cs" />
     <Compile Include="Services\IQuestionService.cs" />
@@ -167,6 +192,10 @@
       <DependentUpon>NavigationView.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Views\PropertyView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -187,12 +216,12 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <Resource Include="Fonts\Roboto-Black.ttf" />
-    <EntityDeploy Include="Models\Entities\AgencyModel.edmx">
+    <EntityDeploy Include="Models\Entities\PropertyModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>AgencyModel.Designer.cs</LastGenOutput>
+      <LastGenOutput>PropertyModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="Models\Entities\AgencyModel.edmx.diagram">
-      <DependentUpon>AgencyModel.edmx</DependentUpon>
+    <None Include="Models\Entities\PropertyModel.edmx.diagram">
+      <DependentUpon>PropertyModel.edmx</DependentUpon>
     </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -203,7 +232,18 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Models\Entities\PropertyModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>PropertyModel.edmx</DependentUpon>
+      <LastGenOutput>PropertyModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\Entities\PropertyModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>PropertyModel.edmx</DependentUpon>
+      <LastGenOutput>PropertyModel.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\alert.png" />
   </ItemGroup>
@@ -218,18 +258,6 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\warning.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Models\Entities\AgencyModel.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>AgencyModel.Context.cs</LastGenOutput>
-      <DependentUpon>AgencyModel.edmx</DependentUpon>
-    </Content>
-    <Content Include="Models\Entities\AgencyModel.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>AgencyModel.edmx</DependentUpon>
-      <LastGenOutput>AgencyModel.cs</LastGenOutput>
-    </Content>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

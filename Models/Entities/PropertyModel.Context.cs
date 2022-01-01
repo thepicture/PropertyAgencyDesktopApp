@@ -26,9 +26,16 @@ namespace PropertyAgencyDesktopApp.Models.Entities
         }
     
         public virtual DbSet<Agent> Agent { get; set; }
+        public virtual DbSet<Apartment> Apartment { get; set; }
+        public virtual DbSet<City> City { get; set; }
         public virtual DbSet<Client> Client { get; set; }
         public virtual DbSet<Demand> Demand { get; set; }
+        public virtual DbSet<District> District { get; set; }
+        public virtual DbSet<DistrictPolygon> DistrictPolygon { get; set; }
+        public virtual DbSet<House> House { get; set; }
+        public virtual DbSet<Land> Land { get; set; }
         public virtual DbSet<Offer> Offer { get; set; }
         public virtual DbSet<Property> Property { get; set; }
+        public virtual DbSet<PropertyAddress> PropertyAddress { get; set; }
     }
 }
