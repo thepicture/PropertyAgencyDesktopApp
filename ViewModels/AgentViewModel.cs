@@ -5,6 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Data.Common;
 using System.Data.Entity;
+using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace PropertyAgencyDesktopApp.ViewModels
@@ -12,6 +14,7 @@ namespace PropertyAgencyDesktopApp.ViewModels
     public class AgentViewModel : ViewModelBase
     {
         private PropertyAgencyBaseEntities _context = new PropertyAgencyBaseEntities();
+        private string _searchText;
         public AgentViewModel()
         {
             Title = "Agents";
@@ -21,6 +24,25 @@ namespace PropertyAgencyDesktopApp.ViewModels
         private async void LoadAgents()
         {
             Agents = await _context.Agent.ToListAsync();
+            if (!string.IsNullOrEmpty(SearchText))
+            {
+                var distanceCalculator = DependencyService
+                                         .Get<IWordIndefiniteSearcher>();
+                await Task.Run(() =>
+                {
+                    return Agents = from Agent a in Agents
+                                    where distanceCalculator
+                                          .Calculate(SearchText,
+                                                  a.FirstName) < 4
+                                    || distanceCalculator
+                                       .Calculate(SearchText,
+                                                  a.LastName) < 4
+                                    || distanceCalculator
+                                       .Calculate(SearchText,
+                                                  a.MiddleName) < 4
+                                    select a;
+                });
+            }
         }
 
         private RelayCommand addNewAgentCommand;
@@ -87,6 +109,16 @@ namespace PropertyAgencyDesktopApp.ViewModels
                 }
 
                 return deleteAgentCommand;
+            }
+        }
+
+        public string SearchText
+        {
+            get => _searchText;
+            set
+            {
+                SetProperty(ref _searchText, value);
+                LoadAgents();
             }
         }
 
