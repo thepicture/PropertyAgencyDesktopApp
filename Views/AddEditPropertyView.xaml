@@ -31,7 +31,7 @@
                                        IsValidated="True"
                                        Placeholder="Enter a street name"
                                        ValidationText="Enter a street name from 2 symbols up to 100 symbols"></controls:TextInputControl>
-            <controls:TextInputControl Header="House number"
+            <controls:InputControl Header="House number"
                                        x:Name="HouseNumberText"
                                        Text="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.CurrentViewModel.CurrentAddress.AddressHouse, UpdateSourceTrigger=PropertyChanged}"
                                        MinLength="2"
@@ -39,8 +39,8 @@
                                        CanBeNull="True"
                                        IsValidated="True"
                                        Placeholder="Enter a house number"
-                                       ValidationText="Enter a house number from 2 symbols up to 50 symbols"></controls:TextInputControl>
-            <controls:TextInputControl Header="Apartment's number"
+                                       ValidationText="Enter a house number from 2 symbols up to 50 symbols"></controls:InputControl>
+            <controls:InputControl Header="Apartment's number"
                                        x:Name="ApartmentNumberText"
                                        Text="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.CurrentViewModel.CurrentAddress.AddressNumber, UpdateSourceTrigger=PropertyChanged}"
                                        MinLength="2"
@@ -48,7 +48,7 @@
                                        CanBeNull="True"
                                        IsValidated="True"
                                        Placeholder="Enter an apartment number"
-                                       ValidationText="Enter an apartment number from 2 symbols up to 50 symbols"></controls:TextInputControl>
+                                       ValidationText="Enter an apartment number from 2 symbols up to 50 symbols"></controls:InputControl>
             <controls:DecimalInputControl Header="Latitude"
                                        x:Name="LatitudeText"
                                        Text="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.CurrentViewModel.CurrentProperty.Latitude, UpdateSourceTrigger=PropertyChanged}"
@@ -84,16 +84,16 @@
                 </StackPanel.Style>
                 <controls:IntegerInputControl Header="Floor number"
                                        x:Name="FloorNumberText"
-                                       Text="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.CurrentViewModel.CurrentAddress.AddressNumber, UpdateSourceTrigger=PropertyChanged}"
+                                       Text="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.CurrentViewModel.Apartment.FloorNumber, UpdateSourceTrigger=PropertyChanged}"
                                        MinLength="1"
-                                       MaxLength="2"
+                                       MaxLength="3"
                                        CanBeNull="True"
                                        IsValidated="True"
                                        Placeholder="Enter a count of floors"
                                        ValidationText="Enter a count of floors from one symbol up to 2 symbols"></controls:IntegerInputControl>
                 <controls:IntegerInputControl Header="Rooms count"
                                        x:Name="ApartmentRoomsCountText"
-                                       Text="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.CurrentViewModel.CurrentAddress.AddressNumber, UpdateSourceTrigger=PropertyChanged}"
+                                       Text="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.CurrentViewModel.Apartment.RoomsCount, UpdateSourceTrigger=PropertyChanged}"
                                        MinLength="2"
                                        MaxLength="4"
                                        CanBeNull="True"
@@ -102,7 +102,7 @@
                                        ValidationText="Enter the rooms count from 2 symbols up to 4 symbols"></controls:IntegerInputControl>
                 <controls:DecimalInputControl Header="Total area"
                                        x:Name="ApartmentTotalAreaText"
-                                       Text="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.CurrentViewModel.CurrentAddress.AddressNumber, UpdateSourceTrigger=PropertyChanged}"
+                                       Text="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.CurrentViewModel.Apartment.TotalArea, UpdateSourceTrigger=PropertyChanged}"
                                        MinLength="2"
                                        MaxLength="20"
                                        CanBeNull="True"
@@ -124,7 +124,7 @@
                 </StackPanel.Style>
                 <controls:IntegerInputControl Header="Total floors"
                                        x:Name="TotalFloorsText"
-                                       Text="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.CurrentViewModel.CurrentAddress.AddressNumber, UpdateSourceTrigger=PropertyChanged}"
+                                       Text="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.CurrentViewModel.House.TotalFloors, UpdateSourceTrigger=PropertyChanged}"
                                        MinLength="1"
                                        MaxLength="2"
                                        CanBeNull="True"
@@ -133,7 +133,7 @@
                                        ValidationText="Enter the total count of floors from one symbol up to 2 symbols"></controls:IntegerInputControl>
                 <controls:IntegerInputControl Header="Rooms count"
                                        x:Name="HouseRoomsCountText"
-                                       Text="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.CurrentViewModel.CurrentAddress.AddressNumber, UpdateSourceTrigger=PropertyChanged}"
+                                       Text="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.CurrentViewModel.House.RoomsCount, UpdateSourceTrigger=PropertyChanged}"
                                        MinLength="2"
                                        MaxLength="4"
                                        CanBeNull="True"
@@ -142,7 +142,7 @@
                                        ValidationText="Enter the rooms count from 2 symbols up to 4 symbols"></controls:IntegerInputControl>
                 <controls:DecimalInputControl Header="Total area"
                                        x:Name="HouseTotalAreaText"
-                                       Text="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.CurrentViewModel.CurrentAddress.AddressNumber, UpdateSourceTrigger=PropertyChanged}"
+                                       Text="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.CurrentViewModel.House.TotalArea, UpdateSourceTrigger=PropertyChanged}"
                                        MinLength="2"
                                        MaxLength="20"
                                        CanBeNull="True"
@@ -164,7 +164,7 @@
                 </StackPanel.Style>
                 <controls:DecimalInputControl Header="Total area"
                                        x:Name="LandTotalAreaText"
-                                       Text="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.CurrentViewModel.CurrentAddress.AddressNumber, UpdateSourceTrigger=PropertyChanged}"
+                                       Text="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.CurrentViewModel.Land.TotalArea, UpdateSourceTrigger=PropertyChanged}"
                                        MinLength="2"
                                        MaxLength="20"
                                        CanBeNull="True"
@@ -179,19 +179,55 @@
                            BasedOn="{StaticResource CommonButton}">
                         <Setter Property="IsEnabled" Value="True" />
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding ElementName=DealShare, Path=IsValidated}"
+                            <DataTrigger Binding="{Binding ElementName=CityText, Path=IsValidated}"
                                          Value="False">
                                 <Setter Property="IsEnabled" Value="False" />
                             </DataTrigger>
-                            <DataTrigger Binding="{Binding ElementName=LastNameText, Path=IsValidated}"
+                            <DataTrigger Binding="{Binding ElementName=StreetNameText, Path=IsValidated}"
                                          Value="False">
                                 <Setter Property="IsEnabled" Value="False" />
                             </DataTrigger>
-                            <DataTrigger Binding="{Binding ElementName=MiddleNameText, Path=IsValidated}"
+                            <DataTrigger Binding="{Binding ElementName=HouseNumberText, Path=IsValidated}"
                                          Value="False">
                                 <Setter Property="IsEnabled" Value="False" />
                             </DataTrigger>
-                            <DataTrigger Binding="{Binding ElementName=FirstNameText, Path=IsValidated}"
+                            <DataTrigger Binding="{Binding ElementName=ApartmentNumberText, Path=IsValidated}"
+                                         Value="False">
+                                <Setter Property="IsEnabled" Value="False" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ElementName=LatitudeText, Path=IsValidated}"
+                                         Value="False">
+                                <Setter Property="IsEnabled" Value="False" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ElementName=LongitudeText, Path=IsValidated}"
+                                         Value="False">
+                                    <Setter Property="IsEnabled" Value="False" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ElementName=FloorNumberText, Path=IsValidated}"
+                                         Value="False">
+                                <Setter Property="IsEnabled" Value="False" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ElementName=ApartmentRoomsCountText, Path=IsValidated}"
+                                         Value="False">
+                                <Setter Property="IsEnabled" Value="False" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ElementName=ApartmentTotalAreaText, Path=IsValidated}"
+                                         Value="False">
+                                <Setter Property="IsEnabled" Value="False" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ElementName=TotalFloorsText, Path=IsValidated}"
+                                         Value="False">
+                                <Setter Property="IsEnabled" Value="False" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ElementName=HouseRoomsCountText, Path=IsValidated}"
+                                         Value="False">
+                                <Setter Property="IsEnabled" Value="False" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ElementName=HouseTotalAreaText, Path=IsValidated}"
+                                         Value="False">
+                                <Setter Property="IsEnabled" Value="False" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ElementName=LandTotalAreaText, Path=IsValidated}"
                                          Value="False">
                                 <Setter Property="IsEnabled" Value="False" />
                             </DataTrigger>

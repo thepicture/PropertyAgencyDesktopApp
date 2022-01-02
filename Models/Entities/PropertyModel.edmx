@@ -19,7 +19,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="PropertyId" Type="int" Nullable="false" />
           <Property Name="FloorNumber" Type="tinyint" />
           <Property Name="RoomsCount" Type="int" />
@@ -29,7 +29,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="CityName" Type="nvarchar" MaxLength="100" Nullable="false" />
         </EntityType>
         <EntityType Name="Client">
@@ -73,7 +73,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="PropertyId" Type="int" Nullable="false" />
           <Property Name="TotalFloors" Type="int" />
           <Property Name="RoomsCount" Type="int" />
@@ -83,7 +83,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="PropertyId" Type="int" Nullable="false" />
           <Property Name="TotalArea" Type="int" />
         </EntityType>
@@ -101,7 +101,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="AddressId" Type="int" />
           <Property Name="Latitude" Type="decimal" Precision="20" Scale="13" Nullable="false" />
           <Property Name="Longitude" Type="decimal" Precision="20" Scale="13" Nullable="false" />
@@ -110,7 +110,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="AddressCityId" Type="int" />
           <Property Name="DistrictId" Type="int" />
           <Property Name="AddressHouse" Type="nvarchar" MaxLength="50" />
@@ -359,7 +359,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="PropertyId" Type="Int32" Nullable="false" />
           <Property Name="FloorNumber" Type="Byte" />
           <Property Name="RoomsCount" Type="Int32" />
@@ -370,7 +370,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="CityName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="PropertyAddress" Relationship="Self.FK_PropertyAddress_City" FromRole="City" ToRole="PropertyAddress" />
         </EntityType>
@@ -423,7 +423,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="PropertyId" Type="Int32" Nullable="false" />
           <Property Name="TotalFloors" Type="Int32" />
           <Property Name="RoomsCount" Type="Int32" />
@@ -434,7 +434,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="PropertyId" Type="Int32" Nullable="false" />
           <Property Name="TotalArea" Type="Int32" />
           <NavigationProperty Name="Property" Relationship="Self.FK_Land_Property" FromRole="Land" ToRole="Property" />
@@ -456,7 +456,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="AddressId" Type="Int32" />
           <Property Name="Latitude" Type="Decimal" Precision="20" Scale="13" Nullable="false" />
           <Property Name="Longitude" Type="Decimal" Precision="20" Scale="13" Nullable="false" />
@@ -471,7 +471,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="AddressCityId" Type="Int32" />
           <Property Name="DistrictId" Type="Int32" />
           <Property Name="AddressHouse" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />

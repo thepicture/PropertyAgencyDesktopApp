@@ -243,18 +243,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Models\Entities\PropertyModel.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>PropertyModel.edmx</DependentUpon>
-      <LastGenOutput>PropertyModel.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="Models\Entities\PropertyModel.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>PropertyModel.edmx</DependentUpon>
-      <LastGenOutput>PropertyModel.cs</LastGenOutput>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Resources\alert.png" />
   </ItemGroup>
   <ItemGroup>
@@ -271,6 +259,18 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Models\Entities\PropertyModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>PropertyModel.edmx</DependentUpon>
+      <LastGenOutput>PropertyModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\Entities\PropertyModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>PropertyModel.edmx</DependentUpon>
+      <LastGenOutput>PropertyModel.cs</LastGenOutput>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
