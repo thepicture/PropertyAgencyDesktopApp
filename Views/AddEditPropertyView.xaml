@@ -63,7 +63,115 @@
                                        MaxValue="180"
                                        Placeholder="Enter a longitude value"
                                        ValidationText="Enter a longitude decimal value from -180 up to 180"></controls:DecimalInputControl>
-
+            <TextBlock Foreground="Gray"
+                   Text="Type of the property"
+                   Margin="15 15 15 -5"
+                   Style="{StaticResource CommonBlock}"></TextBlock>
+            <ComboBox ItemsSource="{Binding PropertyTypes}"
+                      SelectedItem="{Binding CurrentPropertyType}"
+                      Style="{StaticResource CommonComboBox}"></ComboBox>
+            <StackPanel Name="ApartmentFields">
+                <StackPanel.Style>
+                    <Style TargetType="StackPanel">
+                        <Setter Property="Visibility" Value="Collapsed" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding CurrentPropertyType}"
+                                         Value="Apartment">
+                                <Setter Property="Visibility" Value="Visible" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </StackPanel.Style>
+                <controls:IntegerInputControl Header="Floor number"
+                                       x:Name="FloorNumberText"
+                                       Text="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.CurrentViewModel.CurrentAddress.AddressNumber, UpdateSourceTrigger=PropertyChanged}"
+                                       MinLength="1"
+                                       MaxLength="2"
+                                       CanBeNull="True"
+                                       IsValidated="True"
+                                       Placeholder="Enter a count of floors"
+                                       ValidationText="Enter a count of floors from one symbol up to 2 symbols"></controls:IntegerInputControl>
+                <controls:IntegerInputControl Header="Rooms count"
+                                       x:Name="ApartmentRoomsCountText"
+                                       Text="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.CurrentViewModel.CurrentAddress.AddressNumber, UpdateSourceTrigger=PropertyChanged}"
+                                       MinLength="2"
+                                       MaxLength="4"
+                                       CanBeNull="True"
+                                       IsValidated="True"
+                                       Placeholder="Enter the rooms count"
+                                       ValidationText="Enter the rooms count from 2 symbols up to 4 symbols"></controls:IntegerInputControl>
+                <controls:DecimalInputControl Header="Total area"
+                                       x:Name="ApartmentTotalAreaText"
+                                       Text="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.CurrentViewModel.CurrentAddress.AddressNumber, UpdateSourceTrigger=PropertyChanged}"
+                                       MinLength="2"
+                                       MaxLength="20"
+                                       CanBeNull="True"
+                                       IsValidated="True"
+                                       Placeholder="Enter the total area"
+                                       ValidationText="Enter the total area as a decimal from 2 symbols up to 20 symbols"></controls:DecimalInputControl>
+            </StackPanel>
+            <StackPanel Name="HouseFields">
+                <StackPanel.Style>
+                    <Style TargetType="StackPanel">
+                        <Setter Property="Visibility" Value="Collapsed" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding CurrentPropertyType}"
+                                         Value="House">
+                                <Setter Property="Visibility" Value="Visible" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </StackPanel.Style>
+                <controls:IntegerInputControl Header="Total floors"
+                                       x:Name="TotalFloorsText"
+                                       Text="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.CurrentViewModel.CurrentAddress.AddressNumber, UpdateSourceTrigger=PropertyChanged}"
+                                       MinLength="1"
+                                       MaxLength="2"
+                                       CanBeNull="True"
+                                       IsValidated="True"
+                                       Placeholder="Enter the total count of floors"
+                                       ValidationText="Enter the total count of floors from one symbol up to 2 symbols"></controls:IntegerInputControl>
+                <controls:IntegerInputControl Header="Rooms count"
+                                       x:Name="HouseRoomsCountText"
+                                       Text="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.CurrentViewModel.CurrentAddress.AddressNumber, UpdateSourceTrigger=PropertyChanged}"
+                                       MinLength="2"
+                                       MaxLength="4"
+                                       CanBeNull="True"
+                                       IsValidated="True"
+                                       Placeholder="Enter the rooms count"
+                                       ValidationText="Enter the rooms count from 2 symbols up to 4 symbols"></controls:IntegerInputControl>
+                <controls:DecimalInputControl Header="Total area"
+                                       x:Name="HouseTotalAreaText"
+                                       Text="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.CurrentViewModel.CurrentAddress.AddressNumber, UpdateSourceTrigger=PropertyChanged}"
+                                       MinLength="2"
+                                       MaxLength="20"
+                                       CanBeNull="True"
+                                       IsValidated="True"
+                                       Placeholder="Enter the total area"
+                                       ValidationText="Enter the total area as a decimal from 2 symbols up to 20 symbols"></controls:DecimalInputControl>
+            </StackPanel>
+            <StackPanel Name="LandFields">
+                <StackPanel.Style>
+                    <Style TargetType="StackPanel">
+                        <Setter Property="Visibility" Value="Collapsed" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding CurrentPropertyType}"
+                                         Value="Land">
+                                <Setter Property="Visibility" Value="Visible" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </StackPanel.Style>
+                <controls:DecimalInputControl Header="Total area"
+                                       x:Name="LandTotalAreaText"
+                                       Text="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.CurrentViewModel.CurrentAddress.AddressNumber, UpdateSourceTrigger=PropertyChanged}"
+                                       MinLength="2"
+                                       MaxLength="20"
+                                       CanBeNull="True"
+                                       IsValidated="True"
+                                       Placeholder="Enter the total area"
+                                       ValidationText="Enter the total area as a decimal from 2 symbols up to 20 symbols"></controls:DecimalInputControl>
+            </StackPanel>
             <Button Content="Save"
                     Command="{Binding SavePropertyCommand}">
                 <Button.Style>

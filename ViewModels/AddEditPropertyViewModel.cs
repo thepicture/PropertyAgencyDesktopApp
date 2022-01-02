@@ -1,5 +1,7 @@
 ﻿using PropertyAgencyDesktopApp.Commands;
 using PropertyAgencyDesktopApp.Models.Entities;
+using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Input;
 
 namespace PropertyAgencyDesktopApp.ViewModels
@@ -15,12 +17,18 @@ namespace PropertyAgencyDesktopApp.ViewModels
         {
             Title = "Add a new property";
             CurrentProperty = new Property();
+            CurrentPropertyType = PropertyTypes.First();
         }
 
         public Property CurrentProperty
         {
             get => _currentProperty;
             set => SetProperty(ref _currentProperty, value);
+        }
+        public string CurrentPropertyType
+        {
+            get => _currentPropertyType;
+            set => SetProperty(ref _currentPropertyType, value);
         }
 
         private RelayCommand savePropertyCommand;
@@ -56,6 +64,20 @@ namespace PropertyAgencyDesktopApp.ViewModels
 
         private void SaveProperty(object commandParameter)
         {
+        }
+
+        private IEnumerable<string> _propertyTypes = new List<string>
+        {
+            "Apartment",
+            "House",
+            "Land"
+        };
+        private string _currentPropertyType;
+
+        public IEnumerable<string> PropertyTypes
+        {
+            get => _propertyTypes;
+            set => SetProperty(ref _propertyTypes, value);
         }
     }
 }
