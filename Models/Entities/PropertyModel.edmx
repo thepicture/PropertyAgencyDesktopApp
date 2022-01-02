@@ -117,7 +117,9 @@
           <Property Name="AddressNumber" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <Association Name="FK_Apartment_Property">
-          <End Role="Property" Type="Self.Property" Multiplicity="1" />
+          <End Role="Property" Type="Self.Property" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Apartment" Type="Self.Apartment" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Property">
@@ -153,7 +155,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Demand_Property">
-          <End Role="Property" Type="Self.Property" Multiplicity="1" />
+          <End Role="Property" Type="Self.Property" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Demand" Type="Self.Demand" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Property">
@@ -177,7 +181,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_House_Property">
-          <End Role="Property" Type="Self.Property" Multiplicity="1" />
+          <End Role="Property" Type="Self.Property" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="House" Type="Self.House" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Property">
@@ -189,7 +195,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Land_Property">
-          <End Role="Property" Type="Self.Property" Multiplicity="1" />
+          <End Role="Property" Type="Self.Property" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Land" Type="Self.Land" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Property">
@@ -505,7 +513,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Apartment_Property">
-          <End Role="Property" Type="Self.Property" Multiplicity="1" />
+          <End Role="Property" Type="Self.Property" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Apartment" Type="Self.Apartment" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Property">
@@ -553,7 +563,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Demand_Property">
-          <End Role="Property" Type="Self.Property" Multiplicity="1" />
+          <End Role="Property" Type="Self.Property" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Demand" Type="Self.Demand" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Property">
@@ -589,7 +601,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_House_Property">
-          <End Role="Property" Type="Self.Property" Multiplicity="1" />
+          <End Role="Property" Type="Self.Property" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="House" Type="Self.House" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Property">
@@ -601,7 +615,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Land_Property">
-          <End Role="Property" Type="Self.Property" Multiplicity="1" />
+          <End Role="Property" Type="Self.Property" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Land" Type="Self.Land" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Property">

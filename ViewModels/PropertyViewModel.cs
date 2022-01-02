@@ -1,7 +1,9 @@
 ﻿using PropertyAgencyDesktopApp.Commands;
 using PropertyAgencyDesktopApp.Models.Entities;
 using PropertyAgencyDesktopApp.Services;
+using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Data.Entity;
 using System.Windows.Input;
 
@@ -86,8 +88,51 @@ namespace PropertyAgencyDesktopApp.ViewModels
             }
         }
 
-        private void DeleteProperty(object commandParameter)
+        private async void DeleteProperty(object commandParameter)
         {
+            Property property = commandParameter as Property;
+            if (property.Offer.Count > 0)
+            {
+                IsMessageClosed = false;
+                MessageType = "Warning";
+                ValidationMessage = "Can't delete a property with " +
+                    "offers related to the property";
+                return;
+            }
+            IQuestionService questionService =
+                DependencyService.Get<IQuestionService>();
+            if (questionService.Ask("Do you really want " +
+                "to delete property?"))
+            {
+                IsMessageClosed = false;
+                Property propertyFromDatabase = _context.Property.Find(property.Id);
+                _ = _context.Property.Remove(propertyFromDatabase);
+                try
+                {
+                    _ = await _context.SaveChangesAsync();
+                    MessageType = "Alert";
+                    ValidationMessage = "Property was successfully deleted!";
+                    LoadProperties();
+                }
+                catch (DbException ex)
+                {
+                    System.Diagnostics.Debug.Write(ex.StackTrace);
+                    MessageType = "Danger";
+                    ValidationMessage = "Can't delete the property " +
+                        "from the database. " +
+                        "Try to go back and to the property again," +
+                        "or reload the app if it doesn't help";
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.Write(ex.StackTrace);
+                    MessageType = "Danger";
+                    ValidationMessage = "Can't delete the property " +
+                        "from the database. " +
+                        "Fatal error encountered. " +
+                        "Reload the app and try again";
+                }
+            }
         }
     }
 }
