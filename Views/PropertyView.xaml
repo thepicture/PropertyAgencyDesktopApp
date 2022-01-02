@@ -83,7 +83,7 @@
                                     Style="{StaticResource CommonButton}"
                                     CommandParameter="{Binding .}"
                                     Command="{Binding RelativeSource={RelativeSource AncestorType=UserControl},
-                                                      Path=DataContext.EditClientCommand}"></Button>
+                                                      Path=DataContext.EditPropertyCommand}"></Button>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
@@ -94,7 +94,7 @@
                                         Style="{StaticResource CommonButton}"
                                         CommandParameter="{Binding .}"
                                         Command="{Binding RelativeSource={RelativeSource AncestorType=UserControl},
-                                                          Path=DataContext.DeleteClientCommand}"></Button>
+                                                          Path=DataContext.DeletePropertyCommand}"></Button>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>

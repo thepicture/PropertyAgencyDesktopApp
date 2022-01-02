@@ -69,7 +69,8 @@
                    Style="{StaticResource CommonBlock}"></TextBlock>
             <ComboBox ItemsSource="{Binding PropertyTypes}"
                       SelectedItem="{Binding CurrentPropertyType}"
-                      Style="{StaticResource CommonComboBox}"></ComboBox>
+                      Style="{StaticResource CommonComboBox}"
+                      IsEnabled="{Binding IsInCreateMode}"></ComboBox>
             <StackPanel Name="ApartmentFields">
                 <StackPanel.Style>
                     <Style TargetType="StackPanel">
@@ -231,8 +232,8 @@
                                          Value="False">
                                 <Setter Property="IsEnabled" Value="False" />
                             </DataTrigger>
-                            <DataTrigger Binding="{Binding IsInEditMode}"
-                                         Value="True">
+                            <DataTrigger Binding="{Binding IsInCreateMode}"
+                                         Value="False">
                                 <Setter Property="IsEnabled" Value="True" />
                             </DataTrigger>
                         </Style.Triggers>

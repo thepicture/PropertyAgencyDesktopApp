@@ -48,5 +48,46 @@ namespace PropertyAgencyDesktopApp.ViewModels
             DependencyService.Get<INavigationService<ViewModelBase>>()
                              .Navigate<AddEditPropertyViewModel>();
         }
+
+        private RelayCommand editPropertyCommand;
+
+        public ICommand EditPropertyCommand
+        {
+            get
+            {
+                if (editPropertyCommand == null)
+                {
+                    editPropertyCommand = new RelayCommand(EditProperty);
+                }
+
+                return editPropertyCommand;
+            }
+        }
+
+        private void EditProperty(object commandParameter)
+        {
+            DependencyService.Get<INavigationService<ViewModelBase>>()
+                             .NavigateWithParameter<AddEditPropertyViewModel>
+                             (commandParameter as Property);
+        }
+
+        private RelayCommand deletePropertyCommand;
+
+        public ICommand DeletePropertyCommand
+        {
+            get
+            {
+                if (deletePropertyCommand == null)
+                {
+                    deletePropertyCommand = new RelayCommand(DeleteProperty);
+                }
+
+                return deletePropertyCommand;
+            }
+        }
+
+        private void DeleteProperty(object commandParameter)
+        {
+        }
     }
 }

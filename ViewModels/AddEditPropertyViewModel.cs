@@ -15,6 +15,7 @@ namespace PropertyAgencyDesktopApp.ViewModels
         private PropertyAddress _currentAddress = new PropertyAddress();
         private District _currentDistrict = new District();
         private City _currentCity = new City();
+        private bool _isInCreateMode = true;
 
         private Apartment _apartment = new Apartment();
         private House _house = new House();
@@ -24,6 +25,40 @@ namespace PropertyAgencyDesktopApp.ViewModels
             Title = "Add a new property";
             CurrentProperty = new Property();
             CurrentPropertyType = PropertyTypes.First();
+        }
+
+        public AddEditPropertyViewModel(Property property)
+        {
+            Title = "Edit the existing property";
+            IsInCreateMode = false;
+            LoadProperty(property);
+            if (property.Apartment.Count > 0)
+            {
+                CurrentPropertyType = "Apartment";
+                Apartment = property.Apartment.First();
+            }
+            else if (property.House.Count > 0)
+            {
+                CurrentPropertyType = "House";
+                House = property.House.First();
+            }
+            else if (property.Land.Count > 0)
+            {
+                CurrentPropertyType = "Land";
+                Land = property.Land.First();
+            }
+        }
+
+        private async void LoadProperty(Property property)
+        {
+            CurrentProperty = await _context.Property
+                                    .FindAsync(new object[] { property.Id });
+            if (CurrentProperty.PropertyAddress != null)
+            {
+                CurrentAddress = _context.Entry(CurrentProperty.PropertyAddress).Entity;
+                CurrentCity = _context.Entry(CurrentProperty.PropertyAddress.City).Entity;
+                CurrentDistrict = _context.Entry(CurrentProperty.PropertyAddress.District).Entity;
+            }
         }
 
         public Property CurrentProperty
@@ -73,21 +108,51 @@ namespace PropertyAgencyDesktopApp.ViewModels
             IsMessageClosed = false;
             if (CurrentProperty.Id == 0)
             {
+                switch (CurrentPropertyType)
+                {
+                    case "Apartment":
+                        CurrentProperty.Apartment.Add(Apartment);
+                        break;
+                    case "House":
+                        CurrentProperty.House.Add(House);
+                        break;
+                    case "Land":
+                        CurrentProperty.Land.Add(Land);
+                        break;
+                    default:
+                        break;
+                }
                 _ = _context.Property.Add(CurrentProperty);
+
             }
-            switch (CurrentPropertyType)
+            else
             {
-                case "Apartment":
-                    CurrentProperty.Apartment.Add(Apartment);
-                    break;
-                case "House":
-                    CurrentProperty.House.Add(House);
-                    break;
-                case "Land":
-                    CurrentProperty.Land.Add(Land);
-                    break;
-                default:
-                    break;
+                switch (CurrentPropertyType)
+                {
+                    case "Apartment":
+                        Apartment apartmentFromDatabase =
+                            await _context.Apartment
+                                  .FindAsync(new object[] { Apartment.Id });
+                        _context.Entry(apartmentFromDatabase).CurrentValues
+                                                             .SetValues(Apartment);
+                        break;
+                    case "House":
+                        House houseFromDatabase =
+                              await _context.House
+                                    .FindAsync(new object[] { House.Id });
+                        _context.Entry(houseFromDatabase).CurrentValues
+                                                         .SetValues(House);
+                        break;
+                    case "Land":
+                        Land landFromDatabase =
+                               await _context.Land
+                                     .FindAsync(new object[] { Land.Id });
+                        _context.Entry(landFromDatabase).CurrentValues
+                                                         .SetValues(Land);
+                        break;
+                    default:
+                        break;
+                }
             }
 
             City existingCity = _context.City
@@ -165,6 +230,11 @@ namespace PropertyAgencyDesktopApp.ViewModels
         {
             get => _land;
             set => SetProperty(ref _land, value);
+        }
+        public bool IsInCreateMode
+        {
+            get => _isInCreateMode;
+            set => SetProperty(ref _isInCreateMode, value);
         }
     }
 }
