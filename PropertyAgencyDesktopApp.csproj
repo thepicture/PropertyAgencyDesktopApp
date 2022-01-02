@@ -65,6 +65,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Controls\DecimalInputControl.cs" />
     <Compile Include="Models\Entities\Agent.cs">
       <DependentUpon>PropertyModel.tt</DependentUpon>
     </Compile>
@@ -116,7 +117,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>PropertyModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\AddEditPropertyViewModel.cs" />
     <Compile Include="ViewModels\PropertyViewModel.cs" />
+    <Compile Include="Views\AddEditPropertyView.xaml.cs">
+      <DependentUpon>AddEditPropertyView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\PropertyView.xaml.cs">
       <DependentUpon>PropertyView.xaml</DependentUpon>
     </Compile>
@@ -133,6 +138,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\AddEditClientView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\AddEditPropertyView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

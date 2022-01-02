@@ -81,6 +81,9 @@
                     <DataTemplate DataType="{x:Type viewmodels:PropertyViewModel}">
                         <views:PropertyView></views:PropertyView>
                     </DataTemplate>
+                    <DataTemplate DataType="{x:Type viewmodels:AddEditPropertyViewModel}">
+                        <views:AddEditPropertyView></views:AddEditPropertyView>
+                    </DataTemplate>
                 </ContentControl.Resources>
             </ContentControl>
         </Grid>

@@ -1,0 +1,103 @@
+﻿<UserControl x:Class="PropertyAgencyDesktopApp.Views.AddEditPropertyView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:PropertyAgencyDesktopApp.Views"
+             xmlns:controls="clr-namespace:PropertyAgencyDesktopApp.Controls"
+             xmlns:viewmodels="clr-namespace:PropertyAgencyDesktopApp.ViewModels" 
+             d:DataContext="{d:DesignInstance Type=viewmodels:AddEditPropertyViewModel}"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" 
+             d:DesignWidth="800">
+    <ScrollViewer VerticalScrollBarVisibility="Auto"
+                  HorizontalScrollBarVisibility="Disabled">
+        <StackPanel>
+            <controls:TextInputControl Header="City"
+                                       x:Name="CityText"
+                                       Text="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.CurrentViewModel.CurrentCity.CityName, UpdateSourceTrigger=PropertyChanged}"
+                                       MinLength="2"
+                                       MaxLength="100"
+                                       IsValidated="True"
+                                       CanBeNull="True"
+                                       Placeholder="Enter a city"
+                                       ValidationText="Enter a city from 2 symbols up to 100 symbols"></controls:TextInputControl>
+            <controls:TextInputControl Header="Street name"
+                                       x:Name="StreetNameText"
+                                       Text="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.CurrentViewModel.CurrentDistrict.DistrictName, UpdateSourceTrigger=PropertyChanged}"
+                                       MinLength="2"
+                                       MaxLength="100"
+                                       CanBeNull="True"
+                                       IsValidated="True"
+                                       Placeholder="Enter a street name"
+                                       ValidationText="Enter a street name from 2 symbols up to 100 symbols"></controls:TextInputControl>
+            <controls:TextInputControl Header="House number"
+                                       x:Name="HouseNumberText"
+                                       Text="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.CurrentViewModel.CurrentAddress.AddressHouse, UpdateSourceTrigger=PropertyChanged}"
+                                       MinLength="2"
+                                       MaxLength="50"
+                                       CanBeNull="True"
+                                       IsValidated="True"
+                                       Placeholder="Enter a house number"
+                                       ValidationText="Enter a house number from 2 symbols up to 50 symbols"></controls:TextInputControl>
+            <controls:TextInputControl Header="Apartment's number"
+                                       x:Name="ApartmentNumberText"
+                                       Text="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.CurrentViewModel.CurrentAddress.AddressNumber, UpdateSourceTrigger=PropertyChanged}"
+                                       MinLength="2"
+                                       MaxLength="50"
+                                       CanBeNull="True"
+                                       IsValidated="True"
+                                       Placeholder="Enter an apartment number"
+                                       ValidationText="Enter an apartment number from 2 symbols up to 50 symbols"></controls:TextInputControl>
+            <controls:DecimalInputControl Header="Latitude"
+                                       x:Name="LatitudeText"
+                                       Text="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.CurrentViewModel.CurrentProperty.Latitude, UpdateSourceTrigger=PropertyChanged}"
+                                       MinValue="-180"
+                                       MaxValue="180"
+                                       Placeholder="Enter a latitude value"
+                                       ValidationText="Enter a latitude decimal value from -180 up to 180"></controls:DecimalInputControl>
+            <controls:DecimalInputControl Header="Longitude"
+                                       x:Name="LongitudeText"
+                                       Text="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.CurrentViewModel.CurrentProperty.Longitude, UpdateSourceTrigger=PropertyChanged}"
+                                       MinValue="-180"
+                                       MaxValue="180"
+                                       Placeholder="Enter a longitude value"
+                                       ValidationText="Enter a longitude decimal value from -180 up to 180"></controls:DecimalInputControl>
+
+            <Button Content="Save"
+                    Command="{Binding SavePropertyCommand}">
+                <Button.Style>
+                    <Style TargetType="Button"
+                           BasedOn="{StaticResource CommonButton}">
+                        <Setter Property="IsEnabled" Value="True" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ElementName=DealShare, Path=IsValidated}"
+                                         Value="False">
+                                <Setter Property="IsEnabled" Value="False" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ElementName=LastNameText, Path=IsValidated}"
+                                         Value="False">
+                                <Setter Property="IsEnabled" Value="False" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ElementName=MiddleNameText, Path=IsValidated}"
+                                         Value="False">
+                                <Setter Property="IsEnabled" Value="False" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ElementName=FirstNameText, Path=IsValidated}"
+                                         Value="False">
+                                <Setter Property="IsEnabled" Value="False" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding IsInEditMode}"
+                                         Value="True">
+                                <Setter Property="IsEnabled" Value="True" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+            <Button Style="{StaticResource CommonButton}"
+                    Content="Go back"
+                    Command="{Binding GoBackCommand}"></Button>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>
