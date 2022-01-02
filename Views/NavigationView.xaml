@@ -61,6 +61,17 @@
                 <Button Style="{StaticResource CommonButton}"
                         Content="Properties"
                         Command="{Binding NavigateToPropertiesCommand}"></Button>
+                <ComboBox Height="36"
+                          Padding="10"
+                          Margin="15"
+                          BorderBrush="Red" Style="{DynamicResource CommonComboBox}">
+                    <ComboBox.Items>
+                        <ComboBoxItem Content="ABC"></ComboBoxItem>
+                        <ComboBoxItem Content="ABC"></ComboBoxItem>
+                        <ComboBoxItem Content="ABC"></ComboBoxItem>
+                        <ComboBoxItem Content="FGH"></ComboBoxItem>
+                    </ComboBox.Items>
+                </ComboBox>
             </StackPanel>
             <ContentControl Content="{Binding CurrentViewModel}"
                             Grid.Row="1"
