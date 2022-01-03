@@ -89,12 +89,12 @@
         </EntityType>
         <EntityType Name="Offer">
           <Key>
-            <PropertyRef Name="ClientId" />
-            <PropertyRef Name="AgentId" />
-            <PropertyRef Name="PropertyId" />
+            <PropertyRef Name="Id" />
           </Key>
-          <Property Name="ClientId" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Price" Type="decimal" Precision="20" Scale="2" Nullable="false" />
           <Property Name="AgentId" Type="int" Nullable="false" />
+          <Property Name="ClientId" Type="int" Nullable="false" />
           <Property Name="PropertyId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Property">
@@ -449,12 +449,12 @@
         </EntityType>
         <EntityType Name="Offer">
           <Key>
-            <PropertyRef Name="ClientId" />
-            <PropertyRef Name="AgentId" />
-            <PropertyRef Name="PropertyId" />
+            <PropertyRef Name="Id" />
           </Key>
-          <Property Name="ClientId" Type="Int32" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Price" Type="Decimal" Precision="20" Scale="2" Nullable="false" />
           <Property Name="AgentId" Type="Int32" Nullable="false" />
+          <Property Name="ClientId" Type="Int32" Nullable="false" />
           <Property Name="PropertyId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Agent" Relationship="Self.FK_Offer_Agent" FromRole="Offer" ToRole="Agent" />
           <NavigationProperty Name="Client" Relationship="Self.FK_Offer_Client" FromRole="Offer" ToRole="Client" />
@@ -816,8 +816,10 @@
           <EntitySetMapping Name="Offer">
             <EntityTypeMapping TypeName="PropertyAgencyBaseModel.Offer">
               <MappingFragment StoreEntitySet="Offer">
-                <ScalarProperty Name="ClientId" ColumnName="ClientId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
                 <ScalarProperty Name="AgentId" ColumnName="AgentId" />
+                <ScalarProperty Name="ClientId" ColumnName="ClientId" />
                 <ScalarProperty Name="PropertyId" ColumnName="PropertyId" />
               </MappingFragment>
             </EntityTypeMapping>

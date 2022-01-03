@@ -61,6 +61,9 @@
                 <Button Style="{StaticResource CommonButton}"
                         Content="Properties"
                         Command="{Binding NavigateToPropertiesCommand}"></Button>
+                <Button Style="{StaticResource CommonButton}"
+                        Content="Offers"
+                        Command="{Binding NavigateToOffersCommand}"></Button>
             </StackPanel>
             <ContentControl Content="{Binding CurrentViewModel}"
                             Grid.Row="1"
@@ -83,6 +86,9 @@
                     </DataTemplate>
                     <DataTemplate DataType="{x:Type viewmodels:AddEditPropertyViewModel}">
                         <views:AddEditPropertyView></views:AddEditPropertyView>
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type viewmodels:OfferViewModel}">
+                        <views:OfferView></views:OfferView>
                     </DataTemplate>
                 </ContentControl.Resources>
             </ContentControl>

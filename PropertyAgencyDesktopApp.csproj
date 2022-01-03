@@ -119,9 +119,13 @@
       <DependentUpon>PropertyModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\AddEditPropertyViewModel.cs" />
+    <Compile Include="ViewModels\OfferViewModel.cs" />
     <Compile Include="ViewModels\PropertyViewModel.cs" />
     <Compile Include="Views\AddEditPropertyView.xaml.cs">
       <DependentUpon>AddEditPropertyView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\OfferView.xaml.cs">
+      <DependentUpon>OfferView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\PropertyView.xaml.cs">
       <DependentUpon>PropertyView.xaml</DependentUpon>
@@ -202,6 +206,10 @@
       <DependentUpon>NavigationView.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Views\OfferView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\PropertyView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

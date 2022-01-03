@@ -88,5 +88,26 @@ namespace PropertyAgencyDesktopApp.ViewModels
             DependencyService.Get<INavigationService<ViewModelBase>>()
                           .Navigate<PropertyViewModel>();
         }
+
+        private RelayCommand navigateToOffersCommand;
+
+        public ICommand NavigateToOffersCommand
+        {
+            get
+            {
+                if (navigateToOffersCommand == null)
+                {
+                    navigateToOffersCommand = new RelayCommand(NavigateToOffers);
+                }
+
+                return navigateToOffersCommand;
+            }
+        }
+
+        private void NavigateToOffers(object commandParameter)
+        {
+            DependencyService.Get<INavigationService<ViewModelBase>>()
+                        .Navigate<OfferViewModel>();
+        }
     }
 }

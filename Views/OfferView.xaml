@@ -1,0 +1,108 @@
+﻿<UserControl x:Class="PropertyAgencyDesktopApp.Views.OfferView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:PropertyAgencyDesktopApp.Views"
+             xmlns:viewmodels="clr-namespace:PropertyAgencyDesktopApp.ViewModels"
+             xmlns:controls="clr-namespace:PropertyAgencyDesktopApp.Controls"
+             d:DataContext="{d:DesignInstance Type=viewmodels:OfferViewModel}"
+             mc:Ignorable="d" 
+             d:DesignHeight="450"
+             d:DesignWidth="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Text="Offers"
+                       FontWeight="Bold"
+                       Style="{StaticResource CommonBlock}"
+                       FontSize="30"></TextBlock>
+            <Button Content="Add a new offer"
+                    Style="{StaticResource CommonButton}"
+                    Command="{Binding AddNewOfferCommand}"></Button>
+            <controls:TextInputControl Header="Search by credentials"
+                                       Width="500"
+                                       MinLength="0"
+                                       MaxLength="10"
+                                       ValidationText="Enter only word characters up to 10 symbols"
+                                       Text="{Binding RelativeSource={RelativeSource AncestorType=Window},
+                                                      Path=DataContext.CurrentViewModel.SearchText}"></controls:TextInputControl>
+        </StackPanel>
+        <DataGrid ItemsSource="{Binding Offers}"
+                  IsReadOnly="True"
+                  AutoGenerateColumns="False"
+                  ColumnWidth="*"
+                  Grid.Row="1">
+            <DataGrid.Columns>
+                <DataGridTemplateColumn Header="Client">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Style="{StaticResource CommonBlock}">
+                                    <Run Text="{Binding Client.LastName}"></Run>
+                                    <Run Text="{Binding Client.FirstName}"></Run>
+                                    <Run Text="{Binding Client.MiddleName}"></Run>
+                            </TextBlock>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Agent">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Style="{StaticResource CommonBlock}">
+                                    <Run Text="{Binding Agent.LastName}"></Run>
+                                    <Run Text="{Binding Agent.FirstName}"></Run>
+                                    <Run Text="{Binding Agent.MiddleName}"></Run>
+                            </TextBlock>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Real Estate">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Style="{StaticResource CommonBlock}">
+                                    <Run Text="{Binding Property.PropertyAddress.City.CityName}"></Run>
+                                    <Run Text="{Binding Property.PropertyAddress.District.DistrictName}"></Run>
+                                    <Run Text="{Binding Property.PropertyAddress.AddressHouse}"></Run>
+                                    <Run Text="{Binding Property.PropertyAddress.AddressNumber}"></Run>
+                            </TextBlock>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Price">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Style="{StaticResource CommonBlock}"
+                                       Text="{Binding Price, StringFormat={}{0:F2}RUB}">
+                            </TextBlock>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="Edit"
+                                    Style="{StaticResource CommonButton}"
+                                    CommandParameter="{Binding .}"
+                                    Command="{Binding RelativeSource={RelativeSource AncestorType=UserControl},
+                                                      Path=DataContext.EditOfferCommand}"></Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="Delete"
+                                        Style="{StaticResource CommonButton}"
+                                        CommandParameter="{Binding .}"
+                                        Command="{Binding RelativeSource={RelativeSource AncestorType=UserControl},
+                                                          Path=DataContext.DeleteOfferCommand}"></Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</UserControl>

@@ -14,8 +14,10 @@ namespace PropertyAgencyDesktopApp.Models.Entities
     
     public partial class Offer
     {
-        public int ClientId { get; set; }
+        public int Id { get; set; }
+        public decimal Price { get; set; }
         public int AgentId { get; set; }
+        public int ClientId { get; set; }
         public int PropertyId { get; set; }
     
         public virtual Agent Agent { get; set; }
