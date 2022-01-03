@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Common;
 using System.Data.Entity;
+using System.Linq;
 using System.Windows.Input;
 
 namespace PropertyAgencyDesktopApp.ViewModels
@@ -16,12 +17,37 @@ namespace PropertyAgencyDesktopApp.ViewModels
         public PropertyViewModel()
         {
             Title = "Properties";
-            LoadProperties();
+            CurrentPropertyType = PropertyTypes.First();
         }
 
         private async void LoadProperties()
         {
-            Properties = await _context.Property.ToListAsync();
+            IEnumerable<Property> currentProperties
+                = await _context.Property.ToListAsync();
+            switch (CurrentPropertyType)
+            {
+                case "Apartment":
+                    currentProperties =
+                        currentProperties.Where(p => p.Apartment.Count() > 0);
+                    break;
+                case "House":
+                    currentProperties =
+                       currentProperties.Where(p => p.House.Count() > 0);
+                    break;
+                case "Land":
+                    currentProperties =
+                       currentProperties.Where(p => p.Land.Count() > 0);
+                    break;
+                default:
+                    break;
+            }
+            if (!string.IsNullOrEmpty(SearchText))
+            {
+                currentProperties = currentProperties
+                    .Where(p => p.PropertyAddress.City.CityName.Contains(SearchText)
+                    || p.PropertyAddress.District.DistrictName.Contains(SearchText));
+            }
+            Properties = currentProperties;
         }
 
         private RelayCommand addNewPropertyCommand;
@@ -132,6 +158,41 @@ namespace PropertyAgencyDesktopApp.ViewModels
                         "Fatal error encountered. " +
                         "Reload the app and try again";
                 }
+            }
+        }
+
+        private IEnumerable<string> _propertyTypes = new List<string>
+        {
+            "All property types",
+            "Apartment",
+            "House",
+            "Land"
+        };
+        private string _currentPropertyType;
+        private string _searchText = string.Empty;
+
+        public IEnumerable<string> PropertyTypes
+        {
+            get => _propertyTypes;
+            set => SetProperty(ref _propertyTypes, value);
+        }
+        public string CurrentPropertyType
+        {
+            get => _currentPropertyType;
+            set
+            {
+                SetProperty(ref _currentPropertyType, value);
+                LoadProperties();
+            }
+        }
+
+        public string SearchText
+        {
+            get => _searchText;
+            set
+            {
+                SetProperty(ref _searchText, value);
+                LoadProperties();
             }
         }
     }

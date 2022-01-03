@@ -15,7 +15,7 @@
             <RowDefinition Height="auto"></RowDefinition>
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <StackPanel Orientation="Horizontal">
+        <WrapPanel Orientation="Vertical">
             <TextBlock Text="Properties"
                        FontWeight="Bold"
                        Style="{StaticResource CommonBlock}"
@@ -24,13 +24,20 @@
                     Style="{StaticResource CommonButton}"
                     Command="{Binding AddNewPropertyCommand}"></Button>
             <controls:TextInputControl Header="Search by address"
-                                       Width="500"
                                        MinLength="0"
+                                       Width="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType=WrapPanel}}"
                                        MaxLength="10"
                                        ValidationText="Enter any characters up to 10 symbols"
                                        Text="{Binding RelativeSource={RelativeSource AncestorType=Window},
                                                       Path=DataContext.CurrentViewModel.SearchText}"></controls:TextInputControl>
-        </StackPanel>
+            <TextBlock Foreground="Gray"
+                   Text="Type of the property"
+                   Margin="15 15 15 -5"
+                   Style="{StaticResource CommonBlock}"></TextBlock>
+            <ComboBox ItemsSource="{Binding PropertyTypes}"
+                      SelectedItem="{Binding CurrentPropertyType}"
+                      Style="{StaticResource CommonComboBox}"></ComboBox>
+        </WrapPanel>
         <DataGrid ItemsSource="{Binding Properties}"
                   IsReadOnly="True"
                   AutoGenerateColumns="False"
