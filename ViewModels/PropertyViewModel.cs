@@ -28,24 +28,47 @@ namespace PropertyAgencyDesktopApp.ViewModels
             {
                 case "Apartment":
                     currentProperties =
-                        currentProperties.Where(p => p.Apartment.Count() > 0);
+                        currentProperties.Where(p =>
+                        {
+                            return p.Apartment.Count() > 0;
+                        });
                     break;
                 case "House":
                     currentProperties =
-                       currentProperties.Where(p => p.House.Count() > 0);
+                       currentProperties.Where(p =>
+                       {
+                           return p.House.Count() > 0;
+                       });
                     break;
                 case "Land":
                     currentProperties =
-                       currentProperties.Where(p => p.Land.Count() > 0);
+                       currentProperties.Where(p =>
+                       {
+                           return p.Land.Count() > 0;
+                       });
                     break;
                 default:
                     break;
             }
             if (!string.IsNullOrEmpty(SearchText))
             {
+                IWordIndefiniteSearcher distanceCalculator = DependencyService
+                                         .Get<IWordIndefiniteSearcher>();
                 currentProperties = currentProperties
-                    .Where(p => p.PropertyAddress.City.CityName.Contains(SearchText)
-                    || p.PropertyAddress.District.DistrictName.Contains(SearchText));
+                    .Where(p => distanceCalculator.Calculate(
+                        SearchText.ToLower(),
+                        p.PropertyAddress.City.CityName.ToLower()) < 3
+                    || distanceCalculator.Calculate(
+                        SearchText.ToLower(),
+                        p.PropertyAddress.District.DistrictName.ToLower()) < 3
+                    || distanceCalculator.Calculate(
+                        SearchText.ToLower(),
+                        p.PropertyAddress.AddressNumber) < 1
+                    || distanceCalculator.Calculate(
+                        SearchText.ToLower(),
+                        p.PropertyAddress.AddressHouse) < 1
+                    || p.PropertyAddress.District.DistrictName
+                                                 .Contains(SearchText));
             }
             Properties = currentProperties;
         }
@@ -131,7 +154,8 @@ namespace PropertyAgencyDesktopApp.ViewModels
                 "to delete property?"))
             {
                 IsMessageClosed = false;
-                Property propertyFromDatabase = _context.Property.Find(property.Id);
+                Property propertyFromDatabase = _context.Property
+                                                        .Find(property.Id);
                 _ = _context.Property.Remove(propertyFromDatabase);
                 try
                 {
@@ -181,8 +205,10 @@ namespace PropertyAgencyDesktopApp.ViewModels
             get => _currentPropertyType;
             set
             {
-                SetProperty(ref _currentPropertyType, value);
-                LoadProperties();
+                if (SetProperty(ref _currentPropertyType, value))
+                {
+                    LoadProperties();
+                }
             }
         }
 
@@ -191,8 +217,10 @@ namespace PropertyAgencyDesktopApp.ViewModels
             get => _searchText;
             set
             {
-                SetProperty(ref _searchText, value);
-                LoadProperties();
+                if (SetProperty(ref _searchText, value))
+                {
+                    LoadProperties();
+                }
             }
         }
     }
