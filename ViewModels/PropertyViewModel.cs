@@ -12,12 +12,23 @@ namespace PropertyAgencyDesktopApp.ViewModels
 {
     public class PropertyViewModel : ViewModelBase
     {
-        private PropertyAgencyBaseEntities _context = new PropertyAgencyBaseEntities();
+        private readonly PropertyAgencyBaseEntities _context = new PropertyAgencyBaseEntities();
         private IEnumerable<Property> _properties;
         public PropertyViewModel()
         {
             Title = "Properties";
+            LoadCities();
             CurrentPropertyType = PropertyTypes.First();
+        }
+
+        private async void LoadCities()
+        {
+            Cities = await _context.City.ToListAsync();
+            Cities.Insert(0, new City
+            {
+                CityName = "All cities"
+            });
+            CurrentCity = Cities.First();
         }
 
         private async void LoadProperties()
@@ -69,6 +80,14 @@ namespace PropertyAgencyDesktopApp.ViewModels
                         p.PropertyAddress.AddressHouse) < 1
                     || p.PropertyAddress.District.DistrictName
                                                  .Contains(SearchText));
+            }
+            if (CurrentCity != null && CurrentCity.CityName != "All cities")
+            {
+                currentProperties = currentProperties.Where(p =>
+                {
+                    return p.PropertyAddress.City.CityName
+                    == CurrentCity.CityName;
+                });
             }
             Properties = currentProperties;
         }
@@ -223,5 +242,20 @@ namespace PropertyAgencyDesktopApp.ViewModels
                 }
             }
         }
+
+        private List<City> _cities;
+
+        public List<City> Cities
+        {
+            get => _cities;
+            set => SetProperty(ref _cities, value);
+        }
+        public City CurrentCity
+        {
+            get => _currentCity;
+            set => SetProperty(ref _currentCity, value);
+        }
+
+        private City _currentCity;
     }
 }

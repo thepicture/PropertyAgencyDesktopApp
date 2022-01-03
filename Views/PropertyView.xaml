@@ -37,6 +37,14 @@
             <ComboBox ItemsSource="{Binding PropertyTypes}"
                       SelectedItem="{Binding CurrentPropertyType}"
                       Style="{StaticResource CommonComboBox}"></ComboBox>
+            <TextBlock Foreground="Gray"
+                   Text="City"
+                   Margin="15 15 15 -5"
+                   Style="{StaticResource CommonBlock}"></TextBlock>
+            <ComboBox ItemsSource="{Binding Cities}"
+                      SelectedItem="{Binding CurrentCity}"
+                      DisplayMemberPath="CityName"
+                      Style="{StaticResource CommonComboBox}"></ComboBox>
         </WrapPanel>
         <DataGrid ItemsSource="{Binding Properties}"
                   IsReadOnly="True"
