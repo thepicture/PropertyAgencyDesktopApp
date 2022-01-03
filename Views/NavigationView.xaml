@@ -90,6 +90,9 @@
                     <DataTemplate DataType="{x:Type viewmodels:OfferViewModel}">
                         <views:OfferView></views:OfferView>
                     </DataTemplate>
+                    <DataTemplate DataType="{x:Type viewmodels:AddEditOfferViewModel}">
+                        <views:AddEditOfferView></views:AddEditOfferView>
+                    </DataTemplate>
                 </ContentControl.Resources>
             </ContentControl>
         </Grid>

@@ -1,5 +1,6 @@
 ﻿using PropertyAgencyDesktopApp.Commands;
 using PropertyAgencyDesktopApp.Models.Entities;
+using PropertyAgencyDesktopApp.Services;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Windows.Input;
@@ -44,6 +45,8 @@ namespace PropertyAgencyDesktopApp.ViewModels
 
         private void AddNewOffer(object commandParameter)
         {
+            DependencyService.Get<INavigationService<ViewModelBase>>()
+                             .Navigate<AddEditOfferViewModel>();
         }
     }
 }

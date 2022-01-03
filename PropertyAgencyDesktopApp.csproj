@@ -118,9 +118,13 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>PropertyModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\AddEditOfferViewModel.cs" />
     <Compile Include="ViewModels\AddEditPropertyViewModel.cs" />
     <Compile Include="ViewModels\OfferViewModel.cs" />
     <Compile Include="ViewModels\PropertyViewModel.cs" />
+    <Compile Include="Views\AddEditOfferView.xaml.cs">
+      <DependentUpon>AddEditOfferView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\AddEditPropertyView.xaml.cs">
       <DependentUpon>AddEditPropertyView.xaml</DependentUpon>
     </Compile>
@@ -143,6 +147,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\AddEditClientView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\AddEditOfferView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

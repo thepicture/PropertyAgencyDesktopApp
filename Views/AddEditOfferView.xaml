@@ -1,0 +1,119 @@
+﻿<UserControl x:Class="PropertyAgencyDesktopApp.Views.AddEditOfferView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:PropertyAgencyDesktopApp.Views" 
+             xmlns:controls="clr-namespace:PropertyAgencyDesktopApp.Controls" 
+             xmlns:viewmodels="clr-namespace:PropertyAgencyDesktopApp.ViewModels"
+             d:DataContext="{d:DesignInstance Type=viewmodels:AddEditOfferViewModel}"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" 
+             d:DesignWidth="800">
+    <ScrollViewer VerticalScrollBarVisibility="Auto"
+                  HorizontalScrollBarVisibility="Disabled">
+        <StackPanel>
+            <TextBlock Foreground="Gray"
+                   Text="Client"
+                   Margin="15 15 15 -5"
+                   Style="{StaticResource CommonBlock}"></TextBlock>
+            <ComboBox ItemsSource="{Binding Clients}"
+                      SelectedItem="{Binding CurrentClient}"
+                      Style="{StaticResource CommonComboBox}"
+                      IsEnabled="{Binding IsInCreateMode}">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock>
+                            <TextBlock.Text>
+                                <MultiBinding StringFormat="{}{0} {1} {2}">
+                                    <MultiBinding.Bindings>
+                                        <Binding Path="LastName"></Binding>
+                                        <Binding Path="FirstName"></Binding>
+                                        <Binding Path="MiddleName"></Binding>
+                                    </MultiBinding.Bindings>
+                                </MultiBinding>
+                            </TextBlock.Text>
+                        </TextBlock>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+            <TextBlock Foreground="Gray"
+                   Text="Agent"
+                   Margin="15 15 15 -5"
+                   Style="{StaticResource CommonBlock}"></TextBlock>
+            <ComboBox ItemsSource="{Binding Agents}"
+                      SelectedItem="{Binding CurrentAgent}"
+                      Style="{StaticResource CommonComboBox}"
+                      IsEnabled="{Binding IsInCreateMode}">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock>
+                            <TextBlock.Text>
+                                <MultiBinding StringFormat="{}{0} {1} {2}">
+                                    <MultiBinding.Bindings>
+                                        <Binding Path="LastName"></Binding>
+                                        <Binding Path="FirstName"></Binding>
+                                        <Binding Path="MiddleName"></Binding>
+                                    </MultiBinding.Bindings>
+                                </MultiBinding>
+                            </TextBlock.Text>
+                        </TextBlock>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+            <TextBlock Foreground="Gray"
+                   Text="Real Estate"
+                   Margin="15 15 15 -5"
+                   Style="{StaticResource CommonBlock}"></TextBlock>
+            <ComboBox ItemsSource="{Binding RealEstates}"
+                      SelectedItem="{Binding CurrentRealEstate}"
+                      Style="{StaticResource CommonComboBox}"
+                      IsEnabled="{Binding IsInCreateMode}">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock>
+                            <TextBlock.Text>
+                                <MultiBinding StringFormat="{}{0} {1} {2} {3}">
+                                    <MultiBinding.Bindings>
+                                        <Binding Path="PropertyAddress.City.CityName"></Binding>
+                                        <Binding Path="PropertyAddress.District.DistrictName"></Binding>
+                                        <Binding Path="PropertyAddress.AddressHouse"></Binding>
+                                        <Binding Path="PropertyAddress.AddressNumber"></Binding>
+                                    </MultiBinding.Bindings>
+                                </MultiBinding>
+                            </TextBlock.Text>
+                        </TextBlock>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+            <controls:DecimalInputControl Header="Price in rubles"
+                                       x:Name="PriceInRublesText"
+                                       Text="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.CurrentViewModel.CurrentProperty.Latitude, UpdateSourceTrigger=PropertyChanged}"
+                                       MinValue="1"
+                                       Placeholder="Enter a price in rubles"
+                                       ValidationText="Enter a price in rubles as a positive decimal value"></controls:DecimalInputControl>
+            <Button Content="Save"
+                    Command="{Binding SaveOfferCommand}">
+                <Button.Style>
+                    <Style TargetType="Button"
+                           BasedOn="{StaticResource CommonButton}">
+                        <Setter Property="IsEnabled" Value="True" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ElementName=PriceInRublesText, Path=IsValidated}"
+                                         Value="False">
+                                <Setter Property="IsEnabled" Value="False" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding IsInCreateMode}"
+                                         Value="False">
+                                <Setter Property="IsEnabled" Value="True" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+            <Button Style="{StaticResource CommonButton}"
+                    Content="Go back"
+                    Command="{Binding GoBackCommand}"></Button>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>
