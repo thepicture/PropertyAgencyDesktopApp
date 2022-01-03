@@ -1,6 +1,8 @@
 ﻿using PropertyAgencyDesktopApp.Commands;
 using PropertyAgencyDesktopApp.Models.Entities;
+using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Data.Entity;
 using System.Linq;
 using System.Windows.Input;
@@ -107,8 +109,40 @@ namespace PropertyAgencyDesktopApp.ViewModels
             }
         }
 
-        private void SaveOffer(object commandParameter)
+        private async void SaveOffer(object commandParameter)
         {
+            IsMessageClosed = false;
+            if (CurrentOffer.Id == 0)
+            {
+                _ = _context.Offer.Add(CurrentOffer);
+            }
+            try
+            {
+                CurrentOffer.Client = CurrentClient;
+                CurrentOffer.Agent = CurrentAgent;
+                CurrentOffer.Property = CurrentRealEstate;
+                _ = await _context.SaveChangesAsync();
+                MessageType = "Alert";
+                ValidationMessage = "Offer was successfully saved!";
+            }
+            catch (DbException ex)
+            {
+                System.Diagnostics.Debug.Write(ex.StackTrace);
+                MessageType = "Danger";
+                ValidationMessage = "Can't save the offer " +
+                    "into the database. " +
+                    "Try to go back and to the offer again," +
+                    "or reload the app if it doesn't help";
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.Write(ex.StackTrace);
+                MessageType = "Danger";
+                ValidationMessage = "Can't save the offer " +
+                    "into the database. " +
+                    "Fatal error encountered. " +
+                    "Reload the app and try again";
+            }
         }
 
         private Client _currentClient;

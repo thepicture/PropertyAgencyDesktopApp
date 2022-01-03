@@ -88,7 +88,7 @@
             </ComboBox>
             <controls:DecimalInputControl Header="Price in rubles"
                                        x:Name="PriceInRublesText"
-                                       Text="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.CurrentViewModel.CurrentProperty.Latitude, UpdateSourceTrigger=PropertyChanged}"
+                                       Text="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.CurrentViewModel.CurrentOffer.Price, UpdateSourceTrigger=PropertyChanged}"
                                        MinValue="1"
                                        Placeholder="Enter a price in rubles"
                                        ValidationText="Enter a price in rubles as a positive decimal value"></controls:DecimalInputControl>

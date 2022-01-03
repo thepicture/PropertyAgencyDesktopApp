@@ -91,7 +91,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Price" Type="decimal" Precision="20" Scale="2" Nullable="false" />
           <Property Name="AgentId" Type="int" Nullable="false" />
           <Property Name="ClientId" Type="int" Nullable="false" />
@@ -451,7 +451,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Price" Type="Decimal" Precision="20" Scale="2" Nullable="false" />
           <Property Name="AgentId" Type="Int32" Nullable="false" />
           <Property Name="ClientId" Type="Int32" Nullable="false" />
