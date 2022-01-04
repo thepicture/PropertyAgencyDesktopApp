@@ -18,16 +18,16 @@ namespace PropertyAgencyDesktopApp.ViewModels
         public AddEditOfferViewModel()
         {
             Title = "Add a new offer";
-            LoadClients();
-            LoadAgents();
-            LoadProperties();
+            _ = LoadClients()
+            .ContinueWith((t) => LoadAgents())
+            .ContinueWith((t) => LoadProperties());
         }
 
         public AddEditOfferViewModel(Offer offer)
         {
             IsInCreateMode = false;
             Title = "Edit the existing offer";
-            CurrentOffer = offer;
+            CurrentOffer = _context.Offer.First(o => o.Id == offer.Id);
             _ = LoadClients()
             .ContinueWith((t) => LoadAgents())
             .ContinueWith((t) => LoadProperties());
@@ -50,29 +50,19 @@ namespace PropertyAgencyDesktopApp.ViewModels
         private async Task LoadAgents()
         {
             Agents = await _context.Agent.ToListAsync();
-            if (IsInCreateMode)
-            {
-                CurrentAgent = Agents.First();
-            }
-            else
-            {
-                CurrentAgent = Agents
+            CurrentAgent = IsInCreateMode
+                ? Agents.First()
+                : Agents
                                .First(a => CurrentOffer.AgentId == a.Id);
-            }
         }
 
         private async Task LoadClients()
         {
             Clients = await _context.Client.ToListAsync();
-            if (IsInCreateMode)
-            {
-                CurrentClient = Clients.First();
-            }
-            else
-            {
-                CurrentClient = Clients
+            CurrentClient = IsInCreateMode
+                ? Clients.First()
+                : Clients
                                 .First(c => CurrentOffer.ClientId == c.Id);
-            }
         }
 
         public Offer CurrentOffer
