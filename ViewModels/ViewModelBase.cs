@@ -86,5 +86,8 @@ namespace PropertyAgencyDesktopApp.ViewModels
             get => _isMessageClosed;
             set => SetProperty(ref _isMessageClosed, value);
         }
+
+        public IShowSaveResultService ShowSaveResultService => DependencyService
+                 .Get<IShowSaveResultService>();
     }
 }

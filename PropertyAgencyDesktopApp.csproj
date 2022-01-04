@@ -118,6 +118,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>PropertyModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Services\IShowSaveResultService.cs" />
+    <Compile Include="Services\PropertyAgencyShowSaveResultService.cs" />
     <Compile Include="ViewModels\AddEditOfferViewModel.cs" />
     <Compile Include="ViewModels\AddEditPropertyViewModel.cs" />
     <Compile Include="ViewModels\OfferViewModel.cs" />

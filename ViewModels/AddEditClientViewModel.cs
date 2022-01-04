@@ -70,25 +70,22 @@ namespace PropertyAgencyDesktopApp.ViewModels
             {
                 _ = await _context.SaveChangesAsync();
                 MessageType = "Alert";
-                ValidationMessage = "Client was successfully saved!";
+                ValidationMessage = ValidationMessage = ShowSaveResultService
+                                    .GetOnSavedTemplate(nameof(Client));
             }
             catch (DbException ex)
             {
                 System.Diagnostics.Debug.Write(ex.StackTrace);
                 MessageType = "Danger";
-                ValidationMessage = "Can't save the client " +
-                    "into the database. " +
-                    "Try to go back and to the client again," +
-                    "or reload the app if it doesn't help";
+                ValidationMessage = ShowSaveResultService
+                                    .GetOnCommonErrorTemplate(nameof(Client));
             }
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.Write(ex.StackTrace);
                 MessageType = "Danger";
-                ValidationMessage = "Can't save the client " +
-                    "into the database. " +
-                    "Fatal error encountered. " +
-                    "Reload the app and try again";
+                ValidationMessage = ShowSaveResultService
+                                    .GetOnFatalErrorTemplate(nameof(Client));
             }
         }
     }

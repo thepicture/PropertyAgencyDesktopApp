@@ -123,25 +123,22 @@ namespace PropertyAgencyDesktopApp.ViewModels
                 CurrentOffer.Property = CurrentRealEstate;
                 _ = await _context.SaveChangesAsync();
                 MessageType = "Alert";
-                ValidationMessage = "Offer was successfully saved!";
+                ValidationMessage = ValidationMessage = ShowSaveResultService
+                                    .GetOnSavedTemplate(nameof(Offer));
             }
             catch (DbException ex)
             {
                 System.Diagnostics.Debug.Write(ex.StackTrace);
                 MessageType = "Danger";
-                ValidationMessage = "Can't save the offer " +
-                    "into the database. " +
-                    "Try to go back and to the offer again," +
-                    "or reload the app if it doesn't help";
+                ValidationMessage = ShowSaveResultService
+                                    .GetOnCommonErrorTemplate(nameof(Offer));
             }
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.Write(ex.StackTrace);
                 MessageType = "Danger";
-                ValidationMessage = "Can't save the offer " +
-                    "into the database. " +
-                    "Fatal error encountered. " +
-                    "Reload the app and try again";
+                ValidationMessage = ShowSaveResultService
+                                    .GetOnFatalErrorTemplate(nameof(Offer));
             }
         }
 
