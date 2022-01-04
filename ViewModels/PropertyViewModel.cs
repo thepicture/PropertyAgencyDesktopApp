@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Data.Common;
 using System.Data.Entity;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace PropertyAgencyDesktopApp.ViewModels
@@ -17,11 +18,12 @@ namespace PropertyAgencyDesktopApp.ViewModels
         public PropertyViewModel()
         {
             Title = "Properties";
-            LoadCities();
+            _ = LoadCities()
+            .ContinueWith(t => LoadProperties());
             CurrentPropertyType = PropertyTypes.First();
         }
 
-        private async void LoadCities()
+        private async Task LoadCities()
         {
             Cities = await _context.City.ToListAsync();
             Cities.Insert(0, new City
@@ -163,14 +165,16 @@ namespace PropertyAgencyDesktopApp.ViewModels
             {
                 IsMessageClosed = false;
                 MessageType = "Warning";
-                ValidationMessage = "Can't delete a property with " +
-                    "offers related to the property";
+                ValidationMessage = ShowDeleteResultService
+                                    .OnRelatedObjectsError(nameof(Property),
+                                                           nameof(Offer));
                 return;
             }
             IQuestionService questionService =
                 DependencyService.Get<IQuestionService>();
-            if (questionService.Ask("Do you really want " +
-                "to delete property?"))
+            string deleteTemplate = ShowDeleteResultService
+                                    .OnDelete(nameof(Property));
+            if (questionService.Ask(deleteTemplate))
             {
                 IsMessageClosed = false;
                 Property propertyFromDatabase = _context.Property
@@ -180,26 +184,23 @@ namespace PropertyAgencyDesktopApp.ViewModels
                 {
                     _ = await _context.SaveChangesAsync();
                     MessageType = "Alert";
-                    ValidationMessage = "Property was successfully deleted!";
+                    ValidationMessage = ShowDeleteResultService
+                                        .OnSuccessfulDelete(nameof(Property));
                     LoadProperties();
                 }
                 catch (DbException ex)
                 {
                     System.Diagnostics.Debug.Write(ex.StackTrace);
                     MessageType = "Danger";
-                    ValidationMessage = "Can't delete the property " +
-                        "from the database. " +
-                        "Try to go back and to the property again," +
-                        "or reload the app if it doesn't help";
+                    ValidationMessage = ShowDeleteResultService
+                                        .OnCommonDeleteError(nameof(Property));
                 }
                 catch (Exception ex)
                 {
                     System.Diagnostics.Debug.Write(ex.StackTrace);
                     MessageType = "Danger";
-                    ValidationMessage = "Can't delete the property " +
-                        "from the database. " +
-                        "Fatal error encountered. " +
-                        "Reload the app and try again";
+                    ValidationMessage = ShowDeleteResultService
+                                        .OnFatalDeleteError(nameof(Property));
                 }
             }
         }

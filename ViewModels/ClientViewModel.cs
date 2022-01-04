@@ -137,15 +137,17 @@ namespace PropertyAgencyDesktopApp.ViewModels
             {
                 IsMessageClosed = false;
                 MessageType = "Alert";
-                ValidationMessage = "Can't delete the client with " +
-                    "offers or demands related to the client";
+                ValidationMessage = ShowDeleteResultService
+                                    .OnRelatedObjectsError(nameof(Client),
+                                                           nameof(Offer),
+                                                           nameof(Demand));
                 return;
             }
             IQuestionService questionService =
                 DependencyService.Get<IQuestionService>();
-            if (questionService.Ask("Do you really want " +
-                "to delete client " +
-                $"with credentials {client.Phone ?? client.Email}?"))
+            string deleteTemplate = ShowDeleteResultService
+                                    .OnDelete(nameof(Client));
+            if (questionService.Ask(deleteTemplate))
             {
                 IsMessageClosed = false;
                 Client clientFromDatabase = _context.Client.Find(client.Id);
@@ -154,26 +156,23 @@ namespace PropertyAgencyDesktopApp.ViewModels
                 {
                     _ = await _context.SaveChangesAsync();
                     MessageType = "Alert";
-                    ValidationMessage = "Client was successfully deleted!";
+                    ValidationMessage = ShowDeleteResultService
+                                        .OnSuccessfulDelete(nameof(Client));
                     LoadClients();
                 }
                 catch (DbException ex)
                 {
                     System.Diagnostics.Debug.Write(ex.StackTrace);
                     MessageType = "Danger";
-                    ValidationMessage = "Can't delete the client " +
-                        "from the database. " +
-                        "Try to go back and to the client again," +
-                        "or reload the app if it doesn't help";
+                    ValidationMessage = ShowDeleteResultService
+                                        .OnCommonDeleteError(nameof(Client));
                 }
                 catch (Exception ex)
                 {
                     System.Diagnostics.Debug.Write(ex.StackTrace);
                     MessageType = "Danger";
-                    ValidationMessage = "Can't delete the client " +
-                        "from the database. " +
-                        "Fatal error encountered. " +
-                        "Reload the app and try again";
+                    ValidationMessage = ShowDeleteResultService
+                                        .OnFatalDeleteError(nameof(Client));
                 }
             }
         }

@@ -124,7 +124,9 @@
     <Compile Include="Models\Entities\sysdiagrams.cs">
       <DependentUpon>PropertyModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Services\IShowDeleteResultService.cs" />
     <Compile Include="Services\IShowSaveResultService.cs" />
+    <Compile Include="Services\PropertyAgencyShowDeleteResultService.cs" />
     <Compile Include="Services\PropertyAgencyShowSaveResultService.cs" />
     <Compile Include="ViewModels\AddEditOfferViewModel.cs" />
     <Compile Include="ViewModels\AddEditPropertyViewModel.cs" />

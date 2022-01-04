@@ -16,6 +16,8 @@ namespace PropertyAgencyDesktopApp
             DependencyService.Register<MessageBoxQuestionService>();
             DependencyService.Register<LevenshteinWordIndefiniteSearcher>();
             DependencyService.Register<PropertyAgencyShowSaveResultService>();
+            DependencyService
+                 .Register<PropertyAgencyShowDeleteResultService>();
             DependencyService.Get<INavigationService<ViewModelBase>>()
                  .Navigate<ClientViewModel>();
         }

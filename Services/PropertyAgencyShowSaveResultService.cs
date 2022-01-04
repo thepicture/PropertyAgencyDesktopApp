@@ -4,17 +4,15 @@
     {
         public string GetOnCommonErrorTemplate(string malformedInstance)
         {
-            return $"Can't save the {malformedInstance} "
-                   + "into the database. "
+            return $"Can't save the {malformedInstance}. "
                    + $"Try to go back and to the {malformedInstance} "
-                   + "page again, "
+                   + "again, "
                    + "or reload the app if it doesn't help";
         }
 
         public string GetOnFatalErrorTemplate(string malformedInstance)
         {
-            return $"Can't save the {malformedInstance} "
-                   + "into the database. "
+            return $"Can't save the {malformedInstance}. "
                    + "Fatal error encountered. "
                    + "Reload the app and try again";
         }

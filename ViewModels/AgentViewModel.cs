@@ -133,15 +133,16 @@ namespace PropertyAgencyDesktopApp.ViewModels
             {
                 IsMessageClosed = false;
                 MessageType = "Alert";
-                ValidationMessage = "Can't delete the agent with " +
-                    "offers or demands related to the agent";
+                ValidationMessage = ShowDeleteResultService
+                                    .OnRelatedObjectsError(nameof(Agent),
+                                                           nameof(Offer));
                 return;
             }
             IQuestionService questionService =
                 DependencyService.Get<IQuestionService>();
-            if (questionService.Ask("Do you really want " +
-                "to delete client " +
-                $"{agent.LastName} {agent.FirstName} {agent.MiddleName}?"))
+            string deleteTemplate = ShowDeleteResultService
+                                    .OnDelete(nameof(Agent));
+            if (questionService.Ask(deleteTemplate))
             {
                 IsMessageClosed = false;
                 Agent agentFromDatabase = _context.Agent.Find(agent.Id);
@@ -150,26 +151,23 @@ namespace PropertyAgencyDesktopApp.ViewModels
                 {
                     _ = await _context.SaveChangesAsync();
                     MessageType = "Alert";
-                    ValidationMessage = "Agent was successfully deleted!";
+                    ValidationMessage = ShowDeleteResultService
+                                        .OnSuccessfulDelete(nameof(Agent));
                     LoadAgents();
                 }
                 catch (DbException ex)
                 {
                     System.Diagnostics.Debug.Write(ex.StackTrace);
                     MessageType = "Danger";
-                    ValidationMessage = "Can't delete the agent " +
-                        "from the database. " +
-                        "Try to go back and to the agent again," +
-                        "or reload the app if it doesn't help";
+                    ValidationMessage = ShowDeleteResultService
+                                        .OnCommonDeleteError(nameof(Agent));
                 }
                 catch (Exception ex)
                 {
                     System.Diagnostics.Debug.Write(ex.StackTrace);
                     MessageType = "Danger";
-                    ValidationMessage = "Can't delete the agent " +
-                        "from the database. " +
-                        "Fatal error encountered. " +
-                        "Reload the app and try again";
+                    ValidationMessage = ShowDeleteResultService
+                                        .OnCommonDeleteError(nameof(Agent));
                 }
             }
         }

@@ -96,14 +96,16 @@ namespace PropertyAgencyDesktopApp.ViewModels
             {
                 IsMessageClosed = false;
                 MessageType = "Warning";
-                ValidationMessage = "Can't delete an offer with the" +
-                    "deals related to it";
+                ValidationMessage = ShowDeleteResultService
+                                    .OnRelatedObjectsError(nameof(Offer),
+                                                           nameof(Deal));
                 return;
             }
             IQuestionService questionService =
                 DependencyService.Get<IQuestionService>();
-            if (questionService.Ask("Do you really want " +
-                "to delete the offer?"))
+            string deleteTemplate = ShowDeleteResultService
+                                    .OnDelete(nameof(Offer));
+            if (questionService.Ask(deleteTemplate))
             {
                 IsMessageClosed = false;
                 Offer offerFromDatabase = _context.Offer
@@ -113,26 +115,23 @@ namespace PropertyAgencyDesktopApp.ViewModels
                 {
                     _ = await _context.SaveChangesAsync();
                     MessageType = "Alert";
-                    ValidationMessage = "The offer was successfully deleted!";
+                    ValidationMessage = ShowDeleteResultService
+                                        .OnSuccessfulDelete(nameof(Offer));
                     LoadOffers();
                 }
                 catch (DbException ex)
                 {
                     System.Diagnostics.Debug.Write(ex.StackTrace);
                     MessageType = "Danger";
-                    ValidationMessage = "Can't delete the offer " +
-                        "from the database. " +
-                        "Try to go back and to the offer again," +
-                        "or reload the app if it doesn't help";
+                    ValidationMessage = ShowDeleteResultService
+                                        .OnCommonDeleteError(nameof(Offer));
                 }
                 catch (Exception ex)
                 {
                     System.Diagnostics.Debug.Write(ex.StackTrace);
                     MessageType = "Danger";
-                    ValidationMessage = "Can't delete the offer " +
-                        "from the database. " +
-                        "Fatal error encountered. " +
-                        "Reload the app and try again";
+                    ValidationMessage = ShowDeleteResultService
+                                        .OnFatalDeleteError(nameof(Offer));
                 }
             }
         }
