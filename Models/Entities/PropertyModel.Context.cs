@@ -29,6 +29,7 @@ namespace PropertyAgencyDesktopApp.Models.Entities
         public virtual DbSet<Apartment> Apartment { get; set; }
         public virtual DbSet<City> City { get; set; }
         public virtual DbSet<Client> Client { get; set; }
+        public virtual DbSet<Deal> Deal { get; set; }
         public virtual DbSet<Demand> Demand { get; set; }
         public virtual DbSet<District> District { get; set; }
         public virtual DbSet<DistrictPolygon> DistrictPolygon { get; set; }
@@ -37,7 +38,6 @@ namespace PropertyAgencyDesktopApp.Models.Entities
         public virtual DbSet<Offer> Offer { get; set; }
         public virtual DbSet<Property> Property { get; set; }
         public virtual DbSet<PropertyAddress> PropertyAddress { get; set; }
-        public virtual DbSet<Deal> Deal { get; set; }
-        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
+        public virtual DbSet<RealEstateType> RealEstateType { get; set; }
     }
 }

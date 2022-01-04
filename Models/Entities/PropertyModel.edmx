@@ -25,6 +25,22 @@
           <Property Name="RoomsCount" Type="int" />
           <Property Name="TotalArea" Type="decimal" Precision="20" Scale="2" />
         </EntityType>
+        <EntityType Name="ApartmentDemand">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="MinFloor" Type="tinyint" />
+          <Property Name="MaxFloor" Type="tinyint" />
+        </EntityType>
+        <EntityType Name="BuildingDemand">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="MinRooms" Type="tinyint" />
+          <Property Name="MaxRooms" Type="tinyint" />
+        </EntityType>
         <EntityType Name="City">
           <Key>
             <PropertyRef Name="Id" />
@@ -52,13 +68,17 @@
         </EntityType>
         <EntityType Name="Demand">
           <Key>
-            <PropertyRef Name="ClientId" />
-            <PropertyRef Name="AgentId" />
-            <PropertyRef Name="PropertyId" />
+            <PropertyRef Name="DemandId" />
           </Key>
+          <Property Name="DemandId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ClientId" Type="int" Nullable="false" />
           <Property Name="AgentId" Type="int" Nullable="false" />
-          <Property Name="PropertyId" Type="int" Nullable="false" />
+          <Property Name="RealEstateTypeId" Type="int" />
+          <Property Name="AddressId" Type="int" />
+          <Property Name="MinPrice" Type="int" />
+          <Property Name="MaxPrice" Type="int" />
+          <Property Name="MinArea" Type="decimal" Precision="20" Scale="2" />
+          <Property Name="MaxArea" Type="decimal" Precision="20" Scale="2" />
         </EntityType>
         <EntityType Name="District">
           <Key>
@@ -86,6 +106,14 @@
           <Property Name="RoomsCount" Type="int" />
           <Property Name="TotalArea" Type="decimal" Precision="20" Scale="2" />
         </EntityType>
+        <EntityType Name="HouseDemand">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="MinRoomsCount" Type="tinyint" />
+          <Property Name="MaxRoomsCount" Type="tinyint" />
+        </EntityType>
         <EntityType Name="Land">
           <Key>
             <PropertyRef Name="Id" />
@@ -93,6 +121,12 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="PropertyId" Type="int" Nullable="false" />
           <Property Name="TotalArea" Type="int" />
+        </EntityType>
+        <EntityType Name="LandDemand">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Offer">
           <Key>
@@ -123,15 +157,12 @@
           <Property Name="AddressHouse" Type="nvarchar" MaxLength="50" />
           <Property Name="AddressNumber" Type="nvarchar" MaxLength="50" />
         </EntityType>
-        <EntityType Name="sysdiagrams">
+        <EntityType Name="RealEstateType">
           <Key>
-            <PropertyRef Name="diagram_id" />
+            <PropertyRef Name="Id" />
           </Key>
-          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="principal_id" Type="int" Nullable="false" />
-          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="version" Type="int" />
-          <Property Name="definition" Type="varbinary(max)" />
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="TypeName" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <Association Name="FK_Apartment_Property">
           <End Role="Property" Type="Self.Property" Multiplicity="1">
@@ -144,6 +175,30 @@
             </Principal>
             <Dependent Role="Apartment">
               <PropertyRef Name="PropertyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ApartmentDemand_BuildingDemand">
+          <End Role="BuildingDemand" Type="Self.BuildingDemand" Multiplicity="1" />
+          <End Role="ApartmentDemand" Type="Self.ApartmentDemand" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="BuildingDemand">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ApartmentDemand">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BuildingDemand_Demand">
+          <End Role="Demand" Type="Self.Demand" Multiplicity="1" />
+          <End Role="BuildingDemand" Type="Self.BuildingDemand" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Demand">
+              <PropertyRef Name="DemandId" />
+            </Principal>
+            <Dependent Role="BuildingDemand">
+              <PropertyRef Name="Id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -183,17 +238,27 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Demand_Property">
-          <End Role="Property" Type="Self.Property" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
+        <Association Name="FK_Demand_PropertyAddress">
+          <End Role="PropertyAddress" Type="Self.PropertyAddress" Multiplicity="0..1" />
           <End Role="Demand" Type="Self.Demand" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Property">
+            <Principal Role="PropertyAddress">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Demand">
-              <PropertyRef Name="PropertyId" />
+              <PropertyRef Name="AddressId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Demand_RealEstateType">
+          <End Role="RealEstateType" Type="Self.RealEstateType" Multiplicity="0..1" />
+          <End Role="Demand" Type="Self.Demand" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RealEstateType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Demand">
+              <PropertyRef Name="RealEstateTypeId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -223,6 +288,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_HouseDemand_BuildingDemand">
+          <End Role="BuildingDemand" Type="Self.BuildingDemand" Multiplicity="1" />
+          <End Role="HouseDemand" Type="Self.HouseDemand" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="BuildingDemand">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="HouseDemand">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Land_Property">
           <End Role="Property" Type="Self.Property" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -234,6 +311,18 @@
             </Principal>
             <Dependent Role="Land">
               <PropertyRef Name="PropertyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LandDemand_Demand">
+          <End Role="Demand" Type="Self.Demand" Multiplicity="1" />
+          <End Role="LandDemand" Type="Self.LandDemand" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Demand">
+              <PropertyRef Name="DemandId" />
+            </Principal>
+            <Dependent Role="LandDemand">
+              <PropertyRef Name="Id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -312,6 +401,8 @@
         <EntityContainer Name="PropertyAgencyBaseModelStoreContainer">
           <EntitySet Name="Agent" EntityType="Self.Agent" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Apartment" EntityType="Self.Apartment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ApartmentDemand" EntityType="Self.ApartmentDemand" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BuildingDemand" EntityType="Self.BuildingDemand" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="City" EntityType="Self.City" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Client" EntityType="Self.Client" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Deal" EntityType="Self.Deal" Schema="dbo" store:Type="Tables" />
@@ -319,14 +410,24 @@
           <EntitySet Name="District" EntityType="Self.District" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DistrictPolygon" EntityType="Self.DistrictPolygon" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="House" EntityType="Self.House" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="HouseDemand" EntityType="Self.HouseDemand" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Land" EntityType="Self.Land" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LandDemand" EntityType="Self.LandDemand" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Offer" EntityType="Self.Offer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Property" EntityType="Self.Property" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PropertyAddress" EntityType="Self.PropertyAddress" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RealEstateType" EntityType="Self.RealEstateType" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Apartment_Property" Association="Self.FK_Apartment_Property">
             <End Role="Property" EntitySet="Property" />
             <End Role="Apartment" EntitySet="Apartment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ApartmentDemand_BuildingDemand" Association="Self.FK_ApartmentDemand_BuildingDemand">
+            <End Role="BuildingDemand" EntitySet="BuildingDemand" />
+            <End Role="ApartmentDemand" EntitySet="ApartmentDemand" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BuildingDemand_Demand" Association="Self.FK_BuildingDemand_Demand">
+            <End Role="Demand" EntitySet="Demand" />
+            <End Role="BuildingDemand" EntitySet="BuildingDemand" />
           </AssociationSet>
           <AssociationSet Name="FK_Deal_Offer" Association="Self.FK_Deal_Offer">
             <End Role="Offer" EntitySet="Offer" />
@@ -340,8 +441,12 @@
             <End Role="Client" EntitySet="Client" />
             <End Role="Demand" EntitySet="Demand" />
           </AssociationSet>
-          <AssociationSet Name="FK_Demand_Property" Association="Self.FK_Demand_Property">
-            <End Role="Property" EntitySet="Property" />
+          <AssociationSet Name="FK_Demand_PropertyAddress" Association="Self.FK_Demand_PropertyAddress">
+            <End Role="PropertyAddress" EntitySet="PropertyAddress" />
+            <End Role="Demand" EntitySet="Demand" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Demand_RealEstateType" Association="Self.FK_Demand_RealEstateType">
+            <End Role="RealEstateType" EntitySet="RealEstateType" />
             <End Role="Demand" EntitySet="Demand" />
           </AssociationSet>
           <AssociationSet Name="FK_DistrictPolygon_District" Association="Self.FK_DistrictPolygon_District">
@@ -352,9 +457,17 @@
             <End Role="Property" EntitySet="Property" />
             <End Role="House" EntitySet="House" />
           </AssociationSet>
+          <AssociationSet Name="FK_HouseDemand_BuildingDemand" Association="Self.FK_HouseDemand_BuildingDemand">
+            <End Role="BuildingDemand" EntitySet="BuildingDemand" />
+            <End Role="HouseDemand" EntitySet="HouseDemand" />
+          </AssociationSet>
           <AssociationSet Name="FK_Land_Property" Association="Self.FK_Land_Property">
             <End Role="Property" EntitySet="Property" />
             <End Role="Land" EntitySet="Land" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LandDemand_Demand" Association="Self.FK_LandDemand_Demand">
+            <End Role="Demand" EntitySet="Demand" />
+            <End Role="LandDemand" EntitySet="LandDemand" />
           </AssociationSet>
           <AssociationSet Name="FK_Offer_Agent" Association="Self.FK_Offer_Agent">
             <End Role="Agent" EntitySet="Agent" />
@@ -408,6 +521,14 @@
           <Property Name="TotalArea" Type="Decimal" Precision="20" Scale="2" />
           <NavigationProperty Name="Property" Relationship="Self.FK_Apartment_Property" FromRole="Apartment" ToRole="Property" />
         </EntityType>
+        <EntityType Name="ApartmentDemand" BaseType="PropertyAgencyBaseModel.BuildingDemand">
+          <Property Name="MinFloor" Type="Byte" />
+          <Property Name="MaxFloor" Type="Byte" />
+        </EntityType>
+        <EntityType Name="BuildingDemand" BaseType="PropertyAgencyBaseModel.Demand">
+          <Property Name="MinRooms" Type="Byte" />
+          <Property Name="MaxRooms" Type="Byte" />
+        </EntityType>
         <EntityType Name="City">
           <Key>
             <PropertyRef Name="Id" />
@@ -429,18 +550,31 @@
           <NavigationProperty Name="Demand" Relationship="Self.FK_Demand_Client" FromRole="Client" ToRole="Demand" />
           <NavigationProperty Name="Offer" Relationship="Self.FK_Offer_Client" FromRole="Client" ToRole="Offer" />
         </EntityType>
+        <EntityType Name="Deal">
+          <Key>
+            <PropertyRef Name="DealId" />
+          </Key>
+          <Property Name="DealId" Type="Int32" Nullable="false" />
+          <Property Name="OfferId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Offer" Relationship="Self.FK_Deal_Offer" FromRole="Deal" ToRole="Offer" />
+        </EntityType>
         <EntityType Name="Demand">
           <Key>
-            <PropertyRef Name="ClientId" />
-            <PropertyRef Name="AgentId" />
-            <PropertyRef Name="PropertyId" />
+            <PropertyRef Name="DemandId" />
           </Key>
+          <Property Name="DemandId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ClientId" Type="Int32" Nullable="false" />
           <Property Name="AgentId" Type="Int32" Nullable="false" />
-          <Property Name="PropertyId" Type="Int32" Nullable="false" />
+          <Property Name="AddressId" Type="Int32" />
+          <Property Name="MinPrice" Type="Int32" />
+          <Property Name="MaxPrice" Type="Int32" />
+          <Property Name="MinArea" Type="Decimal" Precision="20" Scale="2" />
+          <Property Name="MaxArea" Type="Decimal" Precision="20" Scale="2" />
           <NavigationProperty Name="Agent" Relationship="Self.FK_Demand_Agent" FromRole="Demand" ToRole="Agent" />
           <NavigationProperty Name="Client" Relationship="Self.FK_Demand_Client" FromRole="Demand" ToRole="Client" />
-          <NavigationProperty Name="Property" Relationship="Self.FK_Demand_Property" FromRole="Demand" ToRole="Property" />
+          <NavigationProperty Name="RealEstateType" Relationship="Self.FK_Demand_RealEstateType" FromRole="Demand" ToRole="RealEstateType" />
+          <Property Name="RealEstateTypeId" Type="Int32" />
+          <NavigationProperty Name="PropertyAddress" Relationship="PropertyAgencyBaseModel.FK_Demand_PropertyAddress" FromRole="Demand" ToRole="PropertyAddress" />
         </EntityType>
         <EntityType Name="District">
           <Key>
@@ -472,6 +606,10 @@
           <Property Name="TotalArea" Type="Decimal" Precision="20" Scale="2" />
           <NavigationProperty Name="Property" Relationship="Self.FK_House_Property" FromRole="House" ToRole="Property" />
         </EntityType>
+        <EntityType Name="HouseDemand" BaseType="PropertyAgencyBaseModel.BuildingDemand">
+          <Property Name="MinRoomsCount" Type="Byte" />
+          <Property Name="MaxRoomsCount" Type="Byte" />
+        </EntityType>
         <EntityType Name="Land">
           <Key>
             <PropertyRef Name="Id" />
@@ -480,6 +618,8 @@
           <Property Name="PropertyId" Type="Int32" Nullable="false" />
           <Property Name="TotalArea" Type="Int32" />
           <NavigationProperty Name="Property" Relationship="Self.FK_Land_Property" FromRole="Land" ToRole="Property" />
+        </EntityType>
+        <EntityType Name="LandDemand" BaseType="PropertyAgencyBaseModel.Demand">
         </EntityType>
         <EntityType Name="Offer">
           <Key>
@@ -492,8 +632,8 @@
           <Property Name="PropertyId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Agent" Relationship="Self.FK_Offer_Agent" FromRole="Offer" ToRole="Agent" />
           <NavigationProperty Name="Client" Relationship="Self.FK_Offer_Client" FromRole="Offer" ToRole="Client" />
+          <NavigationProperty Name="Deal" Relationship="Self.FK_Deal_Offer" FromRole="Offer" ToRole="Deal" />
           <NavigationProperty Name="Property" Relationship="Self.FK_Offer_Property" FromRole="Offer" ToRole="Property" />
-          <NavigationProperty Name="Deal" Relationship="PropertyAgencyBaseModel.FK_Deal_Offer" FromRole="Offer" ToRole="Deal" />
         </EntityType>
         <EntityType Name="Property">
           <Key>
@@ -504,7 +644,6 @@
           <Property Name="Latitude" Type="Decimal" Precision="20" Scale="13" Nullable="false" />
           <Property Name="Longitude" Type="Decimal" Precision="20" Scale="13" Nullable="false" />
           <NavigationProperty Name="Apartment" Relationship="Self.FK_Apartment_Property" FromRole="Property" ToRole="Apartment" />
-          <NavigationProperty Name="Demand" Relationship="Self.FK_Demand_Property" FromRole="Property" ToRole="Demand" />
           <NavigationProperty Name="House" Relationship="Self.FK_House_Property" FromRole="Property" ToRole="House" />
           <NavigationProperty Name="Land" Relationship="Self.FK_Land_Property" FromRole="Property" ToRole="Land" />
           <NavigationProperty Name="Offer" Relationship="Self.FK_Offer_Property" FromRole="Property" ToRole="Offer" />
@@ -522,6 +661,15 @@
           <NavigationProperty Name="City" Relationship="Self.FK_PropertyAddress_City" FromRole="PropertyAddress" ToRole="City" />
           <NavigationProperty Name="District" Relationship="Self.FK_PropertyAddress_District" FromRole="PropertyAddress" ToRole="District" />
           <NavigationProperty Name="Property" Relationship="Self.FK_Property_PropertyAddress" FromRole="PropertyAddress" ToRole="Property" />
+          <NavigationProperty Name="Demand" Relationship="PropertyAgencyBaseModel.FK_Demand_PropertyAddress" FromRole="PropertyAddress" ToRole="Demand" />
+        </EntityType>
+        <EntityType Name="RealEstateType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="TypeName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Demand" Relationship="Self.FK_Demand_RealEstateType" FromRole="RealEstateType" ToRole="Demand" />
         </EntityType>
         <Association Name="FK_Demand_Agent">
           <End Role="Agent" Type="Self.Agent" Multiplicity="1" />
@@ -597,17 +745,27 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Demand_Property">
-          <End Role="Property" Type="Self.Property" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
+        <Association Name="FK_Deal_Offer">
+          <End Role="Offer" Type="Self.Offer" Multiplicity="1" />
+          <End Role="Deal" Type="Self.Deal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Offer">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Deal">
+              <PropertyRef Name="OfferId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Demand_RealEstateType">
+          <End Role="RealEstateType" Type="Self.RealEstateType" Multiplicity="0..1" />
           <End Role="Demand" Type="Self.Demand" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Property">
+            <Principal Role="RealEstateType">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Demand">
-              <PropertyRef Name="PropertyId" />
+              <PropertyRef Name="RealEstateTypeId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -692,6 +850,7 @@
           <EntitySet Name="Apartment" EntityType="Self.Apartment" />
           <EntitySet Name="City" EntityType="Self.City" />
           <EntitySet Name="Client" EntityType="Self.Client" />
+          <EntitySet Name="Deal" EntityType="Self.Deal" />
           <EntitySet Name="Demand" EntityType="Self.Demand" />
           <EntitySet Name="District" EntityType="Self.District" />
           <EntitySet Name="DistrictPolygon" EntityType="Self.DistrictPolygon" />
@@ -700,6 +859,7 @@
           <EntitySet Name="Offer" EntityType="Self.Offer" />
           <EntitySet Name="Property" EntityType="Self.Property" />
           <EntitySet Name="PropertyAddress" EntityType="Self.PropertyAddress" />
+          <EntitySet Name="RealEstateType" EntityType="Self.RealEstateType" />
           <AssociationSet Name="FK_Demand_Agent" Association="Self.FK_Demand_Agent">
             <End Role="Agent" EntitySet="Agent" />
             <End Role="Demand" EntitySet="Demand" />
@@ -724,8 +884,12 @@
             <End Role="Client" EntitySet="Client" />
             <End Role="Offer" EntitySet="Offer" />
           </AssociationSet>
-          <AssociationSet Name="FK_Demand_Property" Association="Self.FK_Demand_Property">
-            <End Role="Property" EntitySet="Property" />
+          <AssociationSet Name="FK_Deal_Offer" Association="Self.FK_Deal_Offer">
+            <End Role="Offer" EntitySet="Offer" />
+            <End Role="Deal" EntitySet="Deal" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Demand_RealEstateType" Association="Self.FK_Demand_RealEstateType">
+            <End Role="RealEstateType" EntitySet="RealEstateType" />
             <End Role="Demand" EntitySet="Demand" />
           </AssociationSet>
           <AssociationSet Name="FK_DistrictPolygon_District" Association="Self.FK_DistrictPolygon_District">
@@ -752,40 +916,20 @@
             <End Role="PropertyAddress" EntitySet="PropertyAddress" />
             <End Role="Property" EntitySet="Property" />
           </AssociationSet>
-          <EntitySet Name="Deal" EntityType="PropertyAgencyBaseModel.Deal" />
-          <EntitySet Name="sysdiagrams" EntityType="PropertyAgencyBaseModel.sysdiagrams" />
-          <AssociationSet Name="FK_Deal_Offer" Association="PropertyAgencyBaseModel.FK_Deal_Offer">
-            <End Role="Offer" EntitySet="Offer" />
-            <End Role="Deal" EntitySet="Deal" />
+          <AssociationSet Name="FK_Demand_PropertyAddress" Association="PropertyAgencyBaseModel.FK_Demand_PropertyAddress">
+            <End Role="PropertyAddress" EntitySet="PropertyAddress" />
+            <End Role="Demand" EntitySet="Demand" />
           </AssociationSet>
         </EntityContainer>
-        <EntityType Name="Deal">
-          <Key>
-            <PropertyRef Name="DealId" />
-          </Key>
-          <Property Name="DealId" Type="Int32" Nullable="false" />
-          <Property Name="OfferId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Offer" Relationship="PropertyAgencyBaseModel.FK_Deal_Offer" FromRole="Deal" ToRole="Offer" />
-        </EntityType>
-        <EntityType Name="sysdiagrams">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="principal_id" Type="Int32" Nullable="false" />
-          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="version" Type="Int32" />
-          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
-        </EntityType>
-        <Association Name="FK_Deal_Offer">
-          <End Type="PropertyAgencyBaseModel.Offer" Role="Offer" Multiplicity="1" />
-          <End Type="PropertyAgencyBaseModel.Deal" Role="Deal" Multiplicity="*" />
+        <Association Name="FK_Demand_PropertyAddress">
+          <End Type="PropertyAgencyBaseModel.PropertyAddress" Role="PropertyAddress" Multiplicity="0..1" />
+          <End Type="PropertyAgencyBaseModel.Demand" Role="Demand" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Offer">
+            <Principal Role="PropertyAddress">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="Deal">
-              <PropertyRef Name="OfferId" />
+            <Dependent Role="Demand">
+              <PropertyRef Name="AddressId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -837,12 +981,54 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Deal">
+            <EntityTypeMapping TypeName="PropertyAgencyBaseModel.Deal">
+              <MappingFragment StoreEntitySet="Deal">
+                <ScalarProperty Name="DealId" ColumnName="DealId" />
+                <ScalarProperty Name="OfferId" ColumnName="OfferId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Demand">
-            <EntityTypeMapping TypeName="PropertyAgencyBaseModel.Demand">
+            <EntityTypeMapping TypeName="IsTypeOf(PropertyAgencyBaseModel.Demand)">
               <MappingFragment StoreEntitySet="Demand">
-                <ScalarProperty Name="ClientId" ColumnName="ClientId" />
+                <ScalarProperty Name="RealEstateTypeId" ColumnName="RealEstateTypeId" />
+                <ScalarProperty Name="DemandId" ColumnName="DemandId" />
+                <ScalarProperty Name="MaxArea" ColumnName="MaxArea" />
+                <ScalarProperty Name="MinArea" ColumnName="MinArea" />
+                <ScalarProperty Name="MaxPrice" ColumnName="MaxPrice" />
+                <ScalarProperty Name="MinPrice" ColumnName="MinPrice" />
+                <ScalarProperty Name="AddressId" ColumnName="AddressId" />
                 <ScalarProperty Name="AgentId" ColumnName="AgentId" />
-                <ScalarProperty Name="PropertyId" ColumnName="PropertyId" />
+                <ScalarProperty Name="ClientId" ColumnName="ClientId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(PropertyAgencyBaseModel.BuildingDemand)">
+              <MappingFragment StoreEntitySet="BuildingDemand">
+                <ScalarProperty Name="DemandId" ColumnName="Id" />
+                <ScalarProperty Name="MaxRooms" ColumnName="MaxRooms" />
+                <ScalarProperty Name="MinRooms" ColumnName="MinRooms" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(PropertyAgencyBaseModel.LandDemand)">
+              <MappingFragment StoreEntitySet="LandDemand">
+                <ScalarProperty Name="DemandId" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(PropertyAgencyBaseModel.ApartmentDemand)">
+              <MappingFragment StoreEntitySet="ApartmentDemand">
+                <ScalarProperty Name="DemandId" ColumnName="Id" />
+                <ScalarProperty Name="MaxFloor" ColumnName="MaxFloor" />
+                <ScalarProperty Name="MinFloor" ColumnName="MinFloor" />
+                
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(PropertyAgencyBaseModel.HouseDemand)">
+              <MappingFragment StoreEntitySet="HouseDemand">
+                <ScalarProperty Name="DemandId" ColumnName="Id" />
+                <ScalarProperty Name="MaxRoomsCount" ColumnName="MaxRoomsCount" />
+                <ScalarProperty Name="MinRoomsCount" ColumnName="MinRoomsCount" />
+                
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -916,22 +1102,11 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Deal">
-            <EntityTypeMapping TypeName="PropertyAgencyBaseModel.Deal">
-              <MappingFragment StoreEntitySet="Deal">
-                <ScalarProperty Name="OfferId" ColumnName="OfferId" />
-                <ScalarProperty Name="DealId" ColumnName="DealId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="PropertyAgencyBaseModel.sysdiagrams">
-              <MappingFragment StoreEntitySet="sysdiagrams">
-                <ScalarProperty Name="definition" ColumnName="definition" />
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
-                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
-                <ScalarProperty Name="name" ColumnName="name" />
+          <EntitySetMapping Name="RealEstateType">
+            <EntityTypeMapping TypeName="PropertyAgencyBaseModel.RealEstateType">
+              <MappingFragment StoreEntitySet="RealEstateType">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="TypeName" ColumnName="TypeName" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

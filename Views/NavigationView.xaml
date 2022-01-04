@@ -64,6 +64,9 @@
                 <Button Style="{StaticResource CommonButton}"
                         Content="Offers"
                         Command="{Binding NavigateToOffersCommand}"></Button>
+                <Button Style="{StaticResource CommonButton}"
+                        Content="Demands"
+                        Command="{Binding NavigateToDemandsCommand}"></Button>
             </StackPanel>
             <ContentControl Content="{Binding CurrentViewModel}"
                             Grid.Row="1"
@@ -92,6 +95,9 @@
                     </DataTemplate>
                     <DataTemplate DataType="{x:Type viewmodels:AddEditOfferViewModel}">
                         <views:AddEditOfferView></views:AddEditOfferView>
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type viewmodels:DemandViewModel}">
+                        <views:DemandView></views:DemandView>
                     </DataTemplate>
                 </ContentControl.Resources>
             </ContentControl>

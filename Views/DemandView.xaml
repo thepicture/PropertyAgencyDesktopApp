@@ -1,14 +1,11 @@
-﻿<UserControl x:Class="PropertyAgencyDesktopApp.Views.OfferView"
+﻿<UserControl x:Class="PropertyAgencyDesktopApp.Views.DemandView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:PropertyAgencyDesktopApp.Views"
-             xmlns:viewmodels="clr-namespace:PropertyAgencyDesktopApp.ViewModels"
-             xmlns:controls="clr-namespace:PropertyAgencyDesktopApp.Controls"
-             d:DataContext="{d:DesignInstance Type=viewmodels:OfferViewModel}"
+             xmlns:local="clr-namespace:PropertyAgencyDesktopApp.Views" xmlns:viewmodels="clr-namespace:PropertyAgencyDesktopApp.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:DemandViewModel}"
              mc:Ignorable="d" 
-             d:DesignHeight="450"
+             d:DesignHeight="450" 
              d:DesignWidth="800">
     <Grid>
         <Grid.RowDefinitions>
@@ -16,15 +13,15 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <StackPanel Orientation="Horizontal">
-            <TextBlock Text="Offers"
+            <TextBlock Text="Demands"
                        FontWeight="Bold"
                        Style="{StaticResource CommonBlock}"
                        FontSize="30"></TextBlock>
-            <Button Content="Add a new offer"
+            <Button Content="Add a new demand"
                     Style="{StaticResource CommonButton}"
-                    Command="{Binding AddNewOfferCommand}"></Button>
+                    Command="{Binding AddNewDemandCommand}"></Button>
         </StackPanel>
-        <DataGrid ItemsSource="{Binding Offers}"
+        <DataGrid ItemsSource="{Binding Demands}"
                   IsReadOnly="True"
                   AutoGenerateColumns="False"
                   ColumnWidth="*"
@@ -52,23 +49,41 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="Real Estate">
+                <DataGridTemplateColumn Header="Real Estate Type">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBlock Style="{StaticResource CommonBlock}">
-                                    <Run Text="{Binding Property.PropertyAddress.City.CityName}"></Run>
-                                    <Run Text="{Binding Property.PropertyAddress.District.DistrictName}"></Run>
-                                    <Run Text="{Binding Property.PropertyAddress.AddressHouse}"></Run>
-                                    <Run Text="{Binding Property.PropertyAddress.AddressNumber}"></Run>
+                            <TextBlock Style="{StaticResource CommonBlock}"
+                                       Text="{Binding RealEstateType.TypeName}">
                             </TextBlock>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="Price">
+                <DataGridTemplateColumn Header="Address">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Style="{StaticResource CommonBlock}">
+                                    <Run Text="{Binding PropertyAddress.City.CityName}"></Run>
+                                    <Run Text="{Binding PropertyAddress.District.DistrictName}"></Run>
+                                    <Run Text="{Binding PropertyAddress.AddressHouse}"></Run>
+                                    <Run Text="{Binding PropertyAddress.AddressNumber}"></Run>
+                            </TextBlock>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Minimum price">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <TextBlock Style="{StaticResource CommonBlock}"
-                                       Text="{Binding Price, StringFormat={}{0:F2}RUB}">
+                                       Text="{Binding MinPrice, StringFormat={}{0}RUB, TargetNullValue=Not specified}">
+                            </TextBlock>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Maximum price">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Style="{StaticResource CommonBlock}"
+                                       Text="{Binding MaxPrice, StringFormat={}{0}RUB, TargetNullValue=Not specified}">
                             </TextBlock>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>

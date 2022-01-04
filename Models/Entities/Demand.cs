@@ -14,12 +14,19 @@ namespace PropertyAgencyDesktopApp.Models.Entities
     
     public partial class Demand
     {
+        public int DemandId { get; set; }
         public int ClientId { get; set; }
         public int AgentId { get; set; }
-        public int PropertyId { get; set; }
+        public Nullable<int> AddressId { get; set; }
+        public Nullable<int> MinPrice { get; set; }
+        public Nullable<int> MaxPrice { get; set; }
+        public Nullable<decimal> MinArea { get; set; }
+        public Nullable<decimal> MaxArea { get; set; }
+        public Nullable<int> RealEstateTypeId { get; set; }
     
         public virtual Agent Agent { get; set; }
         public virtual Client Client { get; set; }
-        public virtual Property Property { get; set; }
+        public virtual RealEstateType RealEstateType { get; set; }
+        public virtual PropertyAddress PropertyAddress { get; set; }
     }
 }

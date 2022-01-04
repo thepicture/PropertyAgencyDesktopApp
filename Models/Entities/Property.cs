@@ -18,7 +18,6 @@ namespace PropertyAgencyDesktopApp.Models.Entities
         public Property()
         {
             this.Apartment = new HashSet<Apartment>();
-            this.Demand = new HashSet<Demand>();
             this.House = new HashSet<House>();
             this.Land = new HashSet<Land>();
             this.Offer = new HashSet<Offer>();
@@ -31,8 +30,6 @@ namespace PropertyAgencyDesktopApp.Models.Entities
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Apartment> Apartment { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Demand> Demand { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<House> House { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

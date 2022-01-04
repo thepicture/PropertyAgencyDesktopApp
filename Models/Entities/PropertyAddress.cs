@@ -18,6 +18,7 @@ namespace PropertyAgencyDesktopApp.Models.Entities
         public PropertyAddress()
         {
             this.Property = new HashSet<Property>();
+            this.Demand = new HashSet<Demand>();
         }
     
         public int Id { get; set; }
@@ -30,5 +31,7 @@ namespace PropertyAgencyDesktopApp.Models.Entities
         public virtual District District { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Property> Property { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Demand> Demand { get; set; }
     }
 }

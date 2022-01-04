@@ -73,6 +73,12 @@
     <Compile Include="Models\Entities\Apartment.cs">
       <DependentUpon>PropertyModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Entities\ApartmentDemand.cs">
+      <DependentUpon>PropertyModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entities\BuildingDemand.cs">
+      <DependentUpon>PropertyModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Entities\City.cs">
       <DependentUpon>PropertyModel.tt</DependentUpon>
     </Compile>
@@ -94,7 +100,13 @@
     <Compile Include="Models\Entities\House.cs">
       <DependentUpon>PropertyModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Entities\HouseDemand.cs">
+      <DependentUpon>PropertyModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Entities\Land.cs">
+      <DependentUpon>PropertyModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entities\LandDemand.cs">
       <DependentUpon>PropertyModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Entities\Offer.cs">
@@ -121,7 +133,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>PropertyModel.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Models\Entities\sysdiagrams.cs">
+    <Compile Include="Models\Entities\RealEstateType.cs">
       <DependentUpon>PropertyModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Services\IShowDeleteResultService.cs" />
@@ -130,6 +142,7 @@
     <Compile Include="Services\PropertyAgencyShowSaveResultService.cs" />
     <Compile Include="ViewModels\AddEditOfferViewModel.cs" />
     <Compile Include="ViewModels\AddEditPropertyViewModel.cs" />
+    <Compile Include="ViewModels\DemandViewModel.cs" />
     <Compile Include="ViewModels\OfferViewModel.cs" />
     <Compile Include="ViewModels\PropertyViewModel.cs" />
     <Compile Include="Views\AddEditOfferView.xaml.cs">
@@ -137,6 +150,9 @@
     </Compile>
     <Compile Include="Views\AddEditPropertyView.xaml.cs">
       <DependentUpon>AddEditPropertyView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DemandView.xaml.cs">
+      <DependentUpon>DemandView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\OfferView.xaml.cs">
       <DependentUpon>OfferView.xaml</DependentUpon>
@@ -173,6 +189,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ClientView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\DemandView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -286,6 +306,7 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="Models\Entities\PropertyModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

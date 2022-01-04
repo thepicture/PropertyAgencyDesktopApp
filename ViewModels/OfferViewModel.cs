@@ -11,7 +11,7 @@ namespace PropertyAgencyDesktopApp.ViewModels
 {
     public class OfferViewModel : ViewModelBase
     {
-        private PropertyAgencyBaseEntities _context = new PropertyAgencyBaseEntities();
+        private readonly PropertyAgencyBaseEntities _context = new PropertyAgencyBaseEntities();
         private IEnumerable<Offer> _offers;
         public OfferViewModel()
         {
