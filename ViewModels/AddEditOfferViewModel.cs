@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Data.Common;
 using System.Data.Entity;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace PropertyAgencyDesktopApp.ViewModels
@@ -22,22 +23,56 @@ namespace PropertyAgencyDesktopApp.ViewModels
             LoadProperties();
         }
 
-        private async void LoadProperties()
+        public AddEditOfferViewModel(Offer offer)
+        {
+            IsInCreateMode = false;
+            Title = "Edit the existing offer";
+            CurrentOffer = offer;
+            _ = LoadClients()
+            .ContinueWith((t) => LoadAgents())
+            .ContinueWith((t) => LoadProperties());
+        }
+
+        private async Task LoadProperties()
         {
             RealEstates = await _context.Property.ToListAsync();
-            CurrentRealEstate = RealEstates.First();
+            if (IsInCreateMode)
+            {
+                CurrentRealEstate = RealEstates.First();
+            }
+            else
+            {
+                CurrentRealEstate = RealEstates
+                               .First(re => CurrentOffer.PropertyId == re.Id);
+            }
         }
 
-        private async void LoadAgents()
+        private async Task LoadAgents()
         {
             Agents = await _context.Agent.ToListAsync();
-            CurrentAgent = Agents.First();
+            if (IsInCreateMode)
+            {
+                CurrentAgent = Agents.First();
+            }
+            else
+            {
+                CurrentAgent = Agents
+                               .First(a => CurrentOffer.AgentId == a.Id);
+            }
         }
 
-        private async void LoadClients()
+        private async Task LoadClients()
         {
             Clients = await _context.Client.ToListAsync();
-            CurrentClient = Clients.First();
+            if (IsInCreateMode)
+            {
+                CurrentClient = Clients.First();
+            }
+            else
+            {
+                CurrentClient = Clients
+                                .First(c => CurrentOffer.ClientId == c.Id);
+            }
         }
 
         public Offer CurrentOffer

@@ -31,70 +31,65 @@ namespace PropertyAgencyDesktopApp.ViewModels
             CurrentCity = Cities.First();
         }
 
-        private readonly object _lock = new object();
-
         private async void LoadProperties()
         {
             IEnumerable<Property> currentProperties
                 = await _context.Property.ToListAsync();
-            lock (_lock)
+            switch (CurrentPropertyType)
             {
-                switch (CurrentPropertyType)
-                {
-                    case "Apartment":
-                        currentProperties =
-                            currentProperties.Where(p =>
-                            {
-                                return p.Apartment.Count() > 0;
-                            });
-                        break;
-                    case "House":
-                        currentProperties =
-                           currentProperties.Where(p =>
-                           {
-                               return p.House.Count() > 0;
-                           });
-                        break;
-                    case "Land":
-                        currentProperties =
-                           currentProperties.Where(p =>
-                           {
-                               return p.Land.Count() > 0;
-                           });
-                        break;
-                    default:
-                        break;
-                }
-                if (!string.IsNullOrEmpty(SearchText))
-                {
-                    IWordIndefiniteSearcher distanceCalculator = DependencyService
-                                             .Get<IWordIndefiniteSearcher>();
-                    currentProperties = currentProperties
-                        .Where(p => distanceCalculator.Calculate(
-                            SearchText.ToLower(),
-                            p.PropertyAddress.City.CityName.ToLower()) < 3
-                        || distanceCalculator.Calculate(
-                            SearchText.ToLower(),
-                            p.PropertyAddress.District.DistrictName.ToLower()) < 3
-                        || distanceCalculator.Calculate(
-                            SearchText.ToLower(),
-                            p.PropertyAddress.AddressNumber) < 1
-                        || distanceCalculator.Calculate(
-                            SearchText.ToLower(),
-                            p.PropertyAddress.AddressHouse) < 1
-                        || p.PropertyAddress.District.DistrictName
-                                                     .Contains(SearchText));
-                }
-                if (CurrentCity != null && CurrentCity.CityName != "All cities")
-                {
-                    currentProperties = currentProperties.Where(p =>
-                    {
-                        return p.PropertyAddress.City.CityName
-                        == CurrentCity.CityName;
-                    });
-                }
-                Properties = currentProperties;
+                case "Apartment":
+                    currentProperties =
+                        currentProperties.Where(p =>
+                        {
+                            return p.Apartment.Count() > 0;
+                        });
+                    break;
+                case "House":
+                    currentProperties =
+                       currentProperties.Where(p =>
+                       {
+                           return p.House.Count() > 0;
+                       });
+                    break;
+                case "Land":
+                    currentProperties =
+                       currentProperties.Where(p =>
+                       {
+                           return p.Land.Count() > 0;
+                       });
+                    break;
+                default:
+                    break;
             }
+            if (!string.IsNullOrEmpty(SearchText))
+            {
+                IWordIndefiniteSearcher distanceCalculator = DependencyService
+                                         .Get<IWordIndefiniteSearcher>();
+                currentProperties = currentProperties
+                    .Where(p => distanceCalculator.Calculate(
+                        SearchText.ToLower(),
+                        p.PropertyAddress.City.CityName.ToLower()) < 3
+                    || distanceCalculator.Calculate(
+                        SearchText.ToLower(),
+                        p.PropertyAddress.District.DistrictName.ToLower()) < 3
+                    || distanceCalculator.Calculate(
+                        SearchText.ToLower(),
+                        p.PropertyAddress.AddressNumber) < 1
+                    || distanceCalculator.Calculate(
+                        SearchText.ToLower(),
+                        p.PropertyAddress.AddressHouse) < 1
+                    || p.PropertyAddress.District.DistrictName
+                                                 .Contains(SearchText));
+            }
+            if (CurrentCity != null && CurrentCity.CityName != "All cities")
+            {
+                currentProperties = currentProperties.Where(p =>
+                {
+                    return p.PropertyAddress.City.CityName
+                    == CurrentCity.CityName;
+                });
+            }
+            Properties = currentProperties;
         }
 
         private RelayCommand addNewPropertyCommand;
@@ -229,7 +224,8 @@ namespace PropertyAgencyDesktopApp.ViewModels
             get => _currentPropertyType;
             set
             {
-                if (SetProperty(ref _currentPropertyType, value))
+                if (SetProperty(ref _currentPropertyType, value)
+                    && value != "All property types")
                 {
                     LoadProperties();
                 }
@@ -241,7 +237,8 @@ namespace PropertyAgencyDesktopApp.ViewModels
             get => _searchText;
             set
             {
-                if (SetProperty(ref _searchText, value))
+                if (SetProperty(ref _searchText, value)
+                    && !string.IsNullOrEmpty(value))
                 {
                     LoadProperties();
                 }

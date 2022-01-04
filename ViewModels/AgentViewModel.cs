@@ -13,7 +13,8 @@ namespace PropertyAgencyDesktopApp.ViewModels
 {
     public class AgentViewModel : ViewModelBase
     {
-        private PropertyAgencyBaseEntities _context = new PropertyAgencyBaseEntities();
+        private readonly PropertyAgencyBaseEntities _context =
+            new PropertyAgencyBaseEntities();
         private string _searchText;
         public AgentViewModel()
         {
@@ -26,22 +27,22 @@ namespace PropertyAgencyDesktopApp.ViewModels
             Agents = await _context.Agent.ToListAsync();
             if (!string.IsNullOrEmpty(SearchText))
             {
-                var distanceCalculator = DependencyService
+                IWordIndefiniteSearcher distanceCalculator = DependencyService
                                          .Get<IWordIndefiniteSearcher>();
-                await Task.Run(() =>
-                {
-                    return Agents = from Agent a in Agents
-                                    where distanceCalculator
-                                          .Calculate(SearchText,
-                                                  a.FirstName) < 4
-                                    || distanceCalculator
-                                       .Calculate(SearchText,
-                                                  a.LastName) < 4
-                                    || distanceCalculator
-                                       .Calculate(SearchText,
-                                                  a.MiddleName) < 4
-                                    select a;
-                });
+                _ = await Task.Run(() =>
+                  {
+                      return Agents = from Agent a in Agents
+                                      where distanceCalculator
+                                            .Calculate(SearchText,
+                                                    a.FirstName) < 4
+                                      || distanceCalculator
+                                         .Calculate(SearchText,
+                                                    a.LastName) < 4
+                                      || distanceCalculator
+                                         .Calculate(SearchText,
+                                                    a.MiddleName) < 4
+                                      select a;
+                  });
             }
         }
 
@@ -117,8 +118,11 @@ namespace PropertyAgencyDesktopApp.ViewModels
             get => _searchText;
             set
             {
-                SetProperty(ref _searchText, value);
-                LoadAgents();
+                if (SetProperty(ref _searchText, value)
+                    && !string.IsNullOrEmpty(value))
+                {
+                    LoadAgents();
+                }
             }
         }
 

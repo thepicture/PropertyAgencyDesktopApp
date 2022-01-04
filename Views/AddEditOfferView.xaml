@@ -19,8 +19,7 @@
                    Style="{StaticResource CommonBlock}"></TextBlock>
             <ComboBox ItemsSource="{Binding Clients}"
                       SelectedItem="{Binding CurrentClient}"
-                      Style="{StaticResource CommonComboBox}"
-                      IsEnabled="{Binding IsInCreateMode}">
+                      Style="{StaticResource CommonComboBox}">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock>
@@ -43,8 +42,7 @@
                    Style="{StaticResource CommonBlock}"></TextBlock>
             <ComboBox ItemsSource="{Binding Agents}"
                       SelectedItem="{Binding CurrentAgent}"
-                      Style="{StaticResource CommonComboBox}"
-                      IsEnabled="{Binding IsInCreateMode}">
+                      Style="{StaticResource CommonComboBox}">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock>
@@ -67,8 +65,7 @@
                    Style="{StaticResource CommonBlock}"></TextBlock>
             <ComboBox ItemsSource="{Binding RealEstates}"
                       SelectedItem="{Binding CurrentRealEstate}"
-                      Style="{StaticResource CommonComboBox}"
-                      IsEnabled="{Binding IsInCreateMode}">
+                      Style="{StaticResource CommonComboBox}">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock>

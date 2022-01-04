@@ -28,25 +28,26 @@ namespace PropertyAgencyDesktopApp.ViewModels
             Clients = await _context.Client.ToListAsync();
             if (!string.IsNullOrEmpty(SearchText))
             {
-                var distanceCalculator = DependencyService
-                                         .Get<IWordIndefiniteSearcher>();
-                await Task.Run(() =>
-                {
-                    return Clients = from Client c in Clients
-                                     where c.FirstName != null
-                                     && distanceCalculator
-                                        .Calculate(SearchText,
-                                                   c.FirstName) < 4
-                                     || c.LastName != null
-                                     && distanceCalculator
-                                        .Calculate(SearchText,
-                                                   c.LastName) < 4
-                                     || c.MiddleName != null
-                                     && distanceCalculator
-                                        .Calculate(SearchText,
-                                                   c.MiddleName) < 4
-                                     select c;
-                });
+                IWordIndefiniteSearcher distanceCalculator =
+                    DependencyService
+                    .Get<IWordIndefiniteSearcher>();
+                _ = await Task.Run(() =>
+                  {
+                      return Clients = from Client c in Clients
+                                       where (c.FirstName != null
+                                       && distanceCalculator
+                                          .Calculate(SearchText,
+                                                     c.FirstName) < 4)
+                                       || (c.LastName != null
+                                       && distanceCalculator
+                                          .Calculate(SearchText,
+                                                     c.LastName) < 4)
+                                       || (c.MiddleName != null
+                                       && distanceCalculator
+                                          .Calculate(SearchText,
+                                                     c.MiddleName) < 4)
+                                       select c;
+                  });
             }
         }
 
@@ -121,8 +122,11 @@ namespace PropertyAgencyDesktopApp.ViewModels
             get => _searchText;
             set
             {
-                SetProperty(ref _searchText, value);
-                LoadClients();
+                if (SetProperty(ref _searchText, value)
+                    && !string.IsNullOrEmpty(value))
+                {
+                    LoadClients();
+                }
             }
         }
 

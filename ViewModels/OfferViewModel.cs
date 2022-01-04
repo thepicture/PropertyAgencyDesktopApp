@@ -48,5 +48,47 @@ namespace PropertyAgencyDesktopApp.ViewModels
             DependencyService.Get<INavigationService<ViewModelBase>>()
                              .Navigate<AddEditOfferViewModel>();
         }
+
+        private RelayCommand editOfferCommand;
+
+        public ICommand EditOfferCommand
+        {
+            get
+            {
+                if (editOfferCommand == null)
+                {
+                    editOfferCommand = new RelayCommand(EditOffer);
+                }
+
+                return editOfferCommand;
+            }
+        }
+
+        private void EditOffer(object commandParameter)
+        {
+            Offer offer = commandParameter as Offer;
+            DependencyService.Get<INavigationService<ViewModelBase>>()
+                             .NavigateWithParameter<AddEditOfferViewModel>
+                             (offer);
+        }
+
+        private RelayCommand deleteOfferCommand;
+
+        public ICommand DeleteOfferCommand
+        {
+            get
+            {
+                if (deleteOfferCommand == null)
+                {
+                    deleteOfferCommand = new RelayCommand(DeleteOffer);
+                }
+
+                return deleteOfferCommand;
+            }
+        }
+
+        private void DeleteOffer(object commandParameter)
+        {
+        }
     }
 }
