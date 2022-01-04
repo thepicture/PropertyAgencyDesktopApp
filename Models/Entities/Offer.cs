@@ -14,6 +14,12 @@ namespace PropertyAgencyDesktopApp.Models.Entities
     
     public partial class Offer
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Offer()
+        {
+            this.Deal = new HashSet<Deal>();
+        }
+    
         public int Id { get; set; }
         public decimal Price { get; set; }
         public int AgentId { get; set; }
@@ -23,5 +29,7 @@ namespace PropertyAgencyDesktopApp.Models.Entities
         public virtual Agent Agent { get; set; }
         public virtual Client Client { get; set; }
         public virtual Property Property { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Deal> Deal { get; set; }
     }
 }

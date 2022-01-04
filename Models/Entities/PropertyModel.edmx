@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="PropertyAgencyBaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="PropertyAgencyBaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Agent">
           <Key>
             <PropertyRef Name="Id" />
@@ -42,6 +42,13 @@
           <Property Name="LastName" Type="nvarchar" MaxLength="50" />
           <Property Name="Phone" Type="nvarchar" MaxLength="50" />
           <Property Name="Email" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Deal">
+          <Key>
+            <PropertyRef Name="DealId" />
+          </Key>
+          <Property Name="DealId" Type="int" Nullable="false" />
+          <Property Name="OfferId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Demand">
           <Key>
@@ -116,6 +123,16 @@
           <Property Name="AddressHouse" Type="nvarchar" MaxLength="50" />
           <Property Name="AddressNumber" Type="nvarchar" MaxLength="50" />
         </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
         <Association Name="FK_Apartment_Property">
           <End Role="Property" Type="Self.Property" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -127,6 +144,18 @@
             </Principal>
             <Dependent Role="Apartment">
               <PropertyRef Name="PropertyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Deal_Offer">
+          <End Role="Offer" Type="Self.Offer" Multiplicity="1" />
+          <End Role="Deal" Type="Self.Deal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Offer">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Deal">
+              <PropertyRef Name="OfferId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -285,6 +314,7 @@
           <EntitySet Name="Apartment" EntityType="Self.Apartment" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="City" EntityType="Self.City" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Client" EntityType="Self.Client" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Deal" EntityType="Self.Deal" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Demand" EntityType="Self.Demand" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="District" EntityType="Self.District" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DistrictPolygon" EntityType="Self.DistrictPolygon" Schema="dbo" store:Type="Tables" />
@@ -293,9 +323,14 @@
           <EntitySet Name="Offer" EntityType="Self.Offer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Property" EntityType="Self.Property" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PropertyAddress" EntityType="Self.PropertyAddress" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Apartment_Property" Association="Self.FK_Apartment_Property">
             <End Role="Property" EntitySet="Property" />
             <End Role="Apartment" EntitySet="Apartment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Deal_Offer" Association="Self.FK_Deal_Offer">
+            <End Role="Offer" EntitySet="Offer" />
+            <End Role="Deal" EntitySet="Deal" />
           </AssociationSet>
           <AssociationSet Name="FK_Demand_Agent" Association="Self.FK_Demand_Agent">
             <End Role="Agent" EntitySet="Agent" />
@@ -346,8 +381,7 @@
             <End Role="PropertyAddress" EntitySet="PropertyAddress" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="PropertyAgencyBaseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -459,6 +493,7 @@
           <NavigationProperty Name="Agent" Relationship="Self.FK_Offer_Agent" FromRole="Offer" ToRole="Agent" />
           <NavigationProperty Name="Client" Relationship="Self.FK_Offer_Client" FromRole="Offer" ToRole="Client" />
           <NavigationProperty Name="Property" Relationship="Self.FK_Offer_Property" FromRole="Offer" ToRole="Property" />
+          <NavigationProperty Name="Deal" Relationship="PropertyAgencyBaseModel.FK_Deal_Offer" FromRole="Offer" ToRole="Deal" />
         </EntityType>
         <EntityType Name="Property">
           <Key>
@@ -717,7 +752,43 @@
             <End Role="PropertyAddress" EntitySet="PropertyAddress" />
             <End Role="Property" EntitySet="Property" />
           </AssociationSet>
+          <EntitySet Name="Deal" EntityType="PropertyAgencyBaseModel.Deal" />
+          <EntitySet Name="sysdiagrams" EntityType="PropertyAgencyBaseModel.sysdiagrams" />
+          <AssociationSet Name="FK_Deal_Offer" Association="PropertyAgencyBaseModel.FK_Deal_Offer">
+            <End Role="Offer" EntitySet="Offer" />
+            <End Role="Deal" EntitySet="Deal" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="Deal">
+          <Key>
+            <PropertyRef Name="DealId" />
+          </Key>
+          <Property Name="DealId" Type="Int32" Nullable="false" />
+          <Property Name="OfferId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Offer" Relationship="PropertyAgencyBaseModel.FK_Deal_Offer" FromRole="Deal" ToRole="Offer" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <Association Name="FK_Deal_Offer">
+          <End Type="PropertyAgencyBaseModel.Offer" Role="Offer" Multiplicity="1" />
+          <End Type="PropertyAgencyBaseModel.Deal" Role="Deal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Offer">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Deal">
+              <PropertyRef Name="OfferId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -842,6 +913,25 @@
                 <ScalarProperty Name="DistrictId" ColumnName="DistrictId" />
                 <ScalarProperty Name="AddressHouse" ColumnName="AddressHouse" />
                 <ScalarProperty Name="AddressNumber" ColumnName="AddressNumber" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Deal">
+            <EntityTypeMapping TypeName="PropertyAgencyBaseModel.Deal">
+              <MappingFragment StoreEntitySet="Deal">
+                <ScalarProperty Name="OfferId" ColumnName="OfferId" />
+                <ScalarProperty Name="DealId" ColumnName="DealId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="PropertyAgencyBaseModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="definition" ColumnName="definition" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

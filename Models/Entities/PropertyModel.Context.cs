@@ -37,5 +37,7 @@ namespace PropertyAgencyDesktopApp.Models.Entities
         public virtual DbSet<Offer> Offer { get; set; }
         public virtual DbSet<Property> Property { get; set; }
         public virtual DbSet<PropertyAddress> PropertyAddress { get; set; }
+        public virtual DbSet<Deal> Deal { get; set; }
+        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
     }
 }

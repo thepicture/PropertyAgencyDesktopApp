@@ -30,6 +30,9 @@
         <AssociationConnector Association="PropertyAgencyBaseModel.FK_Land_Property" ManuallyRouted="false" />
         <AssociationConnector Association="PropertyAgencyBaseModel.FK_Offer_Property" ManuallyRouted="false" />
         <AssociationConnector Association="PropertyAgencyBaseModel.FK_Property_PropertyAddress" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="PropertyAgencyBaseModel.Deal" Width="1.5" PointX="13.125" PointY="4" />
+        <EntityTypeShape EntityType="PropertyAgencyBaseModel.sysdiagrams" Width="1.5" PointX="0.75" PointY="0.75" />
+        <AssociationConnector Association="PropertyAgencyBaseModel.FK_Deal_Offer" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
