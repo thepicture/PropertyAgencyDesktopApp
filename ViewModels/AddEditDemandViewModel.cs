@@ -15,7 +15,6 @@ namespace PropertyAgencyDesktopApp.ViewModels
         private Demand _currentDemand = new Demand();
         private readonly PropertyAgencyBaseEntities _context =
             new PropertyAgencyBaseEntities();
-        private bool _isInCreateMode = true;
         private ApartmentDemand _currentApartmentDemand =
             new ApartmentDemand();
         private HouseDemand _currentHouseDemand =
@@ -31,28 +30,75 @@ namespace PropertyAgencyDesktopApp.ViewModels
             .ContinueWith(t => LoadRealEstates());
         }
 
-        private async void LoadRealEstates()
+        public AddEditDemandViewModel(Demand demand)
+        {
+            Title = "Edit the existing demand";
+            _ = LoadClients(demand.ClientId)
+            .ContinueWith(t => LoadAgents(demand.AgentId))
+            .ContinueWith(t => LoadAdresses(demand.AddressId))
+            .ContinueWith(t => LoadRealEstates(demand.RealEstateTypeId));
+            CurrentDemand = 
+                _context.Demand
+                .FirstOrDefault(d => d.DemandId == demand.DemandId);
+            switch (demand.RealEstateType.Id)
+            {
+                case 1:
+                    CurrentApartmentDemand =
+                        _context.Demand
+                        .OfType<ApartmentDemand>()
+                        .FirstOrDefault(ad => ad.DemandId == demand.DemandId);
+                    break;
+                case 2:
+                    CurrentHouseDemand =
+                        _context.Demand
+                        .OfType<HouseDemand>()
+                        .FirstOrDefault(hd => hd.DemandId == demand.DemandId);
+                    break;
+                case 3:
+                    CurrentLandDemand =
+                        _context.Demand
+                        .OfType<LandDemand>()
+                        .FirstOrDefault(di => di.DemandId == demand.DemandId);
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private async void LoadRealEstates(int? id = null)
         {
             RealEstateTypes = await _context.RealEstateType.ToListAsync();
-            CurrentRealEstateType = RealEstateTypes.First();
+            CurrentRealEstateType = id == null
+                ? RealEstateTypes.FirstOrDefault()
+                : RealEstateTypes
+                                        .FirstOrDefault(re => re.Id == id);
         }
 
-        private async Task LoadAdresses()
+        private async Task LoadAdresses(int? id = null)
         {
             Addresses = await _context.PropertyAddress.ToListAsync();
-            CurrentAddress = Addresses.FirstOrDefault();
+            CurrentAddress = id == null
+                ? Addresses.FirstOrDefault()
+                : Addresses
+                                        .FirstOrDefault(a => a.Id == id);
         }
 
-        private async Task LoadAgents()
+        private async Task LoadAgents(int? id = null)
         {
             Agents = await _context.Agent.ToListAsync();
-            CurrentAgent = Agents.FirstOrDefault();
+            CurrentAgent = id == null
+                ? Agents.FirstOrDefault()
+                : Agents
+                                        .FirstOrDefault(a => a.Id == id);
         }
 
-        private async Task LoadClients()
+        private async Task LoadClients(int? id = null)
         {
             Clients = await _context.Client.ToListAsync();
-            CurrentClient = Clients.FirstOrDefault();
+            CurrentClient = id == null
+               ? Clients.FirstOrDefault()
+               : Clients
+                                       .FirstOrDefault(c => c.Id == id);
         }
 
         public Demand CurrentDemand
@@ -119,11 +165,6 @@ namespace PropertyAgencyDesktopApp.ViewModels
         {
             get => _currentRealEstateType;
             set => SetProperty(ref _currentRealEstateType, value);
-        }
-        public bool IsInCreateMode
-        {
-            get => _isInCreateMode;
-            set => SetProperty(ref _isInCreateMode, value);
         }
 
         private RelayCommand _saveDemandCommand;
@@ -218,7 +259,6 @@ namespace PropertyAgencyDesktopApp.ViewModels
                         break;
                 }
             }
-
             try
             {
                 _ = await _context.SaveChangesAsync();
