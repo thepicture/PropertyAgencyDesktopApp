@@ -14,6 +14,12 @@ namespace PropertyAgencyDesktopApp.Models.Entities
     
     public partial class Demand
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Demand()
+        {
+            this.Deal = new HashSet<Deal>();
+        }
+    
         public int DemandId { get; set; }
         public int ClientId { get; set; }
         public int AgentId { get; set; }
@@ -28,5 +34,7 @@ namespace PropertyAgencyDesktopApp.Models.Entities
         public virtual Client Client { get; set; }
         public virtual RealEstateType RealEstateType { get; set; }
         public virtual PropertyAddress PropertyAddress { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Deal> Deal { get; set; }
     }
 }

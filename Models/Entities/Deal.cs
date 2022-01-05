@@ -16,7 +16,9 @@ namespace PropertyAgencyDesktopApp.Models.Entities
     {
         public int DealId { get; set; }
         public int OfferId { get; set; }
+        public int DemandId { get; set; }
     
         public virtual Offer Offer { get; set; }
+        public virtual Demand Demand { get; set; }
     }
 }

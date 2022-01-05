@@ -1,8 +1,11 @@
 ﻿using PropertyAgencyDesktopApp.Commands;
 using PropertyAgencyDesktopApp.Models.Entities;
 using PropertyAgencyDesktopApp.Services;
+using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Data.Entity;
+using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace PropertyAgencyDesktopApp.ViewModels
@@ -81,15 +84,58 @@ namespace PropertyAgencyDesktopApp.ViewModels
             {
                 if (deleteDemandCommand == null)
                 {
-                    deleteDemandCommand = new RelayCommand(DeleteDemand);
+                    deleteDemandCommand = new RelayCommand(DeleteDemandAsync);
                 }
 
                 return deleteDemandCommand;
             }
         }
 
-        private void DeleteDemand(object commandParameter)
+        private async void DeleteDemandAsync(object commandParameter)
         {
+            Demand demand = commandParameter as Demand;
+            if (demand.Deal.Count > 0)
+            {
+                IsMessageClosed = false;
+                MessageType = "Warning";
+                ValidationMessage = ShowDeleteResultService
+                                    .OnRelatedObjectsError(nameof(Demand),
+                                                           nameof(Deal));
+                return;
+            }
+            IQuestionService questionService =
+                DependencyService.Get<IQuestionService>();
+            string deleteTemplate = ShowDeleteResultService
+                                    .OnDelete(nameof(Demand));
+            if (questionService.Ask(deleteTemplate))
+            {
+                IsMessageClosed = false;
+                Demand demandFromDatabase = _context.Demand
+                                                        .Find(demand.DemandId);
+                _ = _context.Demand.Remove(demandFromDatabase);
+                try
+                {
+                    _ = await _context.SaveChangesAsync();
+                    MessageType = "Alert";
+                    ValidationMessage = ShowDeleteResultService
+                                        .OnSuccessfulDelete(nameof(Demand));
+                    LoadDemands();
+                }
+                catch (DbException ex)
+                {
+                    System.Diagnostics.Debug.Write(ex.StackTrace);
+                    MessageType = "Danger";
+                    ValidationMessage = ShowDeleteResultService
+                                        .OnCommonDeleteError(nameof(Demand));
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.Write(ex.StackTrace);
+                    MessageType = "Danger";
+                    ValidationMessage = ShowDeleteResultService
+                                        .OnFatalDeleteError(nameof(Demand));
+                }
+            }
         }
     }
 }

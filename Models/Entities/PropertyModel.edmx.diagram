@@ -42,6 +42,7 @@
         <InheritanceConnector EntityType="PropertyAgencyBaseModel.ApartmentDemand" />
         <InheritanceConnector EntityType="PropertyAgencyBaseModel.HouseDemand" />
         <AssociationConnector Association="PropertyAgencyBaseModel.FK_Demand_PropertyAddress" />
+        <AssociationConnector Association="PropertyAgencyBaseModel.FK_Deal_Demand" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -65,6 +65,7 @@
           </Key>
           <Property Name="DealId" Type="int" Nullable="false" />
           <Property Name="OfferId" Type="int" Nullable="false" />
+          <Property Name="DemandId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Demand">
           <Key>
@@ -199,6 +200,18 @@
             </Principal>
             <Dependent Role="BuildingDemand">
               <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Deal_Demand">
+          <End Role="Demand" Type="Self.Demand" Multiplicity="1" />
+          <End Role="Deal" Type="Self.Deal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Demand">
+              <PropertyRef Name="DemandId" />
+            </Principal>
+            <Dependent Role="Deal">
+              <PropertyRef Name="DemandId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -429,6 +442,10 @@
             <End Role="Demand" EntitySet="Demand" />
             <End Role="BuildingDemand" EntitySet="BuildingDemand" />
           </AssociationSet>
+          <AssociationSet Name="FK_Deal_Demand" Association="Self.FK_Deal_Demand">
+            <End Role="Demand" EntitySet="Demand" />
+            <End Role="Deal" EntitySet="Deal" />
+          </AssociationSet>
           <AssociationSet Name="FK_Deal_Offer" Association="Self.FK_Deal_Offer">
             <End Role="Offer" EntitySet="Offer" />
             <End Role="Deal" EntitySet="Deal" />
@@ -557,6 +574,8 @@
           <Property Name="DealId" Type="Int32" Nullable="false" />
           <Property Name="OfferId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Offer" Relationship="Self.FK_Deal_Offer" FromRole="Deal" ToRole="Offer" />
+          <Property Name="DemandId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Demand" Relationship="PropertyAgencyBaseModel.FK_Deal_Demand" FromRole="Deal" ToRole="Demand" />
         </EntityType>
         <EntityType Name="Demand">
           <Key>
@@ -575,6 +594,7 @@
           <NavigationProperty Name="RealEstateType" Relationship="Self.FK_Demand_RealEstateType" FromRole="Demand" ToRole="RealEstateType" />
           <Property Name="RealEstateTypeId" Type="Int32" />
           <NavigationProperty Name="PropertyAddress" Relationship="PropertyAgencyBaseModel.FK_Demand_PropertyAddress" FromRole="Demand" ToRole="PropertyAddress" />
+          <NavigationProperty Name="Deal" Relationship="PropertyAgencyBaseModel.FK_Deal_Demand" FromRole="Demand" ToRole="Deal" />
         </EntityType>
         <EntityType Name="District">
           <Key>
@@ -920,6 +940,10 @@
             <End Role="PropertyAddress" EntitySet="PropertyAddress" />
             <End Role="Demand" EntitySet="Demand" />
           </AssociationSet>
+          <AssociationSet Name="FK_Deal_Demand" Association="PropertyAgencyBaseModel.FK_Deal_Demand">
+            <End Role="Demand" EntitySet="Demand" />
+            <End Role="Deal" EntitySet="Deal" />
+          </AssociationSet>
         </EntityContainer>
         <Association Name="FK_Demand_PropertyAddress">
           <End Type="PropertyAgencyBaseModel.PropertyAddress" Role="PropertyAddress" Multiplicity="0..1" />
@@ -930,6 +954,18 @@
             </Principal>
             <Dependent Role="Demand">
               <PropertyRef Name="AddressId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Deal_Demand">
+          <End Type="PropertyAgencyBaseModel.Demand" Role="Demand" Multiplicity="1" />
+          <End Type="PropertyAgencyBaseModel.Deal" Role="Deal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Demand">
+              <PropertyRef Name="DemandId" />
+            </Principal>
+            <Dependent Role="Deal">
+              <PropertyRef Name="DemandId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -984,6 +1020,7 @@
           <EntitySetMapping Name="Deal">
             <EntityTypeMapping TypeName="PropertyAgencyBaseModel.Deal">
               <MappingFragment StoreEntitySet="Deal">
+                <ScalarProperty Name="DemandId" ColumnName="DemandId" />
                 <ScalarProperty Name="DealId" ColumnName="DealId" />
                 <ScalarProperty Name="OfferId" ColumnName="OfferId" />
               </MappingFragment>
