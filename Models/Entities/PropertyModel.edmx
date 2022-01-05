@@ -111,8 +111,8 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" Nullable="false" />
-          <Property Name="MinRoomsCount" Type="tinyint" />
-          <Property Name="MaxRoomsCount" Type="tinyint" />
+          <Property Name="MinFloorsCount" Type="int" />
+          <Property Name="MaxFloorsCount" Type="int" />
         </EntityType>
         <EntityType Name="Land">
           <Key>
@@ -607,8 +607,8 @@
           <NavigationProperty Name="Property" Relationship="Self.FK_House_Property" FromRole="House" ToRole="Property" />
         </EntityType>
         <EntityType Name="HouseDemand" BaseType="PropertyAgencyBaseModel.BuildingDemand">
-          <Property Name="MinRoomsCount" Type="Byte" />
-          <Property Name="MaxRoomsCount" Type="Byte" />
+          <Property Name="MinFloorsCount" Type="Int32" />
+          <Property Name="MaxFloorsCount" Type="Int32" />
         </EntityType>
         <EntityType Name="Land">
           <Key>
@@ -1025,11 +1025,10 @@
             </EntityTypeMapping>
             <EntityTypeMapping TypeName="IsTypeOf(PropertyAgencyBaseModel.HouseDemand)">
               <MappingFragment StoreEntitySet="HouseDemand">
+                <ScalarProperty Name="MaxFloorsCount" ColumnName="MaxFloorsCount" />
+                <ScalarProperty Name="MinFloorsCount" ColumnName="MinFloorsCount" />
                 <ScalarProperty Name="DemandId" ColumnName="Id" />
-                <ScalarProperty Name="MaxRoomsCount" ColumnName="MaxRoomsCount" />
-                <ScalarProperty Name="MinRoomsCount" ColumnName="MinRoomsCount" />
-                
-              </MappingFragment>
+                </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="District">

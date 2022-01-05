@@ -202,7 +202,7 @@
                             </DataTrigger>
                             <DataTrigger Binding="{Binding ElementName=LongitudeText, Path=IsValidated}"
                                          Value="False">
-                                    <Setter Property="IsEnabled" Value="False" />
+                                <Setter Property="IsEnabled" Value="False" />
                             </DataTrigger>
                             <DataTrigger Binding="{Binding ElementName=FloorNumberText, Path=IsValidated}"
                                          Value="False">

@@ -16,6 +16,12 @@ namespace PropertyAgencyDesktopApp.ViewModels
         private readonly PropertyAgencyBaseEntities _context =
             new PropertyAgencyBaseEntities();
         private bool _isInCreateMode = true;
+        private ApartmentDemand _currentApartmentDemand =
+            new ApartmentDemand();
+        private HouseDemand _currentHouseDemand =
+            new HouseDemand();
+        private LandDemand _currentLandDemand =
+            new LandDemand();
         public AddEditDemandViewModel()
         {
             Title = "Add a new demand";
@@ -120,19 +126,35 @@ namespace PropertyAgencyDesktopApp.ViewModels
             set => SetProperty(ref _isInCreateMode, value);
         }
 
-        private RelayCommand saveDemandCommand;
+        private RelayCommand _saveDemandCommand;
 
         public ICommand SaveDemandCommand
         {
             get
             {
-                if (saveDemandCommand == null)
+                if (_saveDemandCommand == null)
                 {
-                    saveDemandCommand = new RelayCommand(SaveDemand);
+                    _saveDemandCommand = new RelayCommand(SaveDemand);
                 }
 
-                return saveDemandCommand;
+                return _saveDemandCommand;
             }
+        }
+
+        public ApartmentDemand CurrentApartmentDemand
+        {
+            get => _currentApartmentDemand;
+            set => SetProperty(ref _currentApartmentDemand, value);
+        }
+        public HouseDemand CurrentHouseDemand
+        {
+            get => _currentHouseDemand;
+            set => SetProperty(ref _currentHouseDemand, value);
+        }
+        public LandDemand CurrentLandDemand
+        {
+            get => _currentLandDemand;
+            set => SetProperty(ref _currentLandDemand, value);
         }
 
         private async void SaveDemand(object commandParameter)
@@ -140,25 +162,62 @@ namespace PropertyAgencyDesktopApp.ViewModels
             IsMessageClosed = false;
             if (CurrentDemand.DemandId == 0)
             {
-                switch (CurrentRealEstateType.TypeName)
+                switch (CurrentRealEstateType.Id)
                 {
-                    case "Apartment":
+                    case 1:
+                        ApartmentDemand apartmentDemand = new ApartmentDemand
+                        {
+                            Client = CurrentClient,
+                            Agent = CurrentAgent,
+                            PropertyAddress = CurrentAddress,
+                            RealEstateType = CurrentRealEstateType,
+                            MinPrice = CurrentDemand.MinPrice,
+                            MaxPrice = CurrentDemand.MaxPrice,
+                            MinArea = CurrentApartmentDemand.MinArea,
+                            MaxArea = CurrentApartmentDemand.MaxArea,
+                            MinRooms = CurrentApartmentDemand.MinRooms,
+                            MaxRooms = CurrentApartmentDemand.MaxRooms,
+                            MinFloor = CurrentApartmentDemand.MinFloor,
+                            MaxFloor = CurrentApartmentDemand.MaxFloor
+                        };
+                        _ = _context.Demand.Add(apartmentDemand);
                         break;
-                    case "House":
+                    case 2:
+                        HouseDemand houseDemand = new HouseDemand
+                        {
+                            Client = CurrentClient,
+                            Agent = CurrentAgent,
+                            PropertyAddress = CurrentAddress,
+                            RealEstateType = CurrentRealEstateType,
+                            MinPrice = CurrentDemand.MinPrice,
+                            MaxPrice = CurrentDemand.MaxPrice,
+                            MinArea = CurrentHouseDemand.MinArea,
+                            MaxArea = CurrentHouseDemand.MaxArea,
+                            MinRooms = CurrentHouseDemand.MinRooms,
+                            MaxRooms = CurrentHouseDemand.MaxRooms,
+                            MinFloorsCount = CurrentHouseDemand.MinFloorsCount,
+                            MaxFloorsCount = CurrentHouseDemand.MaxFloorsCount
+                        };
+                        _ = _context.Demand.Add(houseDemand);
                         break;
-                    case "Land":
+                    case 3:
+                        LandDemand landDemand = new LandDemand
+                        {
+                            Client = CurrentClient,
+                            Agent = CurrentAgent,
+                            PropertyAddress = CurrentAddress,
+                            RealEstateType = CurrentRealEstateType,
+                            MinPrice = CurrentDemand.MinPrice,
+                            MaxPrice = CurrentDemand.MaxPrice,
+                            MinArea = CurrentLandDemand.MinArea,
+                            MaxArea = CurrentLandDemand.MaxArea,
+                        };
+                        _ = _context.Demand.Add(landDemand);
                         break;
                     default:
                         break;
                 }
-                _ = _context.Demand.Add(CurrentDemand);
-
             }
-
-            CurrentDemand.PropertyAddress = CurrentAddress;
-            CurrentDemand.RealEstateType = CurrentRealEstateType;
-            CurrentDemand.Agent = CurrentAgent;
-            CurrentDemand.Client = CurrentClient;
 
             try
             {

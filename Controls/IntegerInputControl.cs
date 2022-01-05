@@ -8,10 +8,10 @@ namespace PropertyAgencyDesktopApp.Controls
     {
         protected override void OnKeyUp(KeyEventArgs e)
         {
-            if ((Regex.IsMatch(Text, @"^[0-9\-]+$")
-              && Text?.Length + 1 >= MinLength
-              && Text?.Length + 1 <= MaxLength) || (CanBeNull
-                && string.IsNullOrEmpty(Text)))
+            if (Text != null && (Regex.IsMatch(Text, @"^[0-9\-]+$")
+          && Text?.Length + 1 >= MinLength
+          && Text?.Length + 1 <= MaxLength) || (CanBeNull
+            && string.IsNullOrEmpty(Text)))
             {
                 IsValidated = true;
                 Color = Brushes.Green;

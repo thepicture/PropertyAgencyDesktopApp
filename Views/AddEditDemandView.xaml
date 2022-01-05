@@ -108,6 +108,169 @@
                                        IsValidated="True"
                                        Placeholder="Enter a maximum price in rubles"
                                        ValidationText="Enter a maximum price in rubles as a positive integer value"></controls:DecimalInputControl>
+            
+            <!--StackPanels-->
+            <StackPanel Name="ApartmentFields">
+                <StackPanel.Style>
+                    <Style TargetType="StackPanel">
+                        <Setter Property="Visibility" Value="Collapsed" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding CurrentRealEstateType.Id}"
+                                         Value="1">
+                                <Setter Property="Visibility" Value="Visible" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </StackPanel.Style>
+                <controls:DecimalInputControl Header="Minimum area"
+                                       x:Name="ApartmentMinimumAreaText"
+                                       Text="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.CurrentViewModel.CurrentApartmentDemand.MinArea, UpdateSourceTrigger=PropertyChanged}"
+                                       MinLength="1"
+                                       CanBeNull="True"
+                                       IsValidated="True"
+                                       Placeholder="Enter a minimum area"
+                                       ValidationText="Enter a minimum area at least with one symbol"></controls:DecimalInputControl>
+                <controls:DecimalInputControl Header="Maximum area"
+                                       x:Name="ApartmentMaximumAreaText"
+                                       Text="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.CurrentViewModel.CurrentApartmentDemand.MaxArea, UpdateSourceTrigger=PropertyChanged}"
+                                       MinLength="1"
+                                       CanBeNull="True"
+                                       IsValidated="True"
+                                       Placeholder="Enter a maximum area"
+                                       ValidationText="Enter a maximum area at least with one symbol"></controls:DecimalInputControl>
+                <controls:IntegerInputControl Header="Minimum rooms count"
+                                       x:Name="ApartmentMinRoomsText"
+                                       Text="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.CurrentViewModel.CurrentApartmentDemand.MinRooms, UpdateSourceTrigger=PropertyChanged}"
+                                       MinLength="1"
+                                       MaxLength="4"
+                                       CanBeNull="True"
+                                       IsValidated="True"
+                                       Placeholder="Enter the minimum rooms count"
+                                       ValidationText="Enter the minimum rooms count as an integer value from 1 symbol up to 3 symbols"></controls:IntegerInputControl>
+                <controls:IntegerInputControl Header="Maximum rooms count"
+                                       x:Name="ApartmentMaxRoomsText"
+                                       Text="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.CurrentViewModel.CurrentApartmentDemand.MaxRooms, UpdateSourceTrigger=PropertyChanged}"
+                                       MinLength="1"
+                                       MaxLength="4"
+                                       CanBeNull="True"
+                                       IsValidated="True"
+                                       Placeholder="Enter the maximum rooms count"
+                                       ValidationText="Enter the maximum rooms count as an integer value from 1 symbol up to 3 symbols"></controls:IntegerInputControl>
+                <controls:IntegerInputControl Header="Minimum floor"
+                                       x:Name="ApartmentMinFloorText"
+                                       Text="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.CurrentViewModel.CurrentApartmentDemand.MinFloor, UpdateSourceTrigger=PropertyChanged}"
+                                       MinLength="1"
+                                       MaxLength="4"
+                                       CanBeNull="True"
+                                       IsValidated="True"
+                                       Placeholder="Enter the minimum floor"
+                                       ValidationText="Enter the minimum floor as an integer value from 1 symbol up to 3 symbols"></controls:IntegerInputControl>
+                <controls:IntegerInputControl Header="Maximum floor"
+                                       x:Name="ApartmentMaxFloorText"
+                                       Text="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.CurrentViewModel.CurrentApartmentDemand.MaxFloor, UpdateSourceTrigger=PropertyChanged}"
+                                       MinLength="1"
+                                       MaxLength="4"
+                                       CanBeNull="True"
+                                       IsValidated="True"
+                                       Placeholder="Enter the maximum floor"
+                                       ValidationText="Enter the maximum floor as an integer value from 1 symbol up to 3 symbols"></controls:IntegerInputControl>
+            </StackPanel>
+            <StackPanel Name="HouseFields">
+                <StackPanel.Style>
+                    <Style TargetType="StackPanel">
+                        <Setter Property="Visibility" Value="Collapsed" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding CurrentRealEstateType.Id}"
+                                         Value="2">
+                                <Setter Property="Visibility" Value="Visible" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </StackPanel.Style>
+                <controls:DecimalInputControl Header="Minimum area"
+                                       x:Name="HouseMinimumAreaText"
+                                       Text="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.CurrentViewModel.CurrentHouseDemand.MinArea, UpdateSourceTrigger=PropertyChanged}"
+                                       MinLength="1"
+                                       CanBeNull="True"
+                                       IsValidated="True"
+                                       Placeholder="Enter a minimum area"
+                                       ValidationText="Enter a minimum area at least with one symbol"></controls:DecimalInputControl>
+                <controls:DecimalInputControl Header="Maximum area"
+                                       x:Name="HouseMaximumAreaText"
+                                       Text="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.CurrentViewModel.CurrentHouseDemand.MaxArea, UpdateSourceTrigger=PropertyChanged}"
+                                       MinLength="1"
+                                       CanBeNull="True"
+                                       IsValidated="True"
+                                       Placeholder="Enter a maximum area"
+                                       ValidationText="Enter a maximum area at least with one symbol"></controls:DecimalInputControl>
+                <controls:IntegerInputControl Header="Minimum rooms count"
+                                       x:Name="HouseMinRoomsText"
+                                       Text="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.CurrentViewModel.CurrentHouseDemand.MinRoomsCount, UpdateSourceTrigger=PropertyChanged}"
+                                       MinLength="1"
+                                       MaxLength="4"
+                                       CanBeNull="True"
+                                       IsValidated="True"
+                                       Placeholder="Enter the minimum rooms count"
+                                       ValidationText="Enter the minimum rooms count as an integer value from 1 symbol up to 3 symbols"></controls:IntegerInputControl>
+                <controls:IntegerInputControl Header="Maximum rooms count"
+                                       x:Name="HouseMaxRoomsText"
+                                       Text="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.CurrentViewModel.CurrentHouseDemand.MaxRoomsCount, UpdateSourceTrigger=PropertyChanged}"
+                                       MinLength="1"
+                                       MaxLength="4"
+                                       CanBeNull="True"
+                                       IsValidated="True"
+                                       Placeholder="Enter the maximum rooms count"
+                                       ValidationText="Enter the maximum rooms count as an integer value from 1 symbol up to 3 symbols"></controls:IntegerInputControl>
+                <controls:IntegerInputControl Header="Minimum floors count"
+                                       x:Name="HouseMinFloorsText"
+                                       Text="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.CurrentViewModel.CurrentHouseDemand.MinFloorsCount, UpdateSourceTrigger=PropertyChanged}"
+                                       MinLength="1"
+                                       MaxLength="4"
+                                       CanBeNull="True"
+                                       IsValidated="True"
+                                       Placeholder="Enter the minimum floors count"
+                                       ValidationText="Enter the minimum floors count as an integer value from 1 symbol up to 3 symbols"></controls:IntegerInputControl>
+                <controls:IntegerInputControl Header="Maximum floors count"
+                                       x:Name="HouseMaxFloorsText"
+                                       Text="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.CurrentViewModel.CurrentHouseDemand.MaxFloorsCount, UpdateSourceTrigger=PropertyChanged}"
+                                       MinLength="1"
+                                       MaxLength="4"
+                                       CanBeNull="True"
+                                       IsValidated="True"
+                                       Placeholder="Enter the maximum floors count"
+                                       ValidationText="Enter the maximum floors count as an integer value from 1 symbol up to 3 symbols"></controls:IntegerInputControl>
+            </StackPanel>
+            <StackPanel Name="LandFields">
+                <StackPanel.Style>
+                    <Style TargetType="StackPanel">
+                        <Setter Property="Visibility" Value="Collapsed" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding CurrentRealEstateType.Id}"
+                                         Value="3">
+                                <Setter Property="Visibility" Value="Visible" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </StackPanel.Style>
+                <controls:DecimalInputControl Header="Minimum area"
+                                       x:Name="LandMinimumAreaText"
+                                       Text="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.CurrentViewModel.CurrentLandDemand.MinArea, UpdateSourceTrigger=PropertyChanged}"
+                                       MinLength="1"
+                                       CanBeNull="True"
+                                       IsValidated="True"
+                                       Placeholder="Enter a minimum area"
+                                       ValidationText="Enter a minimum area at least with one symbol"></controls:DecimalInputControl>
+                <controls:DecimalInputControl Header="Maximum area"
+                                       x:Name="LandMaximumAreaText"
+                                       Text="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.CurrentViewModel.CurrentLandDemand.MaxArea, UpdateSourceTrigger=PropertyChanged}"
+                                       MinLength="1"
+                                       CanBeNull="True"
+                                       IsValidated="True"
+                                       Placeholder="Enter a maximum area"
+                                       ValidationText="Enter a maximum area at least with one symbol"></controls:DecimalInputControl>
+            </StackPanel>
+            <!--End of StackPanels-->
+            
             <Button Content="Save"
                     Command="{Binding SaveDemandCommand}">
                 <Button.Style>
@@ -120,6 +283,62 @@
                                 <Setter Property="IsEnabled" Value="False" />
                             </DataTrigger>
                             <DataTrigger Binding="{Binding ElementName=MaxPriceInRublesText, Path=IsValidated}"
+                                         Value="False">
+                                <Setter Property="IsEnabled" Value="False" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ElementName=ApartmentMinimumAreaText, Path=IsValidated}"
+                                         Value="False">
+                                <Setter Property="IsEnabled" Value="False" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ElementName=ApartmentMaximumAreaText, Path=IsValidated}"
+                                         Value="False">
+                                <Setter Property="IsEnabled" Value="False" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ElementName=ApartmentMinRoomsText, Path=IsValidated}"
+                                         Value="False">
+                                <Setter Property="IsEnabled" Value="False" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ElementName=ApartmentMaxRoomsText, Path=IsValidated}"
+                                         Value="False">
+                                <Setter Property="IsEnabled" Value="False" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ElementName=ApartmentMinFloorText, Path=IsValidated}"
+                                         Value="False">
+                                <Setter Property="IsEnabled" Value="False" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ElementName=ApartmentMaxFloorText, Path=IsValidated}"
+                                         Value="False">
+                                <Setter Property="IsEnabled" Value="False" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ElementName=HouseMinimumAreaText, Path=IsValidated}"
+                                         Value="False">
+                                <Setter Property="IsEnabled" Value="False" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ElementName=HouseMaximumAreaText, Path=IsValidated}"
+                                         Value="False">
+                                <Setter Property="IsEnabled" Value="False" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ElementName=HouseMinRoomsText, Path=IsValidated}"
+                                         Value="False">
+                                <Setter Property="IsEnabled" Value="False" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ElementName=HouseMaxRoomsText, Path=IsValidated}"
+                                         Value="False">
+                                <Setter Property="IsEnabled" Value="False" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ElementName=HouseMinFloorsText, Path=IsValidated}"
+                                         Value="False">
+                                <Setter Property="IsEnabled" Value="False" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ElementName=HouseMaxFloorsText, Path=IsValidated}"
+                                         Value="False">
+                                <Setter Property="IsEnabled" Value="False" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ElementName=LandMinimumAreaText, Path=IsValidated}"
+                                         Value="False">
+                                <Setter Property="IsEnabled" Value="False" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ElementName=LandMaximumAreaText, Path=IsValidated}"
                                          Value="False">
                                 <Setter Property="IsEnabled" Value="False" />
                             </DataTrigger>

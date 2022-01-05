@@ -14,7 +14,7 @@ namespace PropertyAgencyDesktopApp.Models.Entities
     
     public partial class HouseDemand : BuildingDemand
     {
-        public Nullable<byte> MinRoomsCount { get; set; }
-        public Nullable<byte> MaxRoomsCount { get; set; }
+        public Nullable<int> MinFloorsCount { get; set; }
+        public Nullable<int> MaxFloorsCount { get; set; }
     }
 }
