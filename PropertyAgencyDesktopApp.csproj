@@ -140,11 +140,15 @@
     <Compile Include="Services\IShowSaveResultService.cs" />
     <Compile Include="Services\PropertyAgencyShowDeleteResultService.cs" />
     <Compile Include="Services\PropertyAgencyShowSaveResultService.cs" />
+    <Compile Include="ViewModels\AddEditDemandViewModel.cs" />
     <Compile Include="ViewModels\AddEditOfferViewModel.cs" />
     <Compile Include="ViewModels\AddEditPropertyViewModel.cs" />
     <Compile Include="ViewModels\DemandViewModel.cs" />
     <Compile Include="ViewModels\OfferViewModel.cs" />
     <Compile Include="ViewModels\PropertyViewModel.cs" />
+    <Compile Include="Views\AddEditDemandView.xaml.cs">
+      <DependentUpon>AddEditDemandView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\AddEditOfferView.xaml.cs">
       <DependentUpon>AddEditOfferView.xaml</DependentUpon>
     </Compile>
@@ -173,6 +177,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\AddEditClientView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\AddEditDemandView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

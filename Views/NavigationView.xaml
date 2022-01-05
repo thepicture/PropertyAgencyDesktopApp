@@ -99,6 +99,9 @@
                     <DataTemplate DataType="{x:Type viewmodels:DemandViewModel}">
                         <views:DemandView></views:DemandView>
                     </DataTemplate>
+                    <DataTemplate DataType="{x:Type viewmodels:AddEditDemandViewModel}">
+                        <views:AddEditDemandView></views:AddEditDemandView>
+                    </DataTemplate>
                 </ContentControl.Resources>
             </ContentControl>
         </Grid>

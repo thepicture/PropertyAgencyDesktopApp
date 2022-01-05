@@ -174,5 +174,36 @@ namespace PropertyAgencyDesktopApp.ViewModels
             get => _currentClient;
             set => SetProperty(ref _currentClient, value);
         }
+
+        private System.Collections.IEnumerable realEstateTypes;
+
+        public System.Collections.IEnumerable RealEstateTypes { get => realEstateTypes; set => SetProperty(ref realEstateTypes, value); }
+
+        private object currentRealEstateType;
+
+        public object CurrentRealEstateType { get => currentRealEstateType; set => SetProperty(ref currentRealEstateType, value); }
+
+        private System.Collections.IEnumerable adresses;
+
+        public System.Collections.IEnumerable Adresses { get => adresses; set => SetProperty(ref adresses, value); }
+
+        private RelayCommand saveDemandCommand;
+
+        public ICommand SaveDemandCommand
+        {
+            get
+            {
+                if (saveDemandCommand == null)
+                {
+                    saveDemandCommand = new RelayCommand(SaveDemand);
+                }
+
+                return saveDemandCommand;
+            }
+        }
+
+        private void SaveDemand(object commandParameter)
+        {
+        }
     }
 }

@@ -1,0 +1,134 @@
+﻿<UserControl x:Class="PropertyAgencyDesktopApp.Views.AddEditDemandView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:PropertyAgencyDesktopApp.Views"
+      xmlns:controls="clr-namespace:PropertyAgencyDesktopApp.Controls" 
+      xmlns:viewmodels="clr-namespace:PropertyAgencyDesktopApp.ViewModels"
+      d:DataContext="{d:DesignInstance Type=viewmodels:AddEditDemandViewModel}"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" 
+      d:DesignWidth="800">
+    <ScrollViewer VerticalScrollBarVisibility="Auto"
+                  HorizontalScrollBarVisibility="Disabled">
+        <StackPanel>
+            <TextBlock Foreground="Gray"
+                   Text="Client"
+                   Margin="15 15 15 -5"
+                   Style="{StaticResource CommonBlock}"></TextBlock>
+            <ComboBox ItemsSource="{Binding Clients}"
+                      SelectedItem="{Binding CurrentClient}"
+                      Style="{StaticResource CommonComboBox}">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock>
+                            <TextBlock.Text>
+                                <MultiBinding StringFormat="{}{0} {1} {2}">
+                                    <MultiBinding.Bindings>
+                                        <Binding Path="LastName"></Binding>
+                                        <Binding Path="FirstName"></Binding>
+                                        <Binding Path="MiddleName"></Binding>
+                                    </MultiBinding.Bindings>
+                                </MultiBinding>
+                            </TextBlock.Text>
+                        </TextBlock>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+            <TextBlock Foreground="Gray"
+                   Text="Agent"
+                   Margin="15 15 15 -5"
+                   Style="{StaticResource CommonBlock}"></TextBlock>
+            <ComboBox ItemsSource="{Binding Agents}"
+                      SelectedItem="{Binding CurrentAgent}"
+                      Style="{StaticResource CommonComboBox}">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock>
+                            <TextBlock.Text>
+                                <MultiBinding StringFormat="{}{0} {1} {2}">
+                                    <MultiBinding.Bindings>
+                                        <Binding Path="LastName"></Binding>
+                                        <Binding Path="FirstName"></Binding>
+                                        <Binding Path="MiddleName"></Binding>
+                                    </MultiBinding.Bindings>
+                                </MultiBinding>
+                            </TextBlock.Text>
+                        </TextBlock>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+            <TextBlock Foreground="Gray"
+                   Text="Real Estate Type"
+                   Margin="15 15 15 -5"
+                   Style="{StaticResource CommonBlock}"></TextBlock>
+            <ComboBox ItemsSource="{Binding RealEstateTypes}"
+                      SelectedItem="{Binding CurrentRealEstateType}"
+                      Style="{StaticResource CommonComboBox}">
+            </ComboBox>
+            <TextBlock Foreground="Gray"
+                   Text="Address"
+                   Margin="15 15 15 -5"
+                   Style="{StaticResource CommonBlock}"></TextBlock>
+            <ComboBox ItemsSource="{Binding Addresses}"
+                      SelectedItem="{Binding CurrentAddress}"
+                      Style="{StaticResource CommonComboBox}">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock>
+                            <TextBlock.Text>
+                                <MultiBinding StringFormat="{}{0} {1} {2} {3}">
+                                    <MultiBinding.Bindings>
+                                        <Binding Path="City.CityName"></Binding>
+                                        <Binding Path="District.DistrictName"></Binding>
+                                        <Binding Path="AddressHouse"></Binding>
+                                        <Binding Path="AddressNumber"></Binding>
+                                    </MultiBinding.Bindings>
+                                </MultiBinding>
+                            </TextBlock.Text>
+                        </TextBlock>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+            <controls:DecimalInputControl Header="Minimal price in rubles"
+                                       x:Name="MinPriceInRublesText"
+                                       Text="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.CurrentViewModel.CurrentDemand.MinPrice, UpdateSourceTrigger=PropertyChanged}"
+                                       MinValue="1"
+                                       CanBeNull="True"
+                                       IsValidated="True"
+                                       Placeholder="Enter a minimum price in rubles"
+                                       ValidationText="Enter a minimum price in rubles as a positive integer value"></controls:DecimalInputControl>
+            <controls:DecimalInputControl Header="Maximum price in rubles"
+                                       x:Name="MaxPriceInRublesText"
+                                       Text="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.CurrentViewModel.CurrentDemand.MaxPrice, UpdateSourceTrigger=PropertyChanged}"
+                                       MinValue="1"
+                                       CanBeNull="True"
+                                       IsValidated="True"
+                                       Placeholder="Enter a maximum price in rubles"
+                                       ValidationText="Enter a maximum price in rubles as a positive integer value"></controls:DecimalInputControl>
+            <Button Content="Save"
+                    Command="{Binding SaveDemandCommand}">
+                <Button.Style>
+                    <Style TargetType="Button"
+                           BasedOn="{StaticResource CommonButton}">
+                        <Setter Property="IsEnabled" Value="True" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ElementName=MinPriceInRublesText, Path=IsValidated}"
+                                         Value="False">
+                                <Setter Property="IsEnabled" Value="False" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ElementName=MaxPriceInRublesText, Path=IsValidated}"
+                                         Value="False">
+                                <Setter Property="IsEnabled" Value="False" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+            <Button Style="{StaticResource CommonButton}"
+                    Content="Go back"
+                    Command="{Binding GoBackCommand}"></Button>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>
