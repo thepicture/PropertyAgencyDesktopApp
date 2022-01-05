@@ -65,6 +65,7 @@
                    Style="{StaticResource CommonBlock}"></TextBlock>
             <ComboBox ItemsSource="{Binding RealEstateTypes}"
                       SelectedItem="{Binding CurrentRealEstateType}"
+                      DisplayMemberPath="TypeName"
                       Style="{StaticResource CommonComboBox}">
             </ComboBox>
             <TextBlock Foreground="Gray"
