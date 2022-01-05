@@ -13,6 +13,71 @@
     <ScrollViewer VerticalScrollBarVisibility="Auto"
                   HorizontalScrollBarVisibility="Disabled">
         <StackPanel>
+            <TextBlock Foreground="Gray"
+                   Text="Demands of the client"
+                   Margin="15 15 15 -5"
+                   Opacity="{Binding CurrentClient.Id}"
+                   Style="{StaticResource CommonBlock}"></TextBlock>
+            <DataGrid ItemsSource="{Binding CurrentClient.Demand}"
+                  IsReadOnly="True"
+                  AutoGenerateColumns="False"
+                  ColumnWidth="*"
+                  Opacity="{Binding CurrentClient.Id}"
+                  Margin="15"
+                  Grid.Row="1">
+                <DataGrid.Columns>
+                    <DataGridTemplateColumn Header="Agent">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Style="{StaticResource CommonBlock}">
+                                    <Run Text="{Binding Agent.LastName}"></Run>
+                                    <Run Text="{Binding Agent.FirstName}"></Run>
+                                    <Run Text="{Binding Agent.MiddleName}"></Run>
+                                </TextBlock>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header="Real Estate Type">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Style="{StaticResource CommonBlock}"
+                                       Text="{Binding RealEstateType.TypeName}">
+                                </TextBlock>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header="Address">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Style="{StaticResource CommonBlock}">
+                                    <Run Text="{Binding PropertyAddress.City.CityName}"></Run>
+                                    <Run Text="{Binding PropertyAddress.District.DistrictName}"></Run>
+                                    <Run Text="{Binding PropertyAddress.AddressHouse}"></Run>
+                                    <Run Text="{Binding PropertyAddress.AddressNumber}"></Run>
+                                </TextBlock>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header="Minimum price">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Style="{StaticResource CommonBlock}"
+                                       Text="{Binding MinPrice, StringFormat={}{0}RUB, TargetNullValue=Not specified}">
+                                </TextBlock>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header="Maximum price">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Style="{StaticResource CommonBlock}"
+                                       Text="{Binding MaxPrice, StringFormat={}{0}RUB, TargetNullValue=Not specified}">
+                                </TextBlock>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
             <controls:TextInputControl Header="Last name"
                                        x:Name="LastNameText"
                                        CanBeNull="True"
