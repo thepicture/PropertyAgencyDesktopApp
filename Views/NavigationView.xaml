@@ -108,6 +108,9 @@
                     <DataTemplate DataType="{x:Type viewmodels:DealViewModel}">
                         <views:DealView></views:DealView>
                     </DataTemplate>
+                    <DataTemplate DataType="{x:Type viewmodels:AddEditDealViewModel}">
+                        <views:AddEditDealView></views:AddEditDealView>
+                    </DataTemplate>
                 </ContentControl.Resources>
             </ContentControl>
         </Grid>
