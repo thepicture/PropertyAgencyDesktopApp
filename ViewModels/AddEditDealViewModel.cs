@@ -12,8 +12,8 @@ namespace PropertyAgencyDesktopApp.ViewModels
 {
     public class AddEditDealViewModel : ViewModelBase
     {
-        private IEnumerable<Offer> _supplies;
-        private IEnumerable<Demand> _demands;
+        private IList<Offer> _supplies;
+        private IList<Demand> _demands;
         private PropertyAgencyBaseEntities _context =
             new PropertyAgencyBaseEntities();
         private Offer _currentSupply;
@@ -26,30 +26,60 @@ namespace PropertyAgencyDesktopApp.ViewModels
             .ContinueWith(t => LoadSupplies());
         }
 
-        private async void LoadSupplies(int? supplyId = null)
+        public AddEditDealViewModel(Deal deal)
         {
-            Supplies = await _context.Offer.Where(s => s.Deal.Count == 0)
-                                           .ToListAsync();
-            CurrentSupply = supplyId != null
-                ? Supplies.First(s => s.Id == supplyId)
-                : Supplies.First();
+            Title = "Edit the existing deal";
+            _ = LoadDeal(deal.DealId)
+                .ContinueWith(t => LoadDemands(deal.DemandId))
+                .ContinueWith(t => LoadSupplies(deal.OfferId));
+        }
+
+        private async Task LoadDeal(int dealId)
+        {
+            CurrentDeal = await _context.Deal
+                                        .FirstAsync(d => d.DealId == dealId);
+        }
+
+        private async Task LoadSupplies(int? supplyId = null)
+        {
+            if (supplyId == null)
+            {
+                Supplies = await _context.Offer.Where(o => o.Deal.Count == 0)
+                                               .ToListAsync();
+                CurrentSupply = Supplies.First();
+            }
+            else
+            {
+                Supplies = await _context.Offer.ToListAsync();
+                Supplies = Supplies.Where(d => d.Deal.Count == 0 || d.Deal.Contains(CurrentDeal))
+                                   .ToList();
+                CurrentSupply = Supplies.First(s => s.Id == supplyId);
+            }
         }
 
         private async Task LoadDemands(int? demandId = null)
         {
-            Demands = await _context.Demand.Where(d => d.Deal.Count == 0)
-                                           .ToListAsync();
-            CurrentDemand = demandId != null
-                ? Demands.First(d => d.DemandId == demandId)
-                : Demands.First();
+            if (demandId == null)
+            {
+                Demands = await _context.Demand.Where(d => d.Deal.Count == 0)
+                                               .ToListAsync();
+                CurrentDemand = Demands.First();
+            }
+            else
+            {
+                Demands = await _context.Demand.ToListAsync();
+                Demands = Demands.Where(d => d.Deal.Count == 0 || d.Deal.Contains(CurrentDeal))
+                                 .ToList();
+                CurrentDemand = Demands.First(d => d.DemandId == demandId);
+            }
         }
 
-        public IEnumerable<Offer> Supplies
+        public IList<Offer> Supplies
         {
             get => _supplies;
             set => SetProperty(ref _supplies, value);
         }
-        public IEnumerable<Demand> Demands
+        public IList<Demand> Demands
         {
             get => _demands;
             set => SetProperty(ref _demands, value);
@@ -88,10 +118,10 @@ namespace PropertyAgencyDesktopApp.ViewModels
         private async void SaveDealAsync(object commandParameter)
         {
             IsMessageClosed = false;
+            CurrentDeal.Offer = CurrentSupply;
+            CurrentDeal.Demand = CurrentDemand;
             if (CurrentDeal.DealId == 0)
             {
-                CurrentDeal.Offer = CurrentSupply;
-                CurrentDeal.Demand = CurrentDemand;
                 _context.Deal.Add(CurrentDeal);
             }
             try

@@ -67,6 +67,10 @@ namespace PropertyAgencyDesktopApp.ViewModels
 
         private void EditDeal(object commandParameter)
         {
+            Deal dealToEdit = commandParameter as Deal;
+            DependencyService.Get<INavigationService<ViewModelBase>>()
+                             .NavigateWithParameter<AddEditDealViewModel>
+                             (dealToEdit);
         }
 
         private RelayCommand deleteDealCommand;
