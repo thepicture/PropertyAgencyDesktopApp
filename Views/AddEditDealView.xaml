@@ -68,23 +68,8 @@
                 </ComboBox.ItemTemplate>
             </ComboBox>
             <Button Content="Save"
-                    Command="{Binding SaveDealCommand}">
-                <Button.Style>
-                    <Style TargetType="Button"
-                           BasedOn="{StaticResource CommonButton}">
-                        <Setter Property="IsEnabled" Value="True" />
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding ElementName=PriceInRublesText, Path=IsValidated}"
-                                         Value="False">
-                                <Setter Property="IsEnabled" Value="False" />
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding IsInCreateMode}"
-                                         Value="False">
-                                <Setter Property="IsEnabled" Value="True" />
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </Button.Style>
+                    Command="{Binding SaveDealCommand}"
+                    Style="{StaticResource CommonButton}">
             </Button>
             <Button Style="{StaticResource CommonButton}"
                     Content="Go back"

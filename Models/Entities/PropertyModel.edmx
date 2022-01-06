@@ -63,7 +63,7 @@
           <Key>
             <PropertyRef Name="DealId" />
           </Key>
-          <Property Name="DealId" Type="int" Nullable="false" />
+          <Property Name="DealId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="OfferId" Type="int" Nullable="false" />
           <Property Name="DemandId" Type="int" Nullable="false" />
         </EntityType>
@@ -571,7 +571,7 @@
           <Key>
             <PropertyRef Name="DealId" />
           </Key>
-          <Property Name="DealId" Type="Int32" Nullable="false" />
+          <Property Name="DealId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="OfferId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Offer" Relationship="Self.FK_Deal_Offer" FromRole="Deal" ToRole="Offer" />
           <Property Name="DemandId" Type="Int32" Nullable="false" />

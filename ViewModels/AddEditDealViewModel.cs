@@ -1,8 +1,12 @@
-﻿using PropertyAgencyDesktopApp.Models.Entities;
+﻿using PropertyAgencyDesktopApp.Commands;
+using PropertyAgencyDesktopApp.Models.Entities;
+using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace PropertyAgencyDesktopApp.ViewModels
 {
@@ -64,6 +68,53 @@ namespace PropertyAgencyDesktopApp.ViewModels
         {
             get => _currentDeal;
             set => SetProperty(ref _currentDeal, value);
+        }
+
+        private RelayCommand saveDealCommand;
+
+        public ICommand SaveDealCommand
+        {
+            get
+            {
+                if (saveDealCommand == null)
+                {
+                    saveDealCommand = new RelayCommand(SaveDealAsync);
+                }
+
+                return saveDealCommand;
+            }
+        }
+
+        private async void SaveDealAsync(object commandParameter)
+        {
+            IsMessageClosed = false;
+            if (CurrentDeal.DealId == 0)
+            {
+                CurrentDeal.Offer = CurrentSupply;
+                CurrentDeal.Demand = CurrentDemand;
+                _context.Deal.Add(CurrentDeal);
+            }
+            try
+            {
+                _ = await _context.SaveChangesAsync();
+                MessageType = "Alert";
+                ValidationMessage = ValidationMessage = ShowSaveResultService
+                                    .GetOnSavedTemplate(nameof(Deal));
+            }
+            catch (DbException ex)
+            {
+                System.Diagnostics.Debug.Write(ex.StackTrace);
+                MessageType = "Danger";
+                ValidationMessage = ShowSaveResultService
+                                    .GetOnCommonErrorTemplate(nameof(Deal));
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.Write(ex.StackTrace);
+                MessageType = "Danger";
+                ValidationMessage = ShowSaveResultService
+                                    .GetOnFatalErrorTemplate(nameof(Deal));
+            }
         }
     }
 }
