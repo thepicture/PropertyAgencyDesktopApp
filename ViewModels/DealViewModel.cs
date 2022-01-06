@@ -1,7 +1,9 @@
 ﻿using PropertyAgencyDesktopApp.Commands;
 using PropertyAgencyDesktopApp.Models.Entities;
 using PropertyAgencyDesktopApp.Services;
+using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Data.Entity;
 using System.Windows.Input;
 
@@ -88,8 +90,42 @@ namespace PropertyAgencyDesktopApp.ViewModels
             }
         }
 
-        private void DeleteDeal(object commandParameter)
+        private async void DeleteDeal(object commandParameter)
         {
+            Deal deal = commandParameter as Deal;
+            IQuestionService questionService =
+                DependencyService.Get<IQuestionService>();
+            string deleteTemplate = ShowDeleteResultService
+                                    .OnDelete(nameof(Deal));
+            if (questionService.Ask(deleteTemplate))
+            {
+                IsMessageClosed = false;
+                Deal dealFromDatabase = _context.Deal
+                                                        .Find(deal.DealId);
+                _ = _context.Deal.Remove(dealFromDatabase);
+                try
+                {
+                    _ = await _context.SaveChangesAsync();
+                    MessageType = "Alert";
+                    ValidationMessage = ShowDeleteResultService
+                                        .OnSuccessfulDelete(nameof(Deal));
+                    LoadDeals();
+                }
+                catch (DbException ex)
+                {
+                    System.Diagnostics.Debug.Write(ex.StackTrace);
+                    MessageType = "Danger";
+                    ValidationMessage = ShowDeleteResultService
+                                        .OnCommonDeleteError(nameof(Deal));
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.Write(ex.StackTrace);
+                    MessageType = "Danger";
+                    ValidationMessage = ShowDeleteResultService
+                                        .OnFatalDeleteError(nameof(Deal));
+                }
+            }
         }
     }
 }
