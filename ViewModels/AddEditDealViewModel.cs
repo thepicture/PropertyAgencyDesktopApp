@@ -14,7 +14,7 @@ namespace PropertyAgencyDesktopApp.ViewModels
     {
         private IList<Offer> _supplies;
         private IList<Demand> _demands;
-        private PropertyAgencyBaseEntities _context =
+        private readonly PropertyAgencyBaseEntities _context =
             new PropertyAgencyBaseEntities();
         private Offer _currentSupply;
         private Demand _currentDemand;

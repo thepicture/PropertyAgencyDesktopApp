@@ -4,7 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:PropertyAgencyDesktopApp.Views" 
-             xmlns:viewmodels="clr-namespace:PropertyAgencyDesktopApp.ViewModels"
+             xmlns:viewmodels="clr-namespace:PropertyAgencyDesktopApp.ViewModels" 
+             xmlns:converters="clr-namespace:PropertyAgencyDesktopApp.Converters"
              d:DataContext="{d:DesignInstance Type=viewmodels:AddEditDealViewModel}"
              mc:Ignorable="d" 
              d:DesignHeight="450"
@@ -12,6 +13,13 @@
     <ScrollViewer VerticalScrollBarVisibility="Auto"
                   HorizontalScrollBarVisibility="Disabled">
         <StackPanel>
+            <StackPanel.Resources>
+                <converters:ClientSellerServicesCostConverter x:Key="ClientSellerServicesCost"></converters:ClientSellerServicesCostConverter>
+                <converters:ClientBuyerServicesCostValueConverter x:Key="ClientBuyerServicesCost"></converters:ClientBuyerServicesCostValueConverter>
+                <converters:ClientSellerDeductionValueConverter x:Key="ClientSellerDeduction"></converters:ClientSellerDeductionValueConverter>
+                <converters:ClientBuyerDeductionValueConverter x:Key="ClientBuyerDeduction"></converters:ClientBuyerDeductionValueConverter>
+                <converters:CompanyTotalPriceValueConverter x:Key="TotalPriceValueConverter"></converters:CompanyTotalPriceValueConverter>
+            </StackPanel.Resources>
             <TextBlock Foreground="Gray"
                    Text="Demand"
                    Margin="15 15 15 -5"
@@ -67,6 +75,42 @@
                     </DataTemplate>
                 </ComboBox.ItemTemplate>
             </ComboBox>
+            <TextBlock Foreground="Gray"
+                   Margin="15 15 15 -5"
+                   Style="{StaticResource CommonBlock}">
+                <TextBlock.Text>
+                    <MultiBinding Converter="{StaticResource ClientSellerServicesCost}"
+                                  StringFormat="{}The services price for the client-seller: {0:F2}RUB">
+                        <MultiBinding.Bindings>
+                            <Binding Path="CurrentDeal"></Binding>
+                        </MultiBinding.Bindings>
+                    </MultiBinding>
+                </TextBlock.Text>
+            </TextBlock>
+            <TextBlock Foreground="Gray"
+                   Text="{Binding CurrentDeal, 
+                                  Converter={StaticResource ClientBuyerServicesCost}, 
+                                  StringFormat={}The services price for the client-buyer: {0:F2}RUB}"
+                   Margin="15 15 15 -5"
+                   Style="{StaticResource CommonBlock}"></TextBlock>
+            <TextBlock Foreground="Gray"
+                   Text="{Binding CurrentDeal, 
+                                  Converter={StaticResource ClientBuyerDeduction}, 
+                                  StringFormat={}The deduction of the client-buyer: {0:F2}RUB}"
+                   Margin="15 15 15 -5"
+                   Style="{StaticResource CommonBlock}"></TextBlock>
+            <TextBlock Foreground="Gray"
+                   Text="{Binding CurrentDeal, 
+                                  Converter={StaticResource ClientSellerDeduction}, 
+                                  StringFormat={}The deduction of the client-seller: {0:F2}RUB}"
+                   Margin="15 15 15 -5"
+                   Style="{StaticResource CommonBlock}"></TextBlock>
+            <TextBlock Foreground="Gray"
+                   Text="{Binding CurrentDeal, 
+                                  Converter={StaticResource TotalPriceValueConverter}, 
+                                  StringFormat={}Total deduction to the company: {0:F2}RUB}"
+                   Margin="15 15 15 -5"
+                   Style="{StaticResource CommonBlock}"></TextBlock>
             <Button Content="Save"
                     Command="{Binding SaveDealCommand}"
                     Style="{StaticResource CommonButton}">

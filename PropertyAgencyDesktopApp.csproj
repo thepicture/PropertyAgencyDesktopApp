@@ -67,6 +67,11 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Controls\DecimalInputControl.cs" />
+    <Compile Include="Converters\ClientBuyerDeductionValueConverter.cs" />
+    <Compile Include="Converters\ClientBuyerServicesCostValueConverter.cs" />
+    <Compile Include="Converters\ClientSellerDeductionValueConverter.cs" />
+    <Compile Include="Converters\ClientSellerServicesCostConverter.cs" />
+    <Compile Include="Converters\CompanyTotalPriceValueConverter.cs" />
     <Compile Include="Models\Entities\Agent.cs">
       <DependentUpon>PropertyModel.tt</DependentUpon>
     </Compile>
