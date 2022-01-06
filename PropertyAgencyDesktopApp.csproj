@@ -143,6 +143,7 @@
     <Compile Include="ViewModels\AddEditDemandViewModel.cs" />
     <Compile Include="ViewModels\AddEditOfferViewModel.cs" />
     <Compile Include="ViewModels\AddEditPropertyViewModel.cs" />
+    <Compile Include="ViewModels\DealViewModel.cs" />
     <Compile Include="ViewModels\DemandViewModel.cs" />
     <Compile Include="ViewModels\OfferViewModel.cs" />
     <Compile Include="ViewModels\PropertyViewModel.cs" />
@@ -154,6 +155,9 @@
     </Compile>
     <Compile Include="Views\AddEditPropertyView.xaml.cs">
       <DependentUpon>AddEditPropertyView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DealView.xaml.cs">
+      <DependentUpon>DealView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\DemandView.xaml.cs">
       <DependentUpon>DemandView.xaml</DependentUpon>
@@ -197,6 +201,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ClientView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\DealView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
