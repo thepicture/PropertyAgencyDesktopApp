@@ -34,6 +34,16 @@ namespace PropertyAgencyDesktopApp.ViewModels
                 .ContinueWith(t => LoadSupplies(deal.OfferId));
         }
 
+
+        public AddEditDealViewModel(Tuple<Offer, Demand> offerAndDemand)
+        {
+            Offer offer = offerAndDemand.Item1;
+            Demand demand = offerAndDemand.Item2;
+            Title = "Fast deal creation with the selected demand";
+            LoadDemands(demand.DemandId)
+            .ContinueWith(t => LoadSupplies(offer.Id));
+        }
+
         private async Task LoadDeal(int dealId)
         {
             CurrentDeal = await _context.Deal

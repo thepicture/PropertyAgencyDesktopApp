@@ -245,5 +245,31 @@ namespace PropertyAgencyDesktopApp.ViewModels
                 }
             }
         }
+
+        private RelayCommand dealOfferWithSelectedDemandCommand;
+
+        public ICommand DealOfferWithSelectedDemandCommand
+        {
+            get
+            {
+                if (dealOfferWithSelectedDemandCommand == null)
+                {
+                    dealOfferWithSelectedDemandCommand = new RelayCommand(DealOfferWithSelectedDemand);
+                }
+
+                return dealOfferWithSelectedDemandCommand;
+            }
+        }
+
+        private void DealOfferWithSelectedDemand(object commandParameter)
+        {
+            Offer selectedOffer = commandParameter as Offer;
+            DependencyService.Get<INavigationService<ViewModelBase>>()
+                             .NavigateWithParameter<AddEditDealViewModel>
+                             (Tuple.Create(
+                                 selectedOffer,
+                                 CurrentDemand
+                             ));
+        }
     }
 }
