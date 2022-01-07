@@ -39,7 +39,7 @@ namespace PropertyAgencyDesktopApp.ViewModels
         {
             Offer offer = offerAndDemand.Item1;
             Demand demand = offerAndDemand.Item2;
-            Title = "Fast deal creation with the selected demand";
+            Title = "Fast deal creation";
             LoadDemands(demand.DemandId)
             .ContinueWith(t => LoadSupplies(offer.Id));
         }

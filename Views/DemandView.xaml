@@ -123,6 +123,19 @@
                 <DataGridTemplateColumn>
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
+                            <Button Content="Deal"
+                                    IsEnabled="{Binding RelativeSource={RelativeSource AncestorType=UserControl},
+                                                        Path=DataContext.CurrentOffer.Id}"
+                                    Style="{StaticResource CommonButton}"
+                                    CommandParameter="{Binding .}"
+                                    Command="{Binding RelativeSource={RelativeSource AncestorType=UserControl},
+                                                      Path=DataContext.DealDemandWithSelectedOfferCommand}"></Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
                             <Button Content="Edit"
                                     Style="{StaticResource CommonButton}"
                                     CommandParameter="{Binding .}"

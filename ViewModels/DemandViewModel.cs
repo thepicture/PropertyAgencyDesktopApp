@@ -45,7 +45,7 @@ namespace PropertyAgencyDesktopApp.ViewModels
                         Apartment apartment =
                         CurrentOffer.Property.Apartment.First();
                         ApartmentDemand apartmentDemand = d as ApartmentDemand;
-                        if(apartmentDemand == null)
+                        if (apartmentDemand == null)
                         {
                             return false;
                         }
@@ -249,5 +249,32 @@ namespace PropertyAgencyDesktopApp.ViewModels
         }
 
         private Offer _currentOffer;
+
+        private RelayCommand dealDemandWithSelectedOfferCommand;
+
+        public ICommand DealDemandWithSelectedOfferCommand
+        {
+            get
+            {
+                if (dealDemandWithSelectedOfferCommand == null)
+                {
+                    dealDemandWithSelectedOfferCommand =
+                        new RelayCommand(DealDemandWithSelectedOffer);
+                }
+
+                return dealDemandWithSelectedOfferCommand;
+            }
+        }
+
+        private void DealDemandWithSelectedOffer(object commandParameter)
+        {
+            Demand selectedDemand = commandParameter as Demand;
+            DependencyService.Get<INavigationService<ViewModelBase>>()
+                             .NavigateWithParameter<AddEditDealViewModel>
+                             (Tuple.Create(
+                                 CurrentOffer,
+                                 selectedDemand
+                             ));
+        }
     }
 }
