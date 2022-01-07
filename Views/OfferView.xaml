@@ -15,7 +15,7 @@
             <RowDefinition Height="auto"></RowDefinition>
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <StackPanel Orientation="Horizontal">
+        <StackPanel>
             <TextBlock Text="Offers"
                        FontWeight="Bold"
                        Style="{StaticResource CommonBlock}"
@@ -23,9 +23,40 @@
             <Button Content="Add a new offer"
                     Style="{StaticResource CommonButton}"
                     Command="{Binding AddNewOfferCommand}"></Button>
+            <TextBlock Foreground="Gray"
+                   Text="Select a demand to satisfy"
+                   Margin="15 15 15 -5"
+                   Style="{StaticResource CommonBlock}"></TextBlock>
+            <ComboBox ItemsSource="{Binding Demands}"
+                      SelectedItem="{Binding CurrentDemand}"
+                      Style="{StaticResource CommonComboBox}">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock TextWrapping="Wrap">
+                            <TextBlock.Text>
+                                <MultiBinding StringFormat="{}A client {0} {1} {2} wants a {3} at the address {4} {5} {6} {7}"
+                                              FallbackValue="All demands">
+                                    <MultiBinding.Bindings>
+                                        <Binding Path="Client.LastName"></Binding>
+                                        <Binding Path="Client.FirstName"></Binding>
+                                        <Binding Path="Client.MiddleName"></Binding>
+                                        <Binding Path="RealEstateType.TypeName"></Binding>
+                                        <Binding Path="PropertyAddress.City.CityName"></Binding>
+                                        <Binding Path="PropertyAddress.District.DistrictName"></Binding>
+                                        <Binding Path="PropertyAddress.AddressHouse"></Binding>
+                                        <Binding Path="PropertyAddress.AddressNumber"></Binding>
+                                    </MultiBinding.Bindings>
+                                </MultiBinding>
+                            </TextBlock.Text>
+                        </TextBlock>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
         </StackPanel>
         <DataGrid ItemsSource="{Binding Offers}"
                   IsReadOnly="True"
+                  Style="{StaticResource CommonMarkup}"
+                  Height="auto"
                   AutoGenerateColumns="False"
                   ColumnWidth="*"
                   Grid.Row="1">
