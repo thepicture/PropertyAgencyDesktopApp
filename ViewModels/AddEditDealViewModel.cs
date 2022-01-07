@@ -87,12 +87,22 @@ namespace PropertyAgencyDesktopApp.ViewModels
         public Offer CurrentSupply
         {
             get => _currentSupply;
-            set => SetProperty(ref _currentSupply, value);
+            set
+            {
+                _ = SetProperty(ref _currentSupply, value);
+                CurrentDeal.Offer = value;
+                OnPropertyChanged(nameof(CurrentDeal));
+            }
         }
         public Demand CurrentDemand
         {
             get => _currentDemand;
-            set => SetProperty(ref _currentDemand, value);
+            set
+            {
+                _ = SetProperty(ref _currentDemand, value);
+                CurrentDeal.Demand = value;
+                OnPropertyChanged(nameof(CurrentDeal));
+            }
         }
         public Deal CurrentDeal
         {

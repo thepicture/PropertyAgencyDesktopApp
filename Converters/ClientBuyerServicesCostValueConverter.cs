@@ -16,6 +16,10 @@ namespace PropertyAgencyDesktopApp.Converters
                               CultureInfo culture)
         {
             Deal deal = value as Deal;
+            if (deal.Demand == null || deal.Offer == null)
+            {
+                return ZeroCost;
+            }
             return deal.Demand == null
                 ? ZeroCost
                 : (object)(deal.Offer.Price
