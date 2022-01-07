@@ -254,7 +254,8 @@ namespace PropertyAgencyDesktopApp.ViewModels
             {
                 if (dealOfferWithSelectedDemandCommand == null)
                 {
-                    dealOfferWithSelectedDemandCommand = new RelayCommand(DealOfferWithSelectedDemand);
+                    dealOfferWithSelectedDemandCommand =
+                        new RelayCommand(DealOfferWithSelectedDemand);
                 }
 
                 return dealOfferWithSelectedDemandCommand;

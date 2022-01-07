@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Common;
 using System.Data.Entity;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
@@ -17,12 +18,102 @@ namespace PropertyAgencyDesktopApp.ViewModels
         public DemandViewModel()
         {
             Title = "Demands";
-            LoadDemands();
+            _ = LoadOffers();
+        }
+
+        private async Task LoadOffers()
+        {
+            Offers = await _context.Offer.ToListAsync();
+            Offers.Insert(0, new Offer());
+            CurrentOffer = Offers.First();
         }
 
         private async void LoadDemands()
         {
-            Demands = await _context.Demand.ToListAsync();
+            List<Demand> currentDemands =
+                await _context.Demand.ToListAsync();
+            currentDemands = currentDemands.Where(d =>
+            {
+                if (CurrentOffer.Id != 0)
+                {
+                    if (CurrentOffer.Property.Apartment.Count > 0)
+                    {
+                        if (d.RealEstateType.TypeName != "квартира")
+                        {
+                            return false;
+                        }
+                        Apartment apartment =
+                        CurrentOffer.Property.Apartment.First();
+                        ApartmentDemand apartmentDemand = d as ApartmentDemand;
+                        if(apartmentDemand == null)
+                        {
+                            return false;
+                        }
+                        if ((apartmentDemand.MaxArea == null
+                            || apartment.TotalArea <= apartmentDemand.MaxArea)
+                        && (apartmentDemand.MinArea == null
+                            || apartment.TotalArea >= apartmentDemand.MinArea)
+                        && (apartmentDemand.MaxRooms == null
+                            || apartment.RoomsCount <= apartmentDemand.MaxRooms)
+                        && (apartmentDemand.MinRooms == null
+                            || apartment.RoomsCount <= apartmentDemand.MinRooms)
+                        && (apartmentDemand.MaxFloor == null
+                            || apartment.FloorNumber <= apartmentDemand.MaxFloor)
+                        && (apartmentDemand.MinFloor == null
+                            || apartment.FloorNumber >= apartmentDemand.MinFloor))
+                        {
+                            return true;
+                        }
+                        return false;
+                    }
+                    else if (CurrentOffer.Property.House.Count > 0)
+                    {
+                        if (d.RealEstateType.TypeName != "дом")
+                        {
+                            return false;
+                        }
+                        House house = CurrentOffer.Property.House.First();
+                        HouseDemand houseDemand = d as HouseDemand;
+                        if ((houseDemand.MaxArea == null
+                            || house.TotalArea <= houseDemand.MaxArea)
+                        && (houseDemand.MinArea == null
+                            || house.TotalArea >= houseDemand.MinArea)
+                        && (houseDemand.MaxRooms == null
+                            || house.RoomsCount <= houseDemand.MaxRooms)
+                        && (houseDemand.MinRooms == null
+                            || house.RoomsCount <= houseDemand.MinRooms)
+                        && (houseDemand.MinFloorsCount == null
+                            || house.TotalFloors <= houseDemand.MinFloorsCount)
+                        && (houseDemand.MaxFloorsCount == null
+                            || house.TotalFloors >= houseDemand.MaxFloorsCount))
+                        {
+                            return true;
+                        }
+                        return false;
+                    }
+                    else if (CurrentOffer.Property.Land.Count > 0)
+                    {
+                        if (d.RealEstateType.TypeName != "земля")
+                        {
+                            return false;
+                        }
+                        Land land = CurrentOffer.Property.Land.First();
+                        return (d.MaxArea == null
+                        || land.TotalArea <= d.MaxArea)
+                        && (d.MinArea == null
+                        || land.TotalArea >= d.MinArea);
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                else
+                {
+                    return true;
+                }
+            }).ToList();
+            Demands = currentDemands;
         }
 
         private RelayCommand addNewDemandCommand;
@@ -137,5 +228,26 @@ namespace PropertyAgencyDesktopApp.ViewModels
                 }
             }
         }
+
+        private IList<Offer> _offers;
+
+        public IList<Offer> Offers
+        {
+            get => _offers;
+            set => SetProperty(ref _offers, value);
+        }
+        public Offer CurrentOffer
+        {
+            get => _currentOffer;
+            set
+            {
+                if (SetProperty(ref _currentOffer, value))
+                {
+                    LoadDemands();
+                }
+            }
+        }
+
+        private Offer _currentOffer;
     }
 }
